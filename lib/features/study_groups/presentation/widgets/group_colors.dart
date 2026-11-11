@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
 
-class GroupColors {
-  static const background = Color(0xFF19191D);
+/// Cores do módulo alinhadas à identidade visual original do Login.
+abstract final class GroupColors {
+  static const background = AuthColors.background;
   static const card = Color(0xFF25232C);
-  static const border = Color(0xFF3B3347);
-  static const purple = Color(0xFFBBA0F0);
-  static const cyan = Color(0xFF00C6EF);
-  static const white = Color(0xFFF5F2FA);
-  static const muted = Color(0xFF9B95A8);
-
+  static const border = Color(0xFF3A3543);
+  static const purple = AuthColors.pink;
+  static const cyan = AuthColors.blue;
+  static const white = Colors.white;
+  static const muted = AuthColors.textMuted;
   static const gradient = LinearGradient(
-    colors: [Color(0xFF9221A7), Color(0xFF225AC2)],
+    colors: [AuthColors.pink, AuthColors.blue],
   );
 }
