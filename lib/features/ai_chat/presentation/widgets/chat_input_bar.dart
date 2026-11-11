@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_colors.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 class ChatInputBar extends StatelessWidget {
   const ChatInputBar({
@@ -21,10 +21,10 @@ class ChatInputBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(left: 18, right: 6),
       decoration: BoxDecoration(
-        color: ChatColors.card,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: highlighted ? ChatColors.purple : ChatColors.cardBorder,
+          color: highlighted ? AppColors.purple : AppColors.cardBorder,
           width: highlighted ? 1.2 : 1,
         ),
       ),
@@ -33,14 +33,14 @@ class ChatInputBar extends StatelessWidget {
           Expanded(
             child: TextField(
               controller: controller,
-              cursorColor: AuthColors.blue,
+              cursorColor: AppColors.blue,
               textInputAction: TextInputAction.send,
               onSubmitted: (_) => onSend(),
-              style: const TextStyle(color: Colors.white, fontSize: 13),
+              style: const TextStyle(color: AppColors.textPrimary, fontSize: 13),
               decoration: InputDecoration(
                 hintText: hint,
                 hintStyle: const TextStyle(
-                  color: AuthColors.hint,
+                  color: AppColors.hint,
                   fontSize: 13,
                 ),
                 border: InputBorder.none,
@@ -53,7 +53,7 @@ class ChatInputBar extends StatelessWidget {
             icon: Icon(
               Icons.send_outlined,
               size: 20,
-              color: highlighted ? Colors.white : AuthColors.blue,
+              color: highlighted ? AppColors.textPrimary : AppColors.blue,
             ),
           ),
         ],

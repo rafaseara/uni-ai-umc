@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/logout_background.dart';
-import '../widgets/logout_brand.dart';
-import '../widgets/logout_colors.dart';
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/logout/presentation/widgets/logout_brand.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_background.dart';
 
 class LogoutEntryPage extends StatelessWidget {
   final VoidCallback? onLogin;
@@ -12,7 +13,7 @@ class LogoutEntryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LogoutBackground(
+    return UniBackground(
       child: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
@@ -34,14 +35,7 @@ class LogoutEntryPage extends StatelessWidget {
                         if (onLogin != null) {
                           onLogin!();
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'A navegação para o login '
-                                'será integrada à autenticação.',
-                              ),
-                            ),
-                          );
+                          Navigator.pushReplacementNamed(context, AppRoutes.login);
                         }
                       },
                     ),
@@ -53,20 +47,13 @@ class LogoutEntryPage extends StatelessWidget {
                         if (onRegister != null) {
                           onRegister!();
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'A navegação para o cadastro '
-                                'será integrada à autenticação.',
-                              ),
-                            ),
-                          );
+                          Navigator.pushReplacementNamed(context, AppRoutes.signUp);
                         }
                       },
                       child: const Text(
                         'Criar uma conta',
                         style: TextStyle(
-                          color: LogoutColors.muted,
+                          color: AppColors.textMuted,
                           fontSize: 11,
                         ),
                       ),

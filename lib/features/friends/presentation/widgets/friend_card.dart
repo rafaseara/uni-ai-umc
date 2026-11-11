@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'friends_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 
 class FriendCard extends StatelessWidget {
   final String initials;
@@ -20,15 +21,11 @@ class FriendCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return UniCard(
       margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: FriendsColors.card,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: FriendsColors.border, width: 1),
-      ),
+      padding: EdgeInsets.zero,
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         child: InkWell(
           onTap:
               onTap ??
@@ -48,7 +45,7 @@ class FriendCard extends StatelessWidget {
                   ],
                 ),
               ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 16),
             child: Row(
@@ -59,13 +56,13 @@ class FriendCard extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: FriendsColors.purple.withValues(alpha: 0.06),
-                    border: Border.all(color: FriendsColors.purple, width: 1),
+                    color: AppColors.purple.withValues(alpha: 0.06),
+                    border: Border.all(color: AppColors.purple, width: 1),
                   ),
                   child: Text(
                     initials,
                     style: const TextStyle(
-                      color: FriendsColors.purple,
+                      color: AppColors.purple,
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
@@ -81,7 +78,7 @@ class FriendCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          color: FriendsColors.white,
+                          color: AppColors.textPrimary,
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -92,7 +89,7 @@ class FriendCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          color: FriendsColors.muted,
+                          color: AppColors.textMuted,
                           fontSize: 10,
                         ),
                       ),
@@ -100,7 +97,7 @@ class FriendCard extends StatelessWidget {
                       Text(
                         '$friendsCount ${friendsCount == 1 ? "Amigo" : "Amigos"}',
                         style: const TextStyle(
-                          color: FriendsColors.muted,
+                          color: AppColors.textMuted,
                           fontSize: 10,
                         ),
                       ),

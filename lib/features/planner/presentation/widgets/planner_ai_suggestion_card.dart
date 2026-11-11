@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_card.dart';
-import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 
 class PlannerAiSuggestionCard extends StatelessWidget {
   const PlannerAiSuggestionCard({
@@ -17,8 +17,8 @@ class PlannerAiSuggestionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlannerCard(
-      borderColor: AuthColors.blue,
+    return UniCard(
+      borderColor: AppColors.blue,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,12 +28,12 @@ class PlannerAiSuggestionCard extends StatelessWidget {
                 width: 28,
                 height: 28,
                 decoration: BoxDecoration(
-                  color: PlannerColors.purpleSoft,
+                  color: AppColors.purpleSoft,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
                   Icons.auto_awesome_outlined,
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   size: 16,
                 ),
               ),
@@ -41,7 +41,7 @@ class PlannerAiSuggestionCard extends StatelessWidget {
               const Text(
                 'Sugestão da IA',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
@@ -51,7 +51,7 @@ class PlannerAiSuggestionCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             text,
-            style: const TextStyle(color: AuthColors.textMuted, fontSize: 12),
+            style: const TextStyle(color: AppColors.textMuted, fontSize: 12),
           ),
           const SizedBox(height: 16),
           Row(
@@ -65,13 +65,13 @@ class PlannerAiSuggestionCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: const LinearGradient(
-                        colors: [Color(0xFF7B2FF7), Color(0xFF3B5BDB)],
+                        colors: [AppColors.pink, AppColors.blue],
                       ),
                     ),
                     child: const Text(
                       'Aceitar',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                       ),
@@ -88,12 +88,12 @@ class PlannerAiSuggestionCard extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AuthColors.blue),
+                      border: Border.all(color: AppColors.blue),
                     ),
                     child: const Text(
                       'Ajustar horário',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                       ),

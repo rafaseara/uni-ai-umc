@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-
-import '../../models/calendar_activity.dart';
-import '../widgets/activity_card.dart';
-import '../widgets/calendar_background.dart';
-import '../widgets/calendar_colors.dart';
-import '../widgets/calendar_header.dart';
-import '../widgets/calendar_month.dart';
-import 'activity_form_page.dart';
-import 'activity_saved_page.dart';
+import 'package:provider/provider.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/calendar/models/calendar_activity.dart';
+import 'package:plataforma_educacional/features/calendar/presentation/controllers/activity_controller.dart';
+import 'package:plataforma_educacional/features/calendar/presentation/pages/activity_form_page.dart';
+import 'package:plataforma_educacional/features/calendar/presentation/pages/activity_saved_page.dart';
+import 'package:plataforma_educacional/features/calendar/presentation/widgets/activity_card.dart';
+import 'package:plataforma_educacional/features/calendar/presentation/widgets/calendar_month.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_controlled_list.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_empty_state.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_page_layout.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
@@ -19,19 +21,6 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
   DateTime _month = DateTime(DateTime.now().year, DateTime.now().month);
   DateTime _selected = DateTime.now();
-
-  final List<CalendarActivity> _activities = [
-    CalendarActivity(
-      title: 'Revisão de algoritmos',
-      description: 'Estruturas de repetição · 1h de estudo',
-      date: DateTime(2026, 10, 25),
-      time: '14:00',
-      priority: 'Alta',
-      duration: '1 hora',
-      reminder: true,
-    ),
-  ];
-
   Future<void> _openForm([CalendarActivity? activity]) async {
     final result = await Navigator.of(context).push<CalendarActivity>(
       MaterialPageRoute(
@@ -42,16 +31,23 @@ class _CalendarPageState extends State<CalendarPage> {
 
     if (!mounted || result == null) return;
 
+    final controller = context.read<ActivityController>();
+    if (activity != null) {
+      await controller.update(result);
+    } else {
+      await controller.add(result);
+    }
+    if (!mounted) return;
     setState(() {
-      if (activity != null) {
-        final index = _activities.indexOf(activity);
-        if (index != -1) _activities[index] = result;
-      } else {
-        _activities.add(result);
-      }
       _selected = result.date;
       _month = DateTime(result.date.year, result.date.month);
     });
+    if (controller.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Não foi possível salvar a atividade.')),
+      );
+      return;
+    }
 
     await Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => ActivitySavedPage(activity: result)),
@@ -60,83 +56,66 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedActivities = _activities.where((activity) {
-      return activity.date.year == _selected.year &&
-          activity.date.month == _selected.month &&
-          activity.date.day == _selected.day;
-    }).toList();
-
-    return CalendarBackground(
-      child: Column(
-        children: [
-          const CalendarHeader(),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Calendário',
-                    style: TextStyle(
-                      color: CalendarColors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  const Text(
-                    'Organize seus prazos. Reserve suas pausas.',
-                    style: TextStyle(color: CalendarColors.muted, fontSize: 11),
-                  ),
-                  const SizedBox(height: 14),
-                  CalendarMonth(
-                    month: _month,
-                    selectedDate: _selected,
-                    onSelected: (date) {
-                      setState(() => _selected = date);
-                    },
-                    onMonthChanged: (month) {
-                      setState(() => _month = month);
-                    },
-                  ),
-                  const SizedBox(height: 15),
-                  Text(
-                    '${_selected.day}/${_selected.month}/${_selected.year}',
-                    style: const TextStyle(
-                      color: CalendarColors.white,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  if (selectedActivities.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 18),
-                      child: Text(
-                        'Nenhuma atividade para este dia.',
-                        style: TextStyle(
-                          color: CalendarColors.muted,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  for (final activity in selectedActivities)
-                    ActivityCard(
-                      activity: activity,
-                      onTap: () => _openForm(activity),
-                    ),
-                  const SizedBox(height: 4),
-                  _GradientButton(
-                    label: '+ Nova atividade',
-                    onPressed: () => _openForm(),
-                  ),
-                ],
-              ),
-            ),
+    return UniPageLayout(
+      title: 'Calendário',
+      subtitle: 'Organize seus prazos. Reserve suas pausas.',
+      children: [
+        CalendarMonth(
+          month: _month,
+          selectedDate: _selected,
+          onSelected: (date) {
+            setState(() => _selected = date);
+          },
+          onMonthChanged: (month) {
+            setState(() => _month = month);
+          },
+        ),
+        const SizedBox(height: 15),
+        Text(
+          '${_selected.day}/${_selected.month}/${_selected.year}',
+          style: const TextStyle(
+            color: AppColors.textPrimary,
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 12),
+        UniControlledList<CalendarActivity>(
+          controller: context.watch<ActivityController>(),
+          emptyState: const UniEmptyState(
+            icon: Icons.event_busy_outlined,
+            title: 'Nenhuma atividade cadastrada',
+            message: 'Crie uma atividade para começar sua organização.',
+          ),
+          builder: (context, activities) {
+            final selectedActivities = activities.where((activity) =>
+                activity.date.year == _selected.year &&
+                activity.date.month == _selected.month &&
+                activity.date.day == _selected.day).toList();
+            if (selectedActivities.isEmpty) {
+              return const UniEmptyState(
+                icon: Icons.event_available_outlined,
+                title: 'Nenhuma atividade para este dia',
+                message: 'Escolha outra data ou crie uma atividade.',
+              );
+            }
+            return Column(
+              children: [
+                for (final activity in selectedActivities)
+                  ActivityCard(
+                    activity: activity,
+                    onTap: () => _openForm(activity),
+                  ),
+              ],
+            );
+          },
+        ),
+        const SizedBox(height: 4),
+        _GradientButton(
+          label: '+ Nova atividade',
+          onPressed: () => _openForm(),
+        ),
+      ],
     );
   }
 }
@@ -155,13 +134,13 @@ class _GradientButton extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: const LinearGradient(
-            colors: [Color(0xFF8319A7), Color(0xFF2357BA)],
+            colors: [AppColors.pink, AppColors.blue],
           ),
           borderRadius: BorderRadius.circular(12),
         ),
         child: TextButton(
           onPressed: onPressed,
-          child: Text(label, style: const TextStyle(color: Colors.white)),
+          child: Text(label, style: const TextStyle(color: AppColors.textPrimary)),
         ),
       ),
     );

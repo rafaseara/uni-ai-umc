@@ -1,35 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/home/presentation/widgets/uni_bottom_nav.dart';
 
-/// Navegação principal comum aos módulos. Preserva as telas já existentes.
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_bottom_nav.dart';
+
+/// Uma única barra inferior para todas as páginas raiz dos módulos.
 class UniModuleShell extends StatelessWidget {
   const UniModuleShell({
     super.key,
     required this.child,
-    required this.currentIndex,
-  });
-  final Widget child;
-  final int currentIndex;
+    this.currentIndex,
+  }) : assert(currentIndex == null || (currentIndex >= 0 && currentIndex < 5));
 
-  static void goToTab(BuildContext context, int index) {
-    const tabs = ['/home', '/grupos', '/chat', '/calendario', '/menu-perfil'];
-    final target = tabs[index];
-    if (ModalRoute.of(context)?.settings.name == target) return;
-    if (index == 0) {
-      Navigator.pushNamedAndRemoveUntil(context, target, (_) => false);
-    } else {
-      Navigator.pushNamed(context, target);
-    }
-  }
+  final Widget child;
+
+  /// null significa nenhuma aba selecionada (submódulos do menu).
+  final int? currentIndex;
+
+  /// Interface de compatibilidade: a tabela de abas pertence a AppRoutes.
+  static void goToTab(BuildContext context, int index) =>
+      AppRoutes.goToTab(context, index);
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AuthColors.background,
+    backgroundColor: AppColors.background,
     body: child,
     bottomNavigationBar: SafeArea(
       top: false,
-      child: HomeBottomNav(
+      child: UniBottomNav(
         currentIndex: currentIndex,
         onTap: (index) => goToTab(context, index),
       ),

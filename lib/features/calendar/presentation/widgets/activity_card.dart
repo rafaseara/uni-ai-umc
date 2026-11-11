@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../models/calendar_activity.dart';
-import 'calendar_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/calendar/models/calendar_activity.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 
 class ActivityCard extends StatelessWidget {
   final CalendarActivity activity;
@@ -11,16 +11,12 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return UniCard(
       margin: const EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        color: CalendarColors.card,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: CalendarColors.border),
-      ),
+      padding: EdgeInsets.zero,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(14),
           child: Column(
@@ -30,16 +26,16 @@ class ActivityCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'PROVA · ${activity.time}',
+                    'PROVA · ${activity.timeLabel}',
                     style: const TextStyle(
-                      color: CalendarColors.muted,
+                      color: AppColors.textMuted,
                       fontSize: 10,
                     ),
                   ),
                   Text(
-                    '${activity.priority} prioridade',
+                    '${activity.priorityLabel} prioridade',
                     style: const TextStyle(
-                      color: CalendarColors.purple,
+                      color: AppColors.purple,
                       fontSize: 10,
                     ),
                   ),
@@ -49,7 +45,7 @@ class ActivityCard extends StatelessWidget {
               Text(
                 activity.title,
                 style: const TextStyle(
-                  color: CalendarColors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
@@ -60,7 +56,7 @@ class ActivityCard extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  color: CalendarColors.muted,
+                  color: AppColors.textMuted,
                   fontSize: 11,
                 ),
               ),

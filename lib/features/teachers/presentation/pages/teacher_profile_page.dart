@@ -1,10 +1,11 @@
-import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/gradient_button.dart';
+
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 import 'package:plataforma_educacional/features/teachers/presentation/widgets/teacher_card.dart';
-import 'package:plataforma_educacional/features/teachers/presentation/widgets/teachers_card.dart';
-import 'package:plataforma_educacional/features/teachers/presentation/widgets/teachers_page_layout.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_page_layout.dart';
+import 'package:plataforma_educacional/shared/widgets/gradient_button.dart';
 
 class TeacherProfilePage extends StatelessWidget {
   const TeacherProfilePage({super.key});
@@ -15,11 +16,11 @@ class TeacherProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TeachersPageLayout(
+    return UniPageLayout(
       title: 'Perfil do professor',
       subtitle: 'Encontre apoio para seguir aprendendo.',
       children: [
-        TeachersCard(
+        UniCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,7 +35,7 @@ class TeacherProfilePage extends StatelessWidget {
                         const Text(
                           'Profa. Ana Martins',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: AppColors.textPrimary,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
@@ -42,7 +43,7 @@ class TeacherProfilePage extends StatelessWidget {
                         const Text(
                           'Ciência da Computação',
                           style: TextStyle(
-                            color: AuthColors.textMuted,
+                            color: AppColors.textMuted,
                             fontSize: 11,
                           ),
                         ),
@@ -53,13 +54,13 @@ class TeacherProfilePage extends StatelessWidget {
                             vertical: 3,
                           ),
                           decoration: BoxDecoration(
-                            color: AuthColors.blue.withValues(alpha: 0.15),
+                            color: AppColors.blue.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: const Text(
                             'Orientação acadêmica',
                             style: TextStyle(
-                              color: AuthColors.blue,
+                              color: AppColors.blue,
                               fontSize: 10,
                             ),
                           ),
@@ -72,7 +73,7 @@ class TeacherProfilePage extends StatelessWidget {
               const SizedBox(height: 16),
               const Text(
                 'Algoritmos, estruturas de dados e lógica de programação.',
-                style: TextStyle(color: Colors.white, fontSize: 12),
+                style: TextStyle(color: AppColors.textPrimary, fontSize: 12),
               ),
               const SizedBox(height: 16),
               const _InfoRow(
@@ -95,17 +96,17 @@ class TeacherProfilePage extends StatelessWidget {
         const Text(
           'Sobre a orientação',
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors.textPrimary,
             fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 10),
-        const TeachersCard(
+        const UniCard(
           child: Text(
             'Os professores definem seus próprios valores para oferecer '
             'aulas particulares e acompanhamento acadêmico aos alunos.',
-            style: TextStyle(color: AuthColors.textMuted, fontSize: 11),
+            style: TextStyle(color: AppColors.textMuted, fontSize: 11),
           ),
         ),
         const SizedBox(height: 16),
@@ -136,7 +137,7 @@ class _InfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 18, color: AuthColors.hint),
+        Icon(icon, size: 18, color: AppColors.hint),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -144,12 +145,12 @@ class _InfoRow extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(color: AuthColors.hint, fontSize: 10),
+                style: const TextStyle(color: AppColors.hint, fontSize: 10),
               ),
               Text(
                 value,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                 ),
@@ -177,13 +178,13 @@ class _FilledGradientButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         gradient: const LinearGradient(
-          colors: [Color(0xFF7B2FF7), Color(0xFF3B5BDB)],
+          colors: [AppColors.pink, AppColors.blue],
         ),
       ),
       child: Text(
         label,
         style: const TextStyle(
-          color: Colors.white,
+          color: AppColors.textPrimary,
           fontSize: 13,
           fontWeight: FontWeight.bold,
         ),

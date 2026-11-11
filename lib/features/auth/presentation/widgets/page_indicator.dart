@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 /// Pontinhos de progresso das telas de acesso.
 /// [activeIndex] começa em 0 (boas-vindas = 0, login = 1, ...).
@@ -35,7 +36,7 @@ class _Dot extends StatelessWidget {
       width: 7,
       height: 7,
       decoration: BoxDecoration(
-        color: active ? AuthColors.blue : AuthColors.dotInactive,
+        color: active ? AppColors.blue : AppColors.dotInactive,
         shape: BoxShape.circle,
       ),
     );

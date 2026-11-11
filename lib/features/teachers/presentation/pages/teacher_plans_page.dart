@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:plataforma_educacional/features/teachers/presentation/widgets/plan_card.dart';
-import 'package:plataforma_educacional/features/teachers/presentation/widgets/teachers_page_layout.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_page_layout.dart';
 
 class TeacherPlansPage extends StatelessWidget {
   const TeacherPlansPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const TeachersPageLayout(
+    return const UniPageLayout(
       title: 'Planos',
       subtitle: 'O primeiro passo para aprender junto.',
       children: [

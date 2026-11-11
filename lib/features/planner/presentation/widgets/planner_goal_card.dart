@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_card.dart';
-import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 
 class PlannerGoalCard extends StatelessWidget {
   const PlannerGoalCard({
@@ -21,7 +21,7 @@ class PlannerGoalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlannerCard(
+    return UniCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,14 +31,14 @@ class PlannerGoalCard extends StatelessWidget {
               Text(
                 title,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
                 timeText,
-                style: const TextStyle(color: AuthColors.hint, fontSize: 11),
+                style: const TextStyle(color: AppColors.hint, fontSize: 11),
               ),
             ],
           ),
@@ -47,7 +47,7 @@ class PlannerGoalCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             child: Stack(
               children: [
-                Container(height: 6, color: PlannerColors.progressTrack),
+                Container(height: 6, color: AppColors.overlaySoft),
                 FractionallySizedBox(
                   widthFactor: progress.clamp(0.0, 1.0),
                   child: Container(
@@ -55,9 +55,9 @@ class PlannerGoalCard extends StatelessWidget {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          AuthColors.pink,
-                          PlannerColors.purple,
-                          AuthColors.blue,
+                          AppColors.pink,
+                          AppColors.purple,
+                          AppColors.blue,
                         ],
                       ),
                     ),
@@ -69,7 +69,7 @@ class PlannerGoalCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             summary,
-            style: const TextStyle(color: AuthColors.hint, fontSize: 11),
+            style: const TextStyle(color: AppColors.hint, fontSize: 11),
           ),
         ],
       ),

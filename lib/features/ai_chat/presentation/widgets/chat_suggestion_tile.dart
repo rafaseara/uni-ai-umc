@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_card.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 
 class ChatSuggestionTile extends StatelessWidget {
   const ChatSuggestionTile({
@@ -20,11 +21,11 @@ class ChatSuggestionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: ChatCard(
+      child: UniCard(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(
           children: [
-            Icon(icon, color: AuthColors.textMuted, size: 22),
+            Icon(icon, color: AppColors.textMuted, size: 22),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
@@ -33,7 +34,7 @@ class ChatSuggestionTile extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
@@ -42,14 +43,14 @@ class ChatSuggestionTile extends StatelessWidget {
                   Text(
                     subtitle,
                     style: const TextStyle(
-                      color: AuthColors.hint,
+                      color: AppColors.hint,
                       fontSize: 10,
                     ),
                   ),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, color: AuthColors.hint, size: 20),
+            const Icon(Icons.chevron_right, color: AppColors.hint, size: 20),
           ],
         ),
       ),

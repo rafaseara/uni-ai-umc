@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'home_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 class HomeInfoChip extends StatelessWidget {
   const HomeInfoChip({
     super.key,
     required this.label,
-    this.color = HomeColors.muted,
+    this.color = AppColors.textMuted,
   });
 
   final String label;

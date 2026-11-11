@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 /// Logo UniA.I. com contorno circular em degradê e interior transparente.
 class AuthLogo extends StatelessWidget {
@@ -16,7 +17,7 @@ class AuthLogo extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey.withValues(alpha: 0.12),
+          color: AppColors.textMuted.withValues(alpha: 0.12),
         ),
         child: Padding(
           padding: EdgeInsets.all(size * 0.09),
@@ -30,7 +31,7 @@ class AuthLogo extends StatelessWidget {
                 child: Text(
                   'UniA.I.',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
                   ),
@@ -58,7 +59,7 @@ class _LogoBorderPainter extends CustomPainter {
       ..shader = const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [AuthColors.pink, AuthColors.logoRingMiddle, AuthColors.blue],
+        colors: [AppColors.pink, AppColors.logoRingMiddle, AppColors.blue],
       ).createShader(rect);
 
     final borderRect = Rect.fromLTWH(
