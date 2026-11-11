@@ -122,7 +122,7 @@ class FriendsHeader extends StatelessWidget {
           SizedBox(
             width: 44,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, '/notificacoes'),
               icon: const Icon(
                 Icons.notifications_none_rounded,
                 color: FriendsColors.white,

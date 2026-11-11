@@ -30,7 +30,24 @@ class FriendCard extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onTap,
+          onTap:
+              onTap ??
+              () => showDialog<void>(
+                context: context,
+                builder: (dialogContext) => AlertDialog(
+                  title: Text(name),
+                  content: Text(
+                    'Estudante de $course.\n\n'
+                    'Este perfil utiliza dados demonstrativos.',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(dialogContext),
+                      child: const Text('Fechar'),
+                    ),
+                  ],
+                ),
+              ),
           borderRadius: BorderRadius.circular(16),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 16),
