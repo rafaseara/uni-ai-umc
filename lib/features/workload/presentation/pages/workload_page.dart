@@ -52,13 +52,15 @@ class WorkloadPage extends StatelessWidget {
             (
               icon: Icons.coffee_outlined,
               title: 'Faça uma pausa',
-              text: 'Reserve 10 a 15 minutos de descanso entre os períodos '
+              text:
+                  'Reserve 10 a 15 minutos de descanso entre os períodos '
                   'de estudo.',
             ),
             (
               icon: Icons.event_repeat_outlined,
               title: 'Reorganize suas tarefas',
-              text: 'Priorize os prazos mais próximos e distribua as '
+              text:
+                  'Priorize os prazos mais próximos e distribua as '
                   'atividades ao longo da semana.',
             ),
           ],

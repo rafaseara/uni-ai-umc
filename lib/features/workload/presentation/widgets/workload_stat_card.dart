@@ -3,11 +3,7 @@ import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_c
 import 'package:plataforma_educacional/features/workload/presentation/widgets/workload_card.dart';
 
 class WorkloadStatCard extends StatelessWidget {
-  const WorkloadStatCard({
-    super.key,
-    required this.value,
-    required this.label,
-  });
+  const WorkloadStatCard({super.key, required this.value, required this.label});
 
   final String value;
   final String label;
