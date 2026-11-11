@@ -68,10 +68,7 @@ class TeachersPageLayout extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               subtitle,
-              style: const TextStyle(
-                color: AuthColors.textMuted,
-                fontSize: 12,
-              ),
+              style: const TextStyle(color: AuthColors.textMuted, fontSize: 12),
             ),
             const SizedBox(height: 20),
             ...children,

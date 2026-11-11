@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
 import 'package:plataforma_educacional/features/settings/presentation/widgets/reminder_card.dart';
 import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_colors.dart';
 import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_page_layout.dart';
@@ -43,15 +42,9 @@ class NotificationsPage extends StatelessWidget {
           time: 'Hoje · 18:00',
         ),
         const SizedBox(height: 12),
-        const ReminderCard(
-          title: 'Horário de estudo',
-          time: 'Hoje · 19:00',
-        ),
+        const ReminderCard(title: 'Horário de estudo', time: 'Hoje · 19:00'),
         const SizedBox(height: 12),
-        const ReminderCard(
-          title: 'Pausa para descanso',
-          time: 'Hoje · 19:50',
-        ),
+        const ReminderCard(title: 'Pausa para descanso', time: 'Hoje · 19:50'),
         const SizedBox(height: 20),
         Container(
           width: double.infinity,

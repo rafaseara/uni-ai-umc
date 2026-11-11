@@ -3,11 +3,7 @@ import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_c
 import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_colors.dart';
 
 class ReminderCard extends StatelessWidget {
-  const ReminderCard({
-    super.key,
-    required this.title,
-    required this.time,
-  });
+  const ReminderCard({super.key, required this.title, required this.time});
 
   final String title;
   final String time;

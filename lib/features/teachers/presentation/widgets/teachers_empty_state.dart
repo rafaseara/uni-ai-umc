@@ -32,10 +32,7 @@ class TeachersEmptyState extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AuthColors.textMuted,
-                fontSize: 12,
-              ),
+              style: const TextStyle(color: AuthColors.textMuted, fontSize: 12),
             ),
           ],
         ),

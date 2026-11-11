@@ -8,10 +8,6 @@ import 'package:plataforma_educacional/features/teachers/presentation/widgets/te
 class TeacherProfilePage extends StatelessWidget {
   const TeacherProfilePage({super.key});
 
-  void _onChatPressed() {
-    // TODO: abrir chat com o professor
-  }
-
   void _onViewPlansPressed() {
     // TODO: navegar para os planos do professor
   }

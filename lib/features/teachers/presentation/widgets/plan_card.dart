@@ -37,11 +37,7 @@ class PlanCard extends StatelessWidget {
                     'Solicitar plano',
                     style: TextStyle(color: AuthColors.blue, fontSize: 11),
                   ),
-                  Icon(
-                    Icons.chevron_right,
-                    color: Colors.white,
-                    size: 16,
-                  ),
+                  Icon(Icons.chevron_right, color: Colors.white, size: 16),
                 ],
               ),
             ],
