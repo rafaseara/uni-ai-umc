@@ -1,167 +1,119 @@
 import 'package:flutter/material.dart';
+import 'package:plataforma_educacional/core/navigation/uni_module_shell.dart';
+import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_background.dart';
+import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+import 'package:plataforma_educacional/features/home/presentation/widgets/uni_bottom_nav.dart';
 
 import 'group_colors.dart';
 
 class GroupBackground extends StatelessWidget {
-  final Widget child;
-
   const GroupBackground({super.key, required this.child});
-
+  final Widget child;
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: GroupColors.background,
-      body: SafeArea(child: child),
-    );
-  }
+  Widget build(BuildContext context) => AuthBackground(child: child);
 }
 
 class GroupButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  final IconData? icon;
-
   const GroupButton({
     super.key,
     required this.text,
     required this.onPressed,
     this.icon,
   });
-
+  final String text;
+  final VoidCallback onPressed;
+  final IconData? icon;
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 46,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: GroupColors.gradient,
-          borderRadius: BorderRadius.circular(9),
-        ),
-        child: TextButton(
-          onPressed: onPressed,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) ...[
-                Icon(icon, color: Colors.white, size: 17),
-                const SizedBox(width: 6),
-              ],
-              Text(
-                text,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+  Widget build(BuildContext context) => SizedBox(
+    width: double.infinity,
+    height: 46,
+    child: DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: GroupColors.gradient,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(1.2),
+        child: Material(
+          color: AuthColors.background,
+          borderRadius: BorderRadius.circular(11),
+          child: InkWell(
+            onTap: onPressed,
+            borderRadius: BorderRadius.circular(11),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (icon != null) ...[
+                  Icon(icon, color: Colors.white, size: 18),
+                  const SizedBox(width: 6),
+                ],
+                Text(
+                  text,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }
 
 class GroupTopBar extends StatelessWidget {
-  final bool showBack;
-
   const GroupTopBar({super.key, this.showBack = false});
-
+  final bool showBack;
   @override
-  Widget build(BuildContext context) {
-    return Row(
+  Widget build(BuildContext context) => SizedBox(
+    height: 54,
+    child: Row(
       children: [
         IconButton(
-          onPressed: showBack ? () => Navigator.pop(context) : () {},
+          tooltip: showBack ? 'Voltar' : 'Abrir módulos',
+          onPressed: showBack
+              ? () => Navigator.maybePop(context)
+              : () => Navigator.pushNamed(context, '/modulos'),
           icon: Icon(
             showBack ? Icons.chevron_left : Icons.menu,
-            color: GroupColors.white,
+            color: Colors.white,
           ),
         ),
         const Spacer(),
-        const Text(
-          'Uni',
-          style: TextStyle(
-            color: GroupColors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+        const Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: 'Uni',
+                style: TextStyle(color: Colors.white),
+              ),
+              TextSpan(
+                text: 'A.I.',
+                style: TextStyle(color: AuthColors.blue),
+              ),
+            ],
           ),
-        ),
-        const Text(
-          'A.I.',
-          style: TextStyle(
-            color: GroupColors.purple,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
         ),
         const Spacer(),
         IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.notifications_none, color: GroupColors.white),
+          tooltip: 'Notificações',
+          onPressed: () => Navigator.pushNamed(context, '/notificacoes'),
+          icon: const Icon(Icons.notifications_none, color: Colors.white),
         ),
       ],
-    );
-  }
+    ),
+  );
 }
 
 class GroupBottomNav extends StatelessWidget {
   const GroupBottomNav({super.key});
-
   @override
-  Widget build(BuildContext context) {
-    const items = [
-      (Icons.home_outlined, 'Início'),
-      (Icons.people_outline, 'Grupos'),
-      (Icons.add, 'Criar'),
-      (Icons.calendar_month_outlined, 'Agenda'),
-      (Icons.person_outline, 'Perfil'),
-    ];
-
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 9),
-      decoration: const BoxDecoration(
-        color: GroupColors.background,
-        border: Border(top: BorderSide(color: GroupColors.border)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          for (var i = 0; i < items.length; i++)
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    color: i == 1
-                        ? GroupColors.cyan.withValues(alpha: 0.12)
-                        : i == 2
-                        ? GroupColors.purple.withValues(alpha: 0.2)
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(
-                    items[i].$1,
-                    size: 19,
-                    color: i == 1
-                        ? GroupColors.cyan
-                        : i == 2
-                        ? GroupColors.purple
-                        : GroupColors.muted,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  items[i].$2,
-                  style: const TextStyle(color: GroupColors.muted, fontSize: 9),
-                ),
-              ],
-            ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => HomeBottomNav(
+    currentIndex: 1,
+    onTap: (index) => UniModuleShell.goToTab(context, index),
+  );
 }

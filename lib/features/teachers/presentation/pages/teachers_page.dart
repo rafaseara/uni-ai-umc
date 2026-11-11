@@ -1,3 +1,4 @@
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
 import 'package:plataforma_educacional/features/teachers/presentation/widgets/teacher_card.dart';
@@ -16,8 +17,8 @@ class TeachersPage extends StatelessWidget {
     (initials: 'RC', name: 'Rafael Costa', subject: 'Matemática e cálculo'),
   ];
 
-  void _onViewProfilePressed() {
-    // TODO: navegar para o perfil do professor
+  void _onViewProfilePressed(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.teacherProfile);
   }
 
   @override
@@ -56,7 +57,7 @@ class TeachersPage extends StatelessWidget {
               initials: teacher.initials,
               name: teacher.name,
               subject: teacher.subject,
-              onViewProfile: _onViewProfilePressed,
+              onViewProfile: () => _onViewProfilePressed(context),
             ),
             const SizedBox(height: 12),
           ],

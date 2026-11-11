@@ -52,7 +52,7 @@ class PlannerPageLayout extends StatelessWidget {
                   icon: const Icon(Icons.notifications_none, size: 22),
                   color: Colors.white,
                   onPressed: () {
-                    // TODO: abrir notificações
+                    Navigator.pushNamed(context, '/notificacoes');
                   },
                 ),
               ],
@@ -69,10 +69,7 @@ class PlannerPageLayout extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               subtitle,
-              style: const TextStyle(
-                color: AuthColors.textMuted,
-                fontSize: 12,
-              ),
+              style: const TextStyle(color: AuthColors.textMuted, fontSize: 12),
             ),
             const SizedBox(height: 20),
             ...children,

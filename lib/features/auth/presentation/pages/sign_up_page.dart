@@ -1,3 +1,4 @@
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_form_layout.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_text_field.dart';
@@ -23,7 +24,17 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void _onContinuePressed() {
-    // TODO: validar os campos e avançar
+    if (_usernameController.text.trim().isEmpty ||
+        !_emailController.text.trim().contains('@') ||
+        _birthDateController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Preencha nome, e-mail e data de nascimento.'),
+        ),
+      );
+      return;
+    }
+    Navigator.pushNamed(context, AppRoutes.verifyCode);
   }
 
   @override

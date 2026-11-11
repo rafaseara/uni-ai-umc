@@ -7,8 +7,14 @@ import 'package:plataforma_educacional/features/planner/presentation/widgets/pla
 import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_page_layout.dart';
 import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_week_strip.dart';
 
-class WeeklyPlannerPage extends StatelessWidget {
+class WeeklyPlannerPage extends StatefulWidget {
   const WeeklyPlannerPage({super.key});
+  @override
+  State<WeeklyPlannerPage> createState() => _WeeklyPlannerPageState();
+}
+
+class _WeeklyPlannerPageState extends State<WeeklyPlannerPage> {
+  bool _suggestionAccepted = false;
 
   // Dados fictícios só para montar o visual.
   static const _days = [
@@ -22,11 +28,18 @@ class WeeklyPlannerPage extends StatelessWidget {
   ];
 
   void _onAcceptPressed() {
-    // TODO: aceitar a sugestão da IA
+    setState(() => _suggestionAccepted = true);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Sugestão marcada como aceita nesta sessão de demonstração.',
+        ),
+      ),
+    );
   }
 
   void _onAdjustPressed() {
-    // TODO: abrir ajuste de horário
+    Navigator.pushNamed(context, '/calendario');
   }
 
   @override
@@ -44,12 +57,19 @@ class WeeklyPlannerPage extends StatelessWidget {
           summary: '3 de 7 atividades concluídas',
         ),
         const SizedBox(height: 16),
-        PlannerAiSuggestionCard(
-          text: 'Sexta está cheia por causa do simulado. Que tal antecipar '
-              '1 hora de Estruturas de Dados para hoje à noite?',
-          onAccept: _onAcceptPressed,
-          onAdjust: _onAdjustPressed,
-        ),
+        if (!_suggestionAccepted)
+          PlannerAiSuggestionCard(
+            text:
+                'Sexta está cheia por causa do simulado. Que tal antecipar '
+                '1 hora de Estruturas de Dados para hoje à noite?',
+            onAccept: _onAcceptPressed,
+            onAdjust: _onAdjustPressed,
+          )
+        else
+          const Text(
+            'Sugestão aceita nesta sessão.',
+            style: TextStyle(color: AuthColors.blue, fontSize: 12),
+          ),
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

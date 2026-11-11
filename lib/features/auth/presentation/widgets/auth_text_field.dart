@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
 
@@ -60,10 +59,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
               textInputAction: widget.textInputAction,
               obscureText: _obscure,
               cursorColor: AuthColors.blue,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
               decoration: InputDecoration(
                 filled: false,
                 hintText: widget.hint,
@@ -114,10 +110,7 @@ class _GradientBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..shader = const LinearGradient(
-        colors: [
-          AuthColors.pink,
-          AuthColors.blue,
-        ],
+        colors: [AuthColors.pink, AuthColors.blue],
       ).createShader(rect);
 
     final borderRect = Rect.fromLTWH(
@@ -128,10 +121,7 @@ class _GradientBorderPainter extends CustomPainter {
     );
 
     canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        borderRect,
-        const Radius.circular(radius),
-      ),
+      RRect.fromRectAndRadius(borderRect, const Radius.circular(radius)),
       paint,
     );
   }

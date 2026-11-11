@@ -1,4 +1,3 @@
-
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -7,10 +6,7 @@ import 'package:plataforma_educacional/features/profile/presentation/widgets/pro
 
 /// Fundo das telas de Profile do UniA.I.
 class ProfileBackground extends StatelessWidget {
-  const ProfileBackground({
-    super.key,
-    required this.child,
-  });
+  const ProfileBackground({super.key, required this.child});
 
   final Widget child;
 
@@ -31,20 +27,14 @@ class ProfileBackground extends StatelessWidget {
             const Positioned(
               top: -160,
               left: -190,
-              child: _Glow(
-                color: ProfileColors.glowPurple,
-                size: 500,
-              ),
+              child: _Glow(color: ProfileColors.glowPurple, size: 500),
             ),
 
             // Iluminação azul na lateral direita
             const Positioned(
               bottom: 190,
               right: -210,
-              child: _Glow(
-                color: ProfileColors.glowBlue,
-                size: 500,
-              ),
+              child: _Glow(color: ProfileColors.glowBlue, size: 500),
             ),
 
             SafeArea(child: child),
@@ -57,10 +47,7 @@ class ProfileBackground extends StatelessWidget {
 
 /// Iluminação difusa usada apenas no Profile.
 class _Glow extends StatelessWidget {
-  const _Glow({
-    required this.color,
-    required this.size,
-  });
+  const _Glow({required this.color, required this.size});
 
   final Color color;
   final double size;
@@ -68,10 +55,7 @@ class _Glow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ImageFiltered(
-      imageFilter: ui.ImageFilter.blur(
-        sigmaX: 75,
-        sigmaY: 75,
-      ),
+      imageFilter: ui.ImageFilter.blur(sigmaX: 75, sigmaY: 75),
       child: Container(
         width: size,
         height: size,

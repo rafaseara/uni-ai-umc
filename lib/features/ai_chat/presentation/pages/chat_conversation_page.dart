@@ -14,6 +14,7 @@ class ChatConversationPage extends StatefulWidget {
 
 class _ChatConversationPageState extends State<ChatConversationPage> {
   final _messageController = TextEditingController();
+  final List<String> _sentMessages = [];
 
   @override
   void dispose() {
@@ -22,7 +23,10 @@ class _ChatConversationPageState extends State<ChatConversationPage> {
   }
 
   void _onSendPressed() {
-    // TODO: enviar a mensagem
+    final message = _messageController.text.trim();
+    if (message.isEmpty) return;
+    setState(() => _sentMessages.add(message));
+    _messageController.clear();
   }
 
   @override
@@ -35,37 +39,45 @@ class _ChatConversationPageState extends State<ChatConversationPage> {
         controller: _messageController,
         onSend: _onSendPressed,
       ),
-      children: const [
-        // Mensagens fictícias só para montar o visual.
-        ChatUserMessage(
-          text: 'Tenho uma prova de algoritmos. '
+      children: [
+        // Exemplos visuais, sem consulta a um servidor de IA.
+        const ChatUserMessage(
+          text:
+              'Tenho uma prova de algoritmos. '
               'Como posso organizar minha revisão?',
         ),
-        SizedBox(height: 12),
-        ChatAiMessage(
+        const SizedBox(height: 12),
+        const ChatAiMessage(
           title: 'Vamos dividir a revisão em três blocos:',
           steps: [
-            (
-              time: '20 min',
-              text: 'Revise os conceitos de laços e condições.',
-            ),
+            (time: '20 min', text: 'Revise os conceitos de laços e condições.'),
             (
               time: '30 min',
               text: 'Resolva três exercícios, do simples ao mais desafiador.',
             ),
-            (
-              time: '10 min',
-              text: 'Confira os erros e anote suas dúvidas.',
-            ),
+            (time: '10 min', text: 'Confira os erros e anote suas dúvidas.'),
           ],
-          footnote: 'Faça uma pausa de 5 minutos entre os blocos '
+          footnote:
+              'Faça uma pausa de 5 minutos entre os blocos '
               'e ajuste os tempos à sua rotina.',
         ),
-        SizedBox(height: 14),
-        ChatDisclaimer(
-          text: 'Confira o conteúdo. A IA pode cometer erros e não '
+        const SizedBox(height: 14),
+        const ChatDisclaimer(
+          text:
+              'Confira o conteúdo. A IA pode cometer erros e não '
               'substitui a orientação de um professor.',
         ),
+        for (final message in _sentMessages) ...[
+          const SizedBox(height: 12),
+          ChatUserMessage(text: message),
+        ],
+        if (_sentMessages.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          const Text(
+            'Mensagens adicionadas apenas nesta sessão. A IA ainda não está conectada.',
+            style: TextStyle(color: Colors.white70, fontSize: 11),
+          ),
+        ],
       ],
     );
   }

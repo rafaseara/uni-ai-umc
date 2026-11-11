@@ -35,6 +35,7 @@ class ChatInputBar extends StatelessWidget {
               controller: controller,
               cursorColor: AuthColors.blue,
               textInputAction: TextInputAction.send,
+              onSubmitted: (_) => onSend(),
               style: const TextStyle(color: Colors.white, fontSize: 13),
               decoration: InputDecoration(
                 hintText: hint,

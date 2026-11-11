@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
 
@@ -13,34 +12,34 @@ class AuthLogo extends StatelessWidget {
     return CustomPaint(
       painter: _LogoBorderPainter(),
       child: Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.grey.withValues(alpha: 0.12),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(size * 0.09),
-        child: Image.asset(
-          'assets/images/uniai_logo.webp',
-          fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) {
-            debugPrint('Erro ao carregar a logo: $error');
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.grey.withValues(alpha: 0.12),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(size * 0.09),
+          child: Image.asset(
+            'assets/images/uniai_logo.webp',
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              debugPrint('Erro ao carregar a logo: $error');
 
-            return const Center(
-              child: Text(
-                'UniA.I.',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
+              return const Center(
+                child: Text(
+                  'UniA.I.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
-    ),
     );
   }
 }
@@ -59,11 +58,7 @@ class _LogoBorderPainter extends CustomPainter {
       ..shader = const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [
-          AuthColors.pink,
-          AuthColors.logoRingMiddle,
-          AuthColors.blue,
-        ],
+        colors: [AuthColors.pink, AuthColors.logoRingMiddle, AuthColors.blue],
       ).createShader(rect);
 
     final borderRect = Rect.fromLTWH(
@@ -73,10 +68,7 @@ class _LogoBorderPainter extends CustomPainter {
       size.height - strokeWidth,
     );
 
-    canvas.drawOval(
-      borderRect,
-      paint,
-    );
+    canvas.drawOval(borderRect, paint);
   }
 
   @override

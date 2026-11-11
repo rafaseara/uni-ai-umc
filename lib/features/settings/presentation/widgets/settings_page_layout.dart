@@ -39,7 +39,7 @@ class SettingsPageLayout extends StatelessWidget {
                     if (showBackButton) {
                       Navigator.maybePop(context);
                     } else {
-                      // TODO: abrir menu lateral
+                      Navigator.pushNamed(context, '/modulos');
                     }
                   },
                 ),
@@ -63,7 +63,7 @@ class SettingsPageLayout extends StatelessWidget {
                   icon: const Icon(Icons.notifications_none, size: 22),
                   color: Colors.white,
                   onPressed: () {
-                    // TODO: abrir notificações
+                    Navigator.pushNamed(context, '/notificacoes');
                   },
                 ),
               ],

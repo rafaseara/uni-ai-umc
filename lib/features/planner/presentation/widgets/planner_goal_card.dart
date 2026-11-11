@@ -54,7 +54,11 @@ class PlannerGoalCard extends StatelessWidget {
                     height: 6,
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [AuthColors.pink, PlannerColors.purple, AuthColors.blue],
+                        colors: [
+                          AuthColors.pink,
+                          PlannerColors.purple,
+                          AuthColors.blue,
+                        ],
                       ),
                     ),
                   ),
