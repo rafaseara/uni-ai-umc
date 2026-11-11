@@ -1,3 +1,5 @@
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -10,12 +12,12 @@ import 'package:plataforma_educacional/features/auth/presentation/widgets/page_i
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
-  void _onLoginPressed() {
-    // TODO: Navegar para login
+  void _onLoginPressed(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.login);
   }
 
-  void _onSignUpPressed() {
-    // TODO: Navegar para cadastro
+  void _onSignUpPressed(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.signUp);
   }
 
   @override
@@ -35,7 +37,10 @@ class WelcomePage extends StatelessWidget {
                 const SizedBox(height: 48),
                 AuthLogo(size: logoSize),
                 const Spacer(),
-                GradientButton(label: 'ENTRAR', onPressed: _onLoginPressed),
+                GradientButton(
+                  label: 'ENTRAR',
+                  onPressed: () => _onLoginPressed(context),
+                ),
                 const SizedBox(height: 32),
                 const PageIndicator(activeIndex: 0),
                 const SizedBox(height: 20),
@@ -50,7 +55,7 @@ class WelcomePage extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: _onSignUpPressed,
+                      onTap: () => _onSignUpPressed(context),
                       child: const Text(
                         'Criar uma conta',
                         style: TextStyle(

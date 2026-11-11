@@ -1,3 +1,5 @@
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -27,15 +29,31 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onLoginPressed() {
-    // TODO (PR de lógica): validar os campos e chamar o AuthController
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+    if (!email.contains('@') || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Informe um e-mail e uma senha para continuar.'),
+        ),
+      );
+      return;
+    }
+    // Navegação DEMONSTRATIVA. Ainda NÃO existe autenticação.
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Modo demonstração: login sem autenticação real.'),
+      ),
+    );
+    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
   }
 
   void _onResetPasswordPressed() {
-    // TODO: navegar para redefinir senha
+    Navigator.pushNamed(context, AppRoutes.verifyCode);
   }
 
   void _onForgotPasswordPressed() {
-    // TODO: navegar para esqueci minha senha
+    Navigator.pushNamed(context, AppRoutes.verifyCode);
   }
 
   @override

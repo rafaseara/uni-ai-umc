@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class HomeBackground extends StatelessWidget {
-  const HomeBackground({
-    super.key,
-    required this.child,
-  });
+  const HomeBackground({super.key, required this.child});
 
   final Widget child;
 
@@ -34,20 +31,14 @@ class HomeBackground extends StatelessWidget {
             const Positioned(
               top: -160,
               left: -190,
-              child: _HomeGlow(
-                color: purple,
-                size: 500,
-              ),
+              child: _HomeGlow(color: purple, size: 500),
             ),
 
             // Luz azul difusa na lateral inferior direita.
             const Positioned(
               right: -210,
               bottom: 190,
-              child: _HomeGlow(
-                color: blue,
-                size: 500,
-              ),
+              child: _HomeGlow(color: blue, size: 500),
             ),
 
             SafeArea(child: child),
@@ -59,10 +50,7 @@ class HomeBackground extends StatelessWidget {
 }
 
 class _HomeGlow extends StatelessWidget {
-  const _HomeGlow({
-    required this.color,
-    required this.size,
-  });
+  const _HomeGlow({required this.color, required this.size});
 
   final Color color;
   final double size;
@@ -90,12 +78,7 @@ class _HomeGlow extends StatelessWidget {
                   color.withValues(alpha: 0.10),
                   color.withValues(alpha: 0.0),
                 ],
-                stops: const [
-                  0.0,
-                  0.35,
-                  0.70,
-                  1.0,
-                ],
+                stops: const [0.0, 0.35, 0.70, 1.0],
               ),
             ),
           ),

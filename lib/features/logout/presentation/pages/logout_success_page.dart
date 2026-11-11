@@ -1,9 +1,9 @@
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/logout_background.dart';
 import '../widgets/logout_brand.dart';
 import '../widgets/logout_colors.dart';
-import 'logout_entry_page.dart';
 
 class LogoutSuccessPage extends StatelessWidget {
   const LogoutSuccessPage({super.key});
@@ -76,10 +76,10 @@ class LogoutSuccessPage extends StatelessWidget {
                     LogoutGradientButton(
                       text: 'Entrar',
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (_) => const LogoutEntryPage(),
-                          ),
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          AppRoutes.login,
+                          (_) => false,
                         );
                       },
                     ),

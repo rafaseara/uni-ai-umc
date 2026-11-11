@@ -45,12 +45,7 @@ class HomeBottomNav extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 10),
       decoration: const BoxDecoration(
         color: Color(0xF2171719),
-        border: Border(
-          top: BorderSide(
-            color: Color(0xFF353139),
-            width: 1,
-          ),
-        ),
+        border: Border(top: BorderSide(color: Color(0xFF353139), width: 1)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,13 +80,9 @@ class HomeBottomNav extends StatelessWidget {
                           height: 38,
                           child: Center(
                             child: isChat
-                                ? _AiChatButton(
-                                    selected: selected,
-                                  )
+                                ? _AiChatButton(selected: selected)
                                 : Icon(
-                                    selected
-                                        ? item.selectedIcon
-                                        : item.icon,
+                                    selected ? item.selectedIcon : item.icon,
                                     color: itemColor,
                                     size: 23,
                                   ),
@@ -103,9 +94,7 @@ class HomeBottomNav extends StatelessWidget {
                           child: Text(
                             item.label,
                             style: TextStyle(
-                              color: isChat
-                                  ? Colors.white
-                                  : itemColor,
+                              color: isChat ? Colors.white : itemColor,
                               fontSize: 10,
                               fontWeight: selected
                                   ? FontWeight.w700
@@ -127,9 +116,7 @@ class HomeBottomNav extends StatelessWidget {
 }
 
 class _AiChatButton extends StatelessWidget {
-  const _AiChatButton({
-    required this.selected,
-  });
+  const _AiChatButton({required this.selected});
 
   final bool selected;
 
@@ -144,17 +131,12 @@ class _AiChatButton extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFFE500C5),
-            Color(0xFF64118F),
-            Color(0xFF00BFFF),
-          ],
+          colors: [Color(0xFFE500C5), Color(0xFF64118F), Color(0xFF00BFFF)],
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF9415B5).withValues(
-              alpha: selected ? 0.45 : 0.25,
-            ),
+            color: const Color(0xFF9415B5)
+                .withValues(alpha: selected ? 0.45 : 0.25),
             blurRadius: selected ? 12 : 7,
           ),
         ],
@@ -164,11 +146,7 @@ class _AiChatButton extends StatelessWidget {
           color: const Color(0xFF64118F).withValues(alpha: 0.70),
           borderRadius: BorderRadius.circular(11),
         ),
-        child: const Icon(
-          Icons.auto_awesome,
-          color: Colors.white,
-          size: 21,
-        ),
+        child: const Icon(Icons.auto_awesome, color: Colors.white, size: 21),
       ),
     );
   }

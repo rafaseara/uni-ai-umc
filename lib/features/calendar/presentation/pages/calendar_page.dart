@@ -17,8 +17,8 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  DateTime _month = DateTime(2026, 10);
-  DateTime _selected = DateTime(2026, 10, 25);
+  DateTime _month = DateTime(DateTime.now().year, DateTime.now().month);
+  DateTime _selected = DateTime.now();
 
   final List<CalendarActivity> _activities = [
     CalendarActivity(

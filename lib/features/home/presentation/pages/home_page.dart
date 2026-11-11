@@ -6,7 +6,7 @@ import 'package:plataforma_educacional/features/home/presentation/widgets/uni_bo
 class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
-    this.userName = 'Gabriel Muniz',
+    this.userName = 'Estudante',
     this.onMenu,
     this.onNotifications,
     this.onCalendar,
@@ -36,10 +36,7 @@ class HomePage extends StatelessWidget {
   static const Color _muted = Color(0xFFCCCCCC);
   static const Color _priority = Color(0xFFFFB86C);
 
-  void _runAction(
-    BuildContext context,
-    VoidCallback? action,
-  ) {
+  void _runAction(BuildContext context, VoidCallback? action) {
     if (action != null) {
       action();
       return;
@@ -48,18 +45,11 @@ class HomePage extends StatelessWidget {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Esta seção ainda não foi conectada.',
-          ),
-        ),
+        const SnackBar(content: Text('Esta seção ainda não foi conectada.')),
       );
   }
 
-  void _handleNavigation(
-    BuildContext context,
-    int index,
-  ) {
+  void _handleNavigation(BuildContext context, int index) {
     if (index == 0) return;
 
     VoidCallback? action;
@@ -135,35 +125,23 @@ class HomePage extends StatelessWidget {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Center(
                     child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: 640,
-                      ),
+                      constraints: const BoxConstraints(maxWidth: 640),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _TopBar(
-                            onMenu: () => _runAction(
-                              pageContext,
-                              onMenu,
-                            ),
-                            onNotifications: () => _runAction(
-                              pageContext,
-                              onNotifications,
-                            ),
+                            onMenu: () => _runAction(pageContext, onMenu),
+                            onNotifications: () =>
+                                _runAction(pageContext, onNotifications),
                           ),
                           const SizedBox(height: 24),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 4,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   'Olá, $userName!',
@@ -188,9 +166,7 @@ class HomePage extends StatelessWidget {
                                   runSpacing: 8,
                                   children: [
                                     _InfoChip(
-                                      label: _formatDate(
-                                        DateTime.now(),
-                                      ),
+                                      label: _formatDate(DateTime.now()),
                                     ),
                                     const _InfoChip(
                                       label: 'Seu espaço de estudos',
@@ -204,8 +180,7 @@ class HomePage extends StatelessWidget {
                           const SizedBox(height: 20),
                           _HomeCard(
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Row(
                                   children: [
@@ -238,22 +213,15 @@ class HomePage extends StatelessWidget {
                                 const SizedBox(height: 10),
                                 const Text(
                                   'Hoje · 14h · 1 hora de estudo',
-                                  style: TextStyle(
-                                    color: _muted,
-                                    fontSize: 12,
-                                  ),
+                                  style: TextStyle(color: _muted, fontSize: 12),
                                 ),
                                 const SizedBox(height: 10),
-                                const _PriorityTag(
-                                  label: 'Alta prioridade',
-                                ),
+                                const _PriorityTag(label: 'Alta prioridade'),
                                 const SizedBox(height: 18),
                                 _GradientButton(
                                   label: 'Ver no calendário',
-                                  onPressed: () => _runAction(
-                                    pageContext,
-                                    onCalendar,
-                                  ),
+                                  onPressed: () =>
+                                      _runAction(pageContext, onCalendar),
                                 ),
                               ],
                             ),
@@ -261,8 +229,7 @@ class HomePage extends StatelessWidget {
                           const SizedBox(height: 16),
                           _HomeCard(
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
                                   'Aprender fica melhor com apoio.',
@@ -285,27 +252,21 @@ class HomePage extends StatelessWidget {
                                 const SizedBox(height: 18),
                                 LayoutBuilder(
                                   builder: (context, constraints) {
-                                    final teachersButton =
-                                        _GradientButton(
+                                    final teachersButton = _GradientButton(
                                       label: 'Professores',
-                                      onPressed: () => _runAction(
-                                        pageContext,
-                                        onTeachers,
-                                      ),
+                                      onPressed: () =>
+                                          _runAction(pageContext, onTeachers),
                                     );
 
-                                    final groupsButton =
-                                        _GradientButton(
+                                    final groupsButton = _GradientButton(
                                       label: 'Meus grupos',
-                                      onPressed: () => _runAction(
-                                        pageContext,
-                                        onGroups,
-                                      ),
+                                      onPressed: () =>
+                                          _runAction(pageContext, onGroups),
                                     );
 
-                                    final textSize =
-                                        MediaQuery.textScalerOf(context)
-                                            .scale(14);
+                                    final textSize = MediaQuery.textScalerOf(
+                                      context,
+                                    ).scale(14);
 
                                     if (constraints.maxWidth < 280 ||
                                         textSize > 18) {
@@ -320,13 +281,9 @@ class HomePage extends StatelessWidget {
 
                                     return Row(
                                       children: [
-                                        Expanded(
-                                          child: teachersButton,
-                                        ),
+                                        Expanded(child: teachersButton),
                                         const SizedBox(width: 12),
-                                        Expanded(
-                                          child: groupsButton,
-                                        ),
+                                        Expanded(child: groupsButton),
                                       ],
                                     );
                                   },
@@ -344,10 +301,7 @@ class HomePage extends StatelessWidget {
               HomeBottomNav(
                 currentIndex: 0,
                 onTap: (index) {
-                  _handleNavigation(
-                    pageContext,
-                    index,
-                  );
+                  _handleNavigation(pageContext, index);
                 },
               ),
             ],
@@ -359,10 +313,7 @@ class HomePage extends StatelessWidget {
 }
 
 class _TopBar extends StatelessWidget {
-  const _TopBar({
-    required this.onMenu,
-    required this.onNotifications,
-  });
+  const _TopBar({required this.onMenu, required this.onNotifications});
 
   final VoidCallback onMenu;
   final VoidCallback onNotifications;
@@ -376,10 +327,7 @@ class _TopBar extends StatelessWidget {
           IconButton(
             tooltip: 'Abrir menu',
             onPressed: onMenu,
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
+            icon: const Icon(Icons.menu, color: Colors.white),
           ),
           Expanded(
             child: Center(
@@ -399,10 +347,7 @@ class _TopBar extends StatelessWidget {
                     ShaderMask(
                       shaderCallback: (bounds) {
                         return const LinearGradient(
-                          colors: [
-                            HomePage._pink,
-                            HomePage._blue,
-                          ],
+                          colors: [HomePage._pink, HomePage._blue],
                         ).createShader(bounds);
                       },
                       child: const Text(
@@ -422,10 +367,7 @@ class _TopBar extends StatelessWidget {
           IconButton(
             tooltip: 'Abrir notificações',
             onPressed: onNotifications,
-            icon: const Icon(
-              Icons.notifications_none,
-              color: Colors.white,
-            ),
+            icon: const Icon(Icons.notifications_none, color: Colors.white),
           ),
         ],
       ),
@@ -434,9 +376,7 @@ class _TopBar extends StatelessWidget {
 }
 
 class _HomeCard extends StatelessWidget {
-  const _HomeCard({
-    required this.child,
-  });
+  const _HomeCard({required this.child});
 
   final Widget child;
 
@@ -448,9 +388,7 @@ class _HomeCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: HomePage._card,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: HomePage._cardBorder,
-        ),
+        border: Border.all(color: HomePage._cardBorder),
         boxShadow: const [
           BoxShadow(
             color: Color(0x30000000),
@@ -465,10 +403,7 @@ class _HomeCard extends StatelessWidget {
 }
 
 class _InfoChip extends StatelessWidget {
-  const _InfoChip({
-    required this.label,
-    this.color = HomePage._muted,
-  });
+  const _InfoChip({required this.label, this.color = HomePage._muted});
 
   final String label;
   final Color color;
@@ -476,16 +411,11 @@ class _InfoChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 8,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: color.withValues(alpha: 0.28),
-        ),
+        border: Border.all(color: color.withValues(alpha: 0.28)),
       ),
       child: Text(
         label,
@@ -500,34 +430,23 @@ class _InfoChip extends StatelessWidget {
 }
 
 class _PriorityTag extends StatelessWidget {
-  const _PriorityTag({
-    required this.label,
-  });
+  const _PriorityTag({required this.label});
 
   final String label;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 6,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: HomePage._priority.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: HomePage._priority.withValues(alpha: 0.35),
-        ),
+        border: Border.all(color: HomePage._priority.withValues(alpha: 0.35)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.flag_outlined,
-            size: 14,
-            color: HomePage._priority,
-          ),
+          const Icon(Icons.flag_outlined, size: 14, color: HomePage._priority),
           const SizedBox(width: 6),
           Text(
             label,
@@ -544,10 +463,7 @@ class _PriorityTag extends StatelessWidget {
 }
 
 class _GradientButton extends StatelessWidget {
-  const _GradientButton({
-    required this.label,
-    required this.onPressed,
-  });
+  const _GradientButton({required this.label, required this.onPressed});
 
   final String label;
   final VoidCallback onPressed;
@@ -559,15 +475,8 @@ class _GradientButton extends StatelessWidget {
       height: 46,
       padding: const EdgeInsets.all(1.2),
       decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(30),
-        ),
-        gradient: LinearGradient(
-          colors: [
-            HomePage._pink,
-            HomePage._blue,
-          ],
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(30)),
+        gradient: LinearGradient(colors: [HomePage._pink, HomePage._blue]),
       ),
       child: ElevatedButton(
         onPressed: onPressed,

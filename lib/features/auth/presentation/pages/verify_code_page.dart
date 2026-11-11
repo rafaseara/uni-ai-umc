@@ -1,3 +1,4 @@
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_form_layout.dart';
@@ -20,7 +21,14 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
   }
 
   void _onContinuePressed() {
-    // TODO: validar o código e avançar
+    if (_codeController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Informe o código para continuar.')),
+      );
+      return;
+    }
+    // Código não validado em servidor: navegação de protótipo.
+    Navigator.pushNamed(context, AppRoutes.newPassword);
   }
 
   @override

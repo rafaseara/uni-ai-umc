@@ -18,7 +18,7 @@ class CalendarHeader extends StatelessWidget {
             child: IconButton(
               onPressed: showBack
                   ? () => Navigator.of(context).maybePop()
-                  : () {},
+                  : () => Navigator.pushNamed(context, '/modulos'),
               icon: Icon(
                 showBack ? Icons.chevron_left : Icons.menu,
                 color: CalendarColors.white,
@@ -48,7 +48,7 @@ class CalendarHeader extends StatelessWidget {
           SizedBox(
             width: 44,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, '/notificacoes'),
               icon: const Icon(
                 Icons.notifications_none,
                 color: CalendarColors.white,
