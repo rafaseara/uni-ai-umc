@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 
 class SettingsProfileCard extends StatelessWidget {
   const SettingsProfileCard({
@@ -16,14 +17,7 @@ class SettingsProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: SettingsColors.card,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: SettingsColors.cardBorder),
-      ),
+    return UniCard(
       child: Row(
         children: [
           Container(
@@ -32,12 +26,12 @@ class SettingsProfileCard extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.white54),
+              border: Border.all(color: AppColors.cardBorder),
             ),
             child: Text(
               initials,
               style: const TextStyle(
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
@@ -50,7 +44,7 @@ class SettingsProfileCard extends StatelessWidget {
               Text(
                 name,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
@@ -60,7 +54,7 @@ class SettingsProfileCard extends StatelessWidget {
                 onTap: onManageAccount,
                 child: const Text(
                   'Gerenciar minha conta',
-                  style: TextStyle(color: AuthColors.blue, fontSize: 11),
+                  style: TextStyle(color: AppColors.blue, fontSize: 11),
                 ),
               ),
             ],

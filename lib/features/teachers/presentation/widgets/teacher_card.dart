@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/gradient_button.dart';
-import 'package:plataforma_educacional/features/teachers/presentation/widgets/teachers_card.dart';
-import 'package:plataforma_educacional/features/teachers/presentation/widgets/teachers_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
+import 'package:plataforma_educacional/shared/widgets/gradient_button.dart';
 
 class TeacherAvatar extends StatelessWidget {
   const TeacherAvatar({super.key, required this.initials, this.size = 44});
@@ -18,12 +18,12 @@ class TeacherAvatar extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.white54),
+        border: Border.all(color: AppColors.cardBorder),
       ),
       child: Text(
         initials,
         style: TextStyle(
-          color: Colors.white,
+          color: AppColors.textPrimary,
           fontSize: size * 0.32,
           fontWeight: FontWeight.w600,
         ),
@@ -48,7 +48,7 @@ class TeacherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TeachersCard(
+    return UniCard(
       child: Row(
         children: [
           TeacherAvatar(initials: initials),
@@ -60,7 +60,7 @@ class TeacherCard extends StatelessWidget {
                 Text(
                   name,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
@@ -69,19 +69,19 @@ class TeacherCard extends StatelessWidget {
                 Text(
                   subject,
                   style: const TextStyle(
-                    color: AuthColors.textMuted,
+                    color: AppColors.textMuted,
                     fontSize: 11,
                   ),
                 ),
                 const SizedBox(height: 12),
                 const Row(
                   children: [
-                    Icon(Icons.circle, size: 6, color: TeachersColors.green),
+                    Icon(Icons.circle, size: 6, color: AppColors.success),
                     SizedBox(width: 6),
                     Text(
                       'Aceita solicitações',
                       style: TextStyle(
-                        color: TeachersColors.green,
+                        color: AppColors.success,
                         fontSize: 10,
                       ),
                     ),

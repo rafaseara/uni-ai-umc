@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 class SettingsTile extends StatelessWidget {
   const SettingsTile({
@@ -27,7 +28,7 @@ class SettingsTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(
           children: [
-            Icon(icon, color: AuthColors.textMuted, size: 22),
+            Icon(icon, color: AppColors.textMuted, size: 22),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
@@ -36,7 +37,7 @@ class SettingsTile extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
@@ -46,7 +47,7 @@ class SettingsTile extends StatelessWidget {
                     Text(
                       subtitle!,
                       style: const TextStyle(
-                        color: AuthColors.hint,
+                        color: AppColors.hint,
                         fontSize: 10,
                       ),
                     ),
@@ -57,7 +58,7 @@ class SettingsTile extends StatelessWidget {
             trailing ??
                 const Icon(
                   Icons.chevron_right,
-                  color: AuthColors.hint,
+                  color: AppColors.hint,
                   size: 20,
                 ),
           ],

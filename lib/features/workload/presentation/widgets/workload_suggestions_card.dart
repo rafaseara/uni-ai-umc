@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/workload/presentation/widgets/workload_card.dart';
-import 'package:plataforma_educacional/features/workload/presentation/widgets/workload_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 
 class WorkloadSuggestionsCard extends StatelessWidget {
   const WorkloadSuggestionsCard({
@@ -15,14 +15,14 @@ class WorkloadSuggestionsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WorkloadCard(
+    return UniCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
             style: const TextStyle(
-              color: WorkloadColors.warning,
+              color: AppColors.warning,
               fontSize: 13,
               fontWeight: FontWeight.w600,
             ),
@@ -31,7 +31,7 @@ class WorkloadSuggestionsCard extends StatelessWidget {
           for (var i = 0; i < suggestions.length; i++) ...[
             if (i > 0) ...[
               const SizedBox(height: 14),
-              const Divider(height: 1, color: WorkloadColors.divider),
+              const Divider(height: 1, color: AppColors.divider),
               const SizedBox(height: 14),
             ],
             _SuggestionItem(
@@ -64,13 +64,13 @@ class _SuggestionItem extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, color: AuthColors.blue, size: 20),
+            Icon(icon, color: AppColors.blue, size: 20),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
                 title,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
@@ -81,7 +81,7 @@ class _SuggestionItem extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           text,
-          style: const TextStyle(color: AuthColors.textMuted, fontSize: 11),
+          style: const TextStyle(color: AppColors.textMuted, fontSize: 11),
         ),
       ],
     );

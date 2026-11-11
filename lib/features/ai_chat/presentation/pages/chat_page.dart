@@ -1,10 +1,11 @@
-import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
+
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_disclaimer.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_input_bar.dart';
-import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_page_layout.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_page_layout.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_suggestion_tile.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_logo.dart';
 
 class ChatPage extends StatefulWidget {
@@ -34,7 +35,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChatPageLayout(
+    return UniPageLayout(
+      title: 'Chat IA',
       subtitle: 'Seu parceiro de estudos, a qualquer hora.',
       bottom: Column(
         mainAxisSize: MainAxisSize.min,
@@ -62,7 +64,7 @@ class _ChatPageState extends State<ChatPage> {
             'Vamos aprender juntos?',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -74,7 +76,7 @@ class _ChatPageState extends State<ChatPage> {
           child: Text(
             'Tire dúvidas, revise conteúdos ou\norganize sua semana de estudos.',
             textAlign: TextAlign.center,
-            style: TextStyle(color: AuthColors.textMuted, fontSize: 12),
+            style: TextStyle(color: AppColors.textMuted, fontSize: 12),
           ),
         ),
         const SizedBox(height: 24),

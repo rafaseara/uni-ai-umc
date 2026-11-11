@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/teachers/presentation/widgets/teachers_card.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 
 class PlanCard extends StatelessWidget {
   const PlanCard({
@@ -34,7 +35,7 @@ class PlanCard extends StatelessWidget {
           ],
         ),
       ),
-      child: TeachersCard(
+      child: UniCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -44,7 +45,7 @@ class PlanCard extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
@@ -53,9 +54,9 @@ class PlanCard extends StatelessWidget {
                   children: [
                     Text(
                       'Solicitar plano',
-                      style: TextStyle(color: AuthColors.blue, fontSize: 11),
+                      style: TextStyle(color: AppColors.blue, fontSize: 11),
                     ),
-                    Icon(Icons.chevron_right, color: Colors.white, size: 16),
+                    Icon(Icons.chevron_right, color: AppColors.textPrimary, size: 16),
                   ],
                 ),
               ],
@@ -64,13 +65,13 @@ class PlanCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
-                color: AuthColors.blue.withValues(alpha: 0.15),
+                color: AppColors.blue.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Text(
                 price,
                 style: const TextStyle(
-                  color: AuthColors.blue,
+                  color: AppColors.blue,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
@@ -85,13 +86,13 @@ class PlanCard extends StatelessWidget {
                   children: [
                     const Text(
                       '•  ',
-                      style: TextStyle(color: AuthColors.textMuted),
+                      style: TextStyle(color: AppColors.textMuted),
                     ),
                     Expanded(
                       child: Text(
                         benefit,
                         style: const TextStyle(
-                          color: AuthColors.textMuted,
+                          color: AppColors.textMuted,
                           fontSize: 11,
                         ),
                       ),

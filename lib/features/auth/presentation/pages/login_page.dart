@@ -1,14 +1,15 @@
-import 'package:plataforma_educacional/core/navigation/app_routes.dart';
-
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_background.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+import 'package:provider/provider.dart';
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_logo.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_text_field.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/gradient_button.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/page_indicator.dart';
+import 'package:plataforma_educacional/shared/uni_validators.dart';
+import 'package:plataforma_educacional/shared/widgets/gradient_button.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_background.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,6 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -29,17 +31,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onLoginPressed() {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text;
-    if (!email.contains('@') || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Informe um e-mail e uma senha para continuar.'),
-        ),
-      );
-      return;
-    }
+    if (!_formKey.currentState!.validate()) return;
     // Navegação DEMONSTRATIVA. Ainda NÃO existe autenticação.
+    context.read<AuthController>().signIn();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Modo demonstração: login sem autenticação real.'),
@@ -48,17 +42,13 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
   }
 
-  void _onResetPasswordPressed() {
-    Navigator.pushNamed(context, AppRoutes.verifyCode);
-  }
-
   void _onForgotPasswordPressed() {
     Navigator.pushNamed(context, AppRoutes.verifyCode);
   }
 
   @override
   Widget build(BuildContext context) {
-    return AuthBackground(
+    return UniBackground(
       child: LayoutBuilder(
         builder: (context, constraints) {
           final logoSize = math.min(constraints.maxWidth * 0.40, 170.0);
@@ -73,37 +63,58 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 40),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                        tooltip: 'Voltar',
+                        icon: const Icon(
+                          Icons.chevron_left,
+                          color: AppColors.textPrimary,
+                        ),
+                        onPressed: () {
+                          final navigator = Navigator.of(context);
+                          if (navigator.canPop()) {
+                            navigator.pop();
+                          } else {
+                            navigator.pushReplacementNamed(AppRoutes.welcome);
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 8),
                     Center(child: AuthLogo(size: logoSize)),
                     const SizedBox(height: 60),
-                    AuthTextField(
-                      label: 'E-mail',
-                      hint: 'voce@email.com',
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    const SizedBox(height: 20),
-                    AuthTextField(
-                      label: 'Senha',
-                      hint: 'Sua senha',
-                      controller: _passwordController,
-                      isPassword: true,
-                      textInputAction: TextInputAction.done,
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          AuthTextField(
+                            label: 'E-mail',
+                            hint: 'voce@email.com',
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            validator: UniValidators.email,
+                          ),
+                          const SizedBox(height: 20),
+                          AuthTextField(
+                            label: 'Senha',
+                            hint: 'Sua senha',
+                            controller: _passwordController,
+                            isPassword: true,
+                            textInputAction: TextInputAction.done,
+                            validator: (value) => UniValidators.nonEmpty(value, 'sua senha'),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 4),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _LinkText(
-                          text: 'Redefinir senha',
-                          onTap: _onResetPasswordPressed,
-                        ),
-                        _LinkText(
-                          text: 'Esqueci a senha',
-                          onTap: _onForgotPasswordPressed,
-                        ),
-                      ],
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: _LinkText(
+                        text: 'Esqueci a senha',
+                        onTap: _onForgotPasswordPressed,
+                      ),
                     ),
                     const Spacer(),
                     Center(
@@ -138,7 +149,7 @@ class _LinkText extends StatelessWidget {
     return TextButton(
       onPressed: onTap,
       style: TextButton.styleFrom(
-        foregroundColor: AuthColors.blue,
+        foregroundColor: AppColors.blue,
         minimumSize: const Size(44, 44),
         padding: const EdgeInsets.symmetric(horizontal: 12),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,

@@ -1,5 +1,7 @@
-import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:plataforma_educacional/shared/uni_validators.dart';
+
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_form_layout.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_text_field.dart';
 
@@ -11,6 +13,7 @@ class NewPasswordPage extends StatefulWidget {
 }
 
 class _NewPasswordPageState extends State<NewPasswordPage> {
+  final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _confirmController = TextEditingController();
 
@@ -22,17 +25,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
   }
 
   void _onContinuePressed() {
-    final password = _passwordController.text;
-    if (password.length < 6 || password != _confirmController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'As senhas devem coincidir e ter ao menos 6 caracteres.',
-          ),
-        ),
-      );
-      return;
-    }
+    if (!_formKey.currentState!.validate()) return;
     // Apenas demonstração: nenhum cadastro ou senha foi salvo.
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -45,6 +38,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return AuthFormLayout(
+      formKey: _formKey,
       showLogo: true,
       activeIndex: 1,
       indicatorCount: 2,
@@ -54,6 +48,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
           label: 'Senha Nova',
           hint: 'Ex: uniA.I2026',
           controller: _passwordController,
+          validator: UniValidators.password,
           isPassword: true,
           textInputAction: TextInputAction.next,
         ),
@@ -62,6 +57,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
           label: 'Confirme Senha',
           hint: 'Ex: uniA.I2026',
           controller: _confirmController,
+          validator: (value) => UniValidators.confirmPassword(value, _passwordController.text),
           isPassword: true,
           textInputAction: TextInputAction.done,
         ),

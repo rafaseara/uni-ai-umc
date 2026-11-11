@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_card.dart';
-import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 
 class PlannerActivityTile extends StatelessWidget {
   const PlannerActivityTile({
@@ -21,7 +21,7 @@ class PlannerActivityTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlannerCard(
+    return UniCard(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Row(
         children: [
@@ -30,13 +30,13 @@ class PlannerActivityTile extends StatelessWidget {
             height: 24,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: done ? PlannerColors.purple : Colors.transparent,
+              color: done ? AppColors.purple : AppColors.transparent,
               border: Border.all(
-                color: done ? PlannerColors.purple : Colors.white54,
+                color: done ? AppColors.purple : AppColors.textDisabled,
               ),
             ),
             child: done
-                ? const Icon(Icons.check, size: 14, color: Colors.white)
+                ? const Icon(Icons.check, size: 14, color: AppColors.textPrimary)
                 : null,
           ),
           const SizedBox(width: 12),
@@ -47,7 +47,7 @@ class PlannerActivityTile extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
@@ -58,7 +58,7 @@ class PlannerActivityTile extends StatelessWidget {
                     Text(
                       details,
                       style: const TextStyle(
-                        color: AuthColors.hint,
+                        color: AppColors.hint,
                         fontSize: 10,
                       ),
                     ),
@@ -70,13 +70,13 @@ class PlannerActivityTile extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white12,
+                          color: AppColors.overlaySoft,
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
                           tag!,
                           style: const TextStyle(
-                            color: AuthColors.textMuted,
+                            color: AppColors.textMuted,
                             fontSize: 9,
                           ),
                         ),

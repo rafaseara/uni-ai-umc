@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'calendar_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 class CalendarMonth extends StatelessWidget {
   final DateTime month;
@@ -54,9 +54,9 @@ class CalendarMonth extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: CalendarColors.card,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: CalendarColors.border),
+        border: Border.all(color: AppColors.cardBorder),
       ),
       child: Column(
         children: [
@@ -69,7 +69,7 @@ class CalendarMonth extends StatelessWidget {
                 },
                 icon: const Icon(
                   Icons.chevron_left,
-                  color: CalendarColors.white,
+                  color: AppColors.textPrimary,
                 ),
               ),
 
@@ -78,7 +78,7 @@ class CalendarMonth extends StatelessWidget {
                   '${_months[month.month - 1]} ${month.year}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: CalendarColors.white,
+                    color: AppColors.textPrimary,
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),
@@ -91,7 +91,7 @@ class CalendarMonth extends StatelessWidget {
                 },
                 icon: const Icon(
                   Icons.chevron_right,
-                  color: CalendarColors.white,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
@@ -107,7 +107,7 @@ class CalendarMonth extends StatelessWidget {
                   child: Text(
                     day,
                     style: const TextStyle(
-                      color: CalendarColors.muted,
+                      color: AppColors.textMuted,
                       fontSize: 9,
                     ),
                   ),
@@ -153,7 +153,7 @@ class CalendarMonth extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: selected
                         ? const LinearGradient(
-                            colors: [Color(0xFF8C1BA9), Color(0xFF2357BA)],
+                            colors: [AppColors.pink, AppColors.blue],
                           )
                         : null,
                     borderRadius: BorderRadius.circular(10),
@@ -162,8 +162,8 @@ class CalendarMonth extends StatelessWidget {
                     '$day',
                     style: TextStyle(
                       color: selected
-                          ? CalendarColors.white
-                          : CalendarColors.muted,
+                          ? AppColors.textPrimary
+                          : AppColors.textMuted,
                       fontSize: 11,
                       fontWeight: selected
                           ? FontWeight.bold
@@ -182,13 +182,13 @@ class CalendarMonth extends StatelessWidget {
             children: [
               Icon(
                 Icons.check_circle_outline,
-                color: CalendarColors.cyan,
+                color: AppColors.blue,
                 size: 15,
               ),
               SizedBox(width: 6),
               Text(
                 'Ver planejamento semanal',
-                style: TextStyle(color: CalendarColors.cyan, fontSize: 11),
+                style: TextStyle(color: AppColors.blue, fontSize: 11),
               ),
             ],
           ),

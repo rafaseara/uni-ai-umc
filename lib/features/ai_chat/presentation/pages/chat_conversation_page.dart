@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_ai_message.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_disclaimer.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_input_bar.dart';
-import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_page_layout.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_page_layout.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_user_message.dart';
 
 class ChatConversationPage extends StatefulWidget {
@@ -31,8 +33,8 @@ class _ChatConversationPageState extends State<ChatConversationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChatPageLayout(
-      showBackButton: true,
+    return UniPageLayout(
+      title: 'Chat IA',
       subtitle: 'Seu apoio para aprender e se organizar.',
       bottom: ChatInputBar(
         hint: 'Continue a conversa...',
@@ -75,7 +77,7 @@ class _ChatConversationPageState extends State<ChatConversationPage> {
           const SizedBox(height: 10),
           const Text(
             'Mensagens adicionadas apenas nesta sessão. A IA ainda não está conectada.',
-            style: TextStyle(color: Colors.white70, fontSize: 11),
+            style: TextStyle(color: AppColors.textMuted, fontSize: 11),
           ),
         ],
       ],

@@ -1,34 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+import 'package:provider/provider.dart';
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/planner/models/planner_activity.dart';
+import 'package:plataforma_educacional/features/planner/presentation/controllers/planner_controller.dart';
 import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_activity_tile.dart';
 import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_ai_suggestion_card.dart';
-import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_colors.dart';
 import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_goal_card.dart';
-import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_page_layout.dart';
 import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_week_strip.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_controlled_list.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_empty_state.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_page_layout.dart';
 
-class WeeklyPlannerPage extends StatefulWidget {
+class WeeklyPlannerPage extends StatelessWidget {
   const WeeklyPlannerPage({super.key});
-  @override
-  State<WeeklyPlannerPage> createState() => _WeeklyPlannerPageState();
-}
 
-class _WeeklyPlannerPageState extends State<WeeklyPlannerPage> {
-  bool _suggestionAccepted = false;
-
-  // Dados fictícios só para montar o visual.
-  static const _days = [
-    (weekday: 'S', day: '26', hasActivity: true),
-    (weekday: 'T', day: '27', hasActivity: true),
-    (weekday: 'Q', day: '28', hasActivity: true),
-    (weekday: 'Q', day: '29', hasActivity: true),
-    (weekday: 'S', day: '30', hasActivity: true),
-    (weekday: 'S', day: '31', hasActivity: true),
-    (weekday: 'D', day: '1', hasActivity: true),
-  ];
-
-  void _onAcceptPressed() {
-    setState(() => _suggestionAccepted = true);
+  void _onAcceptPressed(BuildContext context) {
+    context.read<PlannerController>().acceptSuggestion();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text(
@@ -38,17 +26,20 @@ class _WeeklyPlannerPageState extends State<WeeklyPlannerPage> {
     );
   }
 
-  void _onAdjustPressed() {
-    Navigator.pushNamed(context, '/calendario');
+  void _onAdjustPressed(BuildContext context) {
+    AppRoutes.openModule(context, AppRoutes.calendar);
   }
 
   @override
   Widget build(BuildContext context) {
-    return PlannerPageLayout(
+    return UniPageLayout(
       title: 'Planejamento semanal',
       subtitle: '26 out a 1 nov · Revise e ajuste com a IA',
       children: [
-        const PlannerWeekStrip(days: _days, selectedIndex: 3),
+        PlannerWeekStrip(
+          days: context.watch<PlannerController>().weekDays,
+          selectedIndex: 3,
+        ),
         const SizedBox(height: 16),
         const PlannerGoalCard(
           title: 'Meta da semana',
@@ -57,69 +48,81 @@ class _WeeklyPlannerPageState extends State<WeeklyPlannerPage> {
           summary: '3 de 7 atividades concluídas',
         ),
         const SizedBox(height: 16),
-        if (!_suggestionAccepted)
+        if (!context.watch<PlannerController>().suggestionAccepted)
           PlannerAiSuggestionCard(
             text:
                 'Sexta está cheia por causa do simulado. Que tal antecipar '
                 '1 hora de Estruturas de Dados para hoje à noite?',
-            onAccept: _onAcceptPressed,
-            onAdjust: _onAdjustPressed,
+            onAccept: () => _onAcceptPressed(context),
+            onAdjust: () => _onAdjustPressed(context),
           )
         else
           const Text(
             'Sugestão aceita nesta sessão.',
-            style: TextStyle(color: AuthColors.blue, fontSize: 12),
+            style: TextStyle(color: AppColors.blue, fontSize: 12),
           ),
         const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const Text(
-                  'Quinta, 29 out',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+        UniControlledList<PlannerActivity>(
+          controller: context.watch<PlannerController>(),
+          emptyState: const UniEmptyState(
+            icon: Icons.event_note_outlined,
+            title: 'Nenhuma atividade planejada',
+            message:
+                'Adicione atividades no calendário para organizar a semana.',
+          ),
+          builder: (context, activities) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      const Text(
+                        'Quinta, 29 out',
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.purpleSoft,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Text(
+                          'Hoje',
+                          style: TextStyle(
+                            color: AppColors.purple,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                  Text(
+                    '${activities.length} atividades',
+                    style: const TextStyle(color: AppColors.hint, fontSize: 11),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              for (final activity in activities) ...[
+                PlannerActivityTile(
+                  title: activity.title,
+                  details: activity.details,
+                  tag: activity.tag,
                 ),
-                const SizedBox(width: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: PlannerColors.purpleSoft,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text(
-                    'Hoje',
-                    style: TextStyle(
-                      color: PlannerColors.purpleLight,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
+                const SizedBox(height: 10),
               ],
-            ),
-            const Text(
-              '2 atividades',
-              style: TextStyle(color: AuthColors.hint, fontSize: 11),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        const PlannerActivityTile(
-          title: 'Revisão de algoritmos',
-          details: '14h · 1 hora',
-          tag: 'Alta prioridade',
-        ),
-        const SizedBox(height: 10),
-        const PlannerActivityTile(
-          title: 'Resumo com o Chat IA',
-          details: '19h · 30 min',
+            ],
+          ),
         ),
       ],
     );

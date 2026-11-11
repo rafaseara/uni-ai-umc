@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'logout_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 class LogoutBrand extends StatelessWidget {
   const LogoutBrand({super.key});
@@ -15,8 +15,8 @@ class LogoutBrand extends StatelessWidget {
           height: 96,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: LogoutColors.background.withValues(alpha: 0.55),
-            border: Border.all(color: LogoutColors.purple, width: 1),
+            color: AppColors.background.withValues(alpha: 0.55),
+            border: Border.all(color: AppColors.purple, width: 1),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -25,15 +25,15 @@ class LogoutBrand extends StatelessWidget {
                 shaderCallback: (bounds) {
                   return const LinearGradient(
                     colors: [
-                      LogoutColors.cyan,
-                      LogoutColors.purple,
-                      LogoutColors.pink,
+                      AppColors.blue,
+                      AppColors.purple,
+                      AppColors.pink,
                     ],
                   ).createShader(bounds);
                 },
                 child: const Icon(
                   Icons.school_outlined,
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   size: 39,
                 ),
               ),
@@ -43,11 +43,11 @@ class LogoutBrand extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: 'Uni',
-                      style: TextStyle(color: LogoutColors.white),
+                      style: TextStyle(color: AppColors.textPrimary),
                     ),
                     TextSpan(
                       text: 'A.I.',
-                      style: TextStyle(color: LogoutColors.purple),
+                      style: TextStyle(color: AppColors.purple),
                     ),
                   ],
                 ),
@@ -65,7 +65,7 @@ class LogoutBrand extends StatelessWidget {
           'Seu universo de estudos,\nconectado.',
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: LogoutColors.white,
+            color: AppColors.textPrimary,
             fontSize: 21,
             fontWeight: FontWeight.w700,
             height: 1.35,
@@ -94,12 +94,12 @@ class LogoutGradientButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         gradient: const LinearGradient(
-          colors: [Color(0xFF8319A7), Color(0xFF2357BA)],
+          colors: [AppColors.pink, AppColors.blue],
         ),
-        border: Border.all(color: LogoutColors.purple.withValues(alpha: 0.35)),
+        border: Border.all(color: AppColors.purple.withValues(alpha: 0.35)),
       ),
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         child: InkWell(
           onTap: onPressed,
           borderRadius: BorderRadius.circular(12),
@@ -107,7 +107,7 @@ class LogoutGradientButton extends StatelessWidget {
             child: Text(
               text,
               style: const TextStyle(
-                color: LogoutColors.white,
+                color: AppColors.textPrimary,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
               ),

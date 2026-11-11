@@ -1,13 +1,13 @@
-import 'package:plataforma_educacional/core/navigation/app_routes.dart';
-
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_background.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_logo.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/gradient_button.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/page_indicator.dart';
+import 'package:plataforma_educacional/shared/widgets/gradient_button.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_background.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -22,7 +22,7 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AuthBackground(
+    return UniBackground(
       child: LayoutBuilder(
         builder: (context, constraints) {
           final logoSize = math.min(
@@ -50,7 +50,7 @@ class WelcomePage extends StatelessWidget {
                     const Text(
                       'Não possui uma conta? ',
                       style: TextStyle(
-                        color: AuthColors.textMuted,
+                        color: AppColors.textMuted,
                         fontSize: 13,
                       ),
                     ),
@@ -59,10 +59,10 @@ class WelcomePage extends StatelessWidget {
                       child: const Text(
                         'Criar uma conta',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                           fontSize: 13,
                           decoration: TextDecoration.underline,
-                          decorationColor: Colors.white,
+                          decorationColor: AppColors.textPrimary,
                         ),
                       ),
                     ),

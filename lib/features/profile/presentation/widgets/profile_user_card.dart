@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/profile/presentation/widgets/profile_colors.dart';
+import 'package:provider/provider.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 
 class ProfileUserCard extends StatelessWidget {
   const ProfileUserCard({super.key, this.showProfileLink = false, this.onTap});
@@ -9,19 +12,13 @@ class ProfileUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: ProfileColors.card,
-      borderRadius: BorderRadius.circular(14),
+    return UniCard(
+      padding: EdgeInsets.zero,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
-        child: Container(
-          width: double.infinity,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 13),
-          decoration: BoxDecoration(
-            border: Border.all(color: ProfileColors.border, width: 0.8),
-            borderRadius: BorderRadius.circular(14),
-          ),
           child: Row(
             children: [
               Container(
@@ -30,11 +27,11 @@ class ProfileUserCard extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: ProfileColors.purple),
+                  border: Border.all(color: AppColors.purple),
                 ),
-                child: const Text(
-                  'E',
-                  style: TextStyle(color: ProfileColors.purple, fontSize: 12),
+                child: Text(
+                  context.watch<AuthController>().initials,
+                  style: TextStyle(color: AppColors.purple, fontSize: 12),
                 ),
               ),
               const SizedBox(width: 12),
@@ -42,10 +39,10 @@ class ProfileUserCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Estudante',
+                    Text(
+                      context.watch<AuthController>().studentName,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                       ),
@@ -54,7 +51,7 @@ class ProfileUserCard extends StatelessWidget {
                     const Text(
                       'Estudante · UMC',
                       style: TextStyle(
-                        color: ProfileColors.muted,
+                        color: AppColors.textMuted,
                         fontSize: 10,
                       ),
                     ),
@@ -63,7 +60,7 @@ class ProfileUserCard extends StatelessWidget {
                       const Text(
                         'Ver meu perfil →',
                         style: TextStyle(
-                          color: ProfileColors.cyan,
+                          color: AppColors.blue,
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
                         ),
@@ -73,7 +70,7 @@ class ProfileUserCard extends StatelessWidget {
                       const Text(
                         '10 Amigos',
                         style: TextStyle(
-                          color: ProfileColors.muted,
+                          color: AppColors.textMuted,
                           fontSize: 9,
                         ),
                       ),

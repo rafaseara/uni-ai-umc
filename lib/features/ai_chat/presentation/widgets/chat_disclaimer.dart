@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 /// Aviso de que a IA pode errar.
 /// [centered] = texto simples centralizado (tela inicial);
@@ -15,7 +16,7 @@ class ChatDisclaimer extends StatelessWidget {
     final label = Text(
       text,
       textAlign: centered ? TextAlign.center : TextAlign.start,
-      style: const TextStyle(color: AuthColors.hint, fontSize: 10),
+      style: const TextStyle(color: AppColors.hint, fontSize: 10),
     );
 
     if (centered) return label;
@@ -26,7 +27,7 @@ class ChatDisclaimer extends StatelessWidget {
         const Icon(
           Icons.verified_user_outlined,
           size: 14,
-          color: AuthColors.hint,
+          color: AppColors.hint,
         ),
         const SizedBox(width: 8),
         Expanded(child: label),

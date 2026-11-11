@@ -2,8 +2,11 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
+/// Fundo padrão das telas de acesso: cor sólida, duas luzes difusas
+/// e área segura. O conteúdo da tela entra em [child].
 class UniBackground extends StatelessWidget {
   const UniBackground({super.key, required this.child});
 
@@ -13,7 +16,7 @@ class UniBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: AppColors.transparent,
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarColor: AppColors.background,
         systemNavigationBarIconBrightness: Brightness.light,
@@ -22,16 +25,20 @@ class UniBackground extends StatelessWidget {
         backgroundColor: AppColors.background,
         body: Stack(
           children: [
+            // Iluminação roxa superior esquerda
             const Positioned(
               top: -160,
               left: -190,
               child: _Glow(color: AppColors.glowPurple, size: 500),
             ),
+
+            // Iluminação azul inferior direita
             const Positioned(
               bottom: 190,
               right: -210,
               child: _Glow(color: AppColors.glowBlue, size: 500),
             ),
+
             SafeArea(child: child),
           ],
         ),
@@ -40,6 +47,7 @@ class UniBackground extends StatelessWidget {
   }
 }
 
+// Iluminação difusa (só é usada aqui, por isso continua privada)
 class _Glow extends StatelessWidget {
   const _Glow({required this.color, required this.size});
 

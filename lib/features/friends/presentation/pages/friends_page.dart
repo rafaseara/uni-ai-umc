@@ -1,98 +1,52 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/friends_background.dart';
-import '../widgets/friends_colors.dart';
-import '../widgets/friend_card.dart';
-import 'friend_search_page.dart';
+import 'package:provider/provider.dart';
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/friends/models/friend_preview.dart';
+import 'package:plataforma_educacional/features/friends/presentation/controllers/friend_controller.dart';
+import 'package:plataforma_educacional/features/friends/presentation/widgets/friend_card.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_controlled_list.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_empty_state.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_page_layout.dart';
 
 class FriendsPage extends StatelessWidget {
   const FriendsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FriendsBackground(
-      child: Column(
-        children: [
-          const FriendsHeader(),
-
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: Text(
-                          'Amigos',
-                          style: TextStyle(
-                            color: FriendsColors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        tooltip: 'Buscar amigos',
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const FriendSearchPage(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.person_search_outlined,
-                          color: FriendsColors.purple,
-                          size: 23,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  const FriendCard(
-                    initials: 'GF',
-                    name: 'Gabriel Fernandes',
-                    course: 'Direito',
-                    friendsCount: 10,
-                  ),
-
-                  const FriendCard(
-                    initials: 'JM',
-                    name: 'Junior Miguel',
-                    course: 'Ciência da Computação',
-                    friendsCount: 5,
-                  ),
-
-                  const FriendCard(
-                    initials: 'BS',
-                    name: 'Beatriz Santos',
-                    course: 'Medicina',
-                    friendsCount: 67,
-                  ),
-
-                  const FriendCard(
-                    initials: 'AF',
-                    name: 'Arthur Ferreira',
-                    course: 'Arquitetura',
-                    friendsCount: 54,
-                  ),
-
-                  const FriendCard(
-                    initials: 'MJ',
-                    name: 'Maria Julia',
-                    course: 'Ciência da Computação',
-                    friendsCount: 10,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+    return UniPageLayout(
+      title: 'Amigos',
+      subtitle: '',
+      titleAction: IconButton(
+        tooltip: 'Buscar amigos',
+        onPressed: () => Navigator.pushNamed(context, AppRoutes.friendSearch),
+        icon: const Icon(
+          Icons.person_search_outlined,
+          color: AppColors.purple,
+          size: 23,
+        ),
       ),
+      children: [
+        UniControlledList<FriendPreview>(
+          controller: context.watch<FriendController>(),
+          emptyState: const UniEmptyState(
+            icon: Icons.people_outline,
+            title: 'Nenhum amigo adicionado',
+            message: 'Busque amigos para começar a se conectar.',
+          ),
+          builder: (context, friends) => Column(
+            children: [
+              for (final friend in friends)
+                FriendCard(
+                  initials: friend.initials,
+                  name: friend.name,
+                  course: friend.course,
+                  friendsCount: friend.friendsCount,
+                ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

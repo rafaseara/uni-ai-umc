@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'home_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 class HomePriorityTag extends StatelessWidget {
   const HomePriorityTag({
     super.key,
     required this.label,
-    this.color = HomeColors.priority,
+    this.color = AppColors.warning,
   });
 
   final String label;

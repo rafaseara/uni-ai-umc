@@ -4,7 +4,7 @@ import 'package:plataforma_educacional/main.dart';
 
 void main() {
   testWidgets('Uni.A.I. inicia nas boas-vindas', (tester) async {
-    await tester.pumpWidget(const UniAIApp());
+    await tester.pumpWidget(const UniAiApp());
     expect(find.byType(WelcomePage), findsOneWidget);
   });
 }

@@ -1,6 +1,8 @@
-import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
+import 'package:plataforma_educacional/shared/uni_validators.dart';
+
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_form_layout.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_text_field.dart';
 
@@ -12,6 +14,7 @@ class VerifyCodePage extends StatefulWidget {
 }
 
 class _VerifyCodePageState extends State<VerifyCodePage> {
+  final _formKey = GlobalKey<FormState>();
   final _codeController = TextEditingController();
 
   @override
@@ -21,12 +24,7 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
   }
 
   void _onContinuePressed() {
-    if (_codeController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Informe o código para continuar.')),
-      );
-      return;
-    }
+    if (!_formKey.currentState!.validate()) return;
     // Código não validado em servidor: navegação de protótipo.
     Navigator.pushNamed(context, AppRoutes.newPassword);
   }
@@ -34,6 +32,7 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
   @override
   Widget build(BuildContext context) {
     return AuthFormLayout(
+      formKey: _formKey,
       showLogo: true,
       activeIndex: 0,
       indicatorCount: 2,
@@ -43,7 +42,7 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
           'INSIRA O CÓDIGO',
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors.textPrimary,
             fontSize: 12,
             fontWeight: FontWeight.w800,
             letterSpacing: 1,
@@ -53,12 +52,13 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
         const Text(
           'Enviado para: **********@gmail.com',
           textAlign: TextAlign.center,
-          style: TextStyle(color: AuthColors.blue, fontSize: 11),
+          style: TextStyle(color: AppColors.blue, fontSize: 11),
         ),
         const SizedBox(height: 16),
         AuthTextField(
           hint: 'Ex: m@1242ma',
           controller: _codeController,
+          validator: (value) => UniValidators.nonEmpty(value, 'o código'),
           textInputAction: TextInputAction.done,
         ),
       ],

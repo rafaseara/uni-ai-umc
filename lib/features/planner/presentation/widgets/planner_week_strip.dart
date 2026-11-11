@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/planner/presentation/widgets/planner_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/planner/models/planner_week_day.dart';
 
 class PlannerWeekStrip extends StatelessWidget {
   const PlannerWeekStrip({
@@ -9,7 +9,7 @@ class PlannerWeekStrip extends StatelessWidget {
     required this.selectedIndex,
   });
 
-  final List<({String weekday, String day, bool hasActivity})> days;
+  final List<PlannerWeekDay> days;
   final int selectedIndex;
 
   @override
@@ -48,10 +48,10 @@ class _DayItem extends StatelessWidget {
       width: 40,
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        color: PlannerColors.card,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: selected ? AuthColors.blue : PlannerColors.cardBorder,
+          color: selected ? AppColors.blue : AppColors.cardBorder,
           width: selected ? 1.2 : 1,
         ),
       ),
@@ -59,13 +59,13 @@ class _DayItem extends StatelessWidget {
         children: [
           Text(
             weekday,
-            style: const TextStyle(color: AuthColors.hint, fontSize: 10),
+            style: const TextStyle(color: AppColors.hint, fontSize: 10),
           ),
           const SizedBox(height: 6),
           Text(
             day,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
@@ -76,7 +76,7 @@ class _DayItem extends StatelessWidget {
             height: 4,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: hasActivity ? PlannerColors.purple : Colors.transparent,
+              color: hasActivity ? AppColors.purple : AppColors.transparent,
             ),
           ),
         ],

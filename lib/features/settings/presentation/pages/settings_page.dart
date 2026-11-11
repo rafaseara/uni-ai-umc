@@ -1,15 +1,23 @@
-import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/gradient_button.dart';
-import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_colors.dart';
-import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_page_layout.dart';
+import 'package:provider/provider.dart';
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_profile_card.dart';
 import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_section.dart';
 import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_tile.dart';
+import 'package:plataforma_educacional/shared/widgets/gradient_button.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_page_layout.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  bool _darkThemeEnabled = true;
 
   void _onManageAccountPressed(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.profile);
@@ -24,12 +32,29 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _onDarkThemeChanged(bool value) {
-    // TODO: alternar o tema (na tela é só visual por enquanto)
+    setState(() => _darkThemeEnabled = value);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Preferência de tema alterada nesta demonstração.'),
+      ),
+    );
   }
 
   void _onSecurityPressed(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Segurança: integração pendente.')),
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Segurança e privacidade'),
+        content: const Text(
+          'Esta é uma versão demonstrativa. Nenhum dado pessoal é enviado a servidores.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Entendi'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -38,6 +63,7 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _onLogoutPressed(BuildContext context) {
+    context.read<AuthController>().signOut();
     Navigator.pushNamedAndRemoveUntil(
       context,
       AppRoutes.logoutSuccess,
@@ -47,13 +73,13 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SettingsPageLayout(
+    return UniPageLayout(
       title: 'Configurações',
       subtitle: 'Do seu jeito, no seu ritmo.',
       children: [
         SettingsProfileCard(
-          initials: 'GM',
-          name: 'Gabriel Muniz',
+          initials: context.watch<AuthController>().initials,
+          name: context.watch<AuthController>().studentName,
           onManageAccount: () => _onManageAccountPressed(context),
         ),
         const SizedBox(height: 24),
@@ -77,10 +103,10 @@ class SettingsPage extends StatelessWidget {
               title: 'Tema escuro',
               subtitle: 'Mais conforto para estudar',
               trailing: Switch(
-                value: true,
+                value: _darkThemeEnabled,
                 onChanged: _onDarkThemeChanged,
-                activeThumbColor: Colors.white,
-                activeTrackColor: SettingsColors.purple,
+                activeThumbColor: AppColors.textPrimary,
+                activeTrackColor: AppColors.purple,
               ),
             ),
           ],
@@ -112,7 +138,7 @@ class SettingsPage extends StatelessWidget {
         const Center(
           child: Text(
             'UniA.I. · Versão 1.0',
-            style: TextStyle(color: AuthColors.hint, fontSize: 11),
+            style: TextStyle(color: AppColors.hint, fontSize: 11),
           ),
         ),
       ],

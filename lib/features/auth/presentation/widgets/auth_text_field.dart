@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
 
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+
+/// Campo do login reaproveitado por todos os formulários de autenticação.
+/// O erro de validação aparece junto ao campo, nunca apenas em um SnackBar.
 class AuthTextField extends StatefulWidget {
   const AuthTextField({
     super.key,
@@ -10,6 +13,7 @@ class AuthTextField extends StatefulWidget {
     this.keyboardType,
     this.textInputAction,
     this.isPassword = false,
+    this.validator,
   });
 
   final String? label;
@@ -18,6 +22,7 @@ class AuthTextField extends StatefulWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final bool isPassword;
+  final FormFieldValidator<String>? validator;
 
   @override
   State<AuthTextField> createState() => _AuthTextFieldState();
@@ -31,14 +36,13 @@ class _AuthTextFieldState extends State<AuthTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Só mostra o título se ele não for nulo.
         if (widget.label != null) ...[
           Padding(
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               widget.label!.toUpperCase(),
               style: const TextStyle(
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 fontSize: 12,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1,
@@ -47,29 +51,29 @@ class _AuthTextFieldState extends State<AuthTextField> {
           ),
           const SizedBox(height: 10),
         ],
-
-        // Apenas a borda recebe o degradê.
         CustomPaint(
           painter: _GradientBorderPainter(),
-          child: SizedBox(
-            height: 52,
-            child: TextField(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 52),
+            child: TextFormField(
               controller: widget.controller,
               keyboardType: widget.keyboardType,
               textInputAction: widget.textInputAction,
               obscureText: _obscure,
-              cursorColor: AuthColors.blue,
-              style: const TextStyle(color: Colors.white, fontSize: 14),
+              validator: widget.validator,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              cursorColor: AppColors.blue,
+              style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
               decoration: InputDecoration(
                 filled: false,
                 hintText: widget.hint,
-                hintStyle: const TextStyle(
-                  color: AuthColors.hint,
-                  fontSize: 14,
-                ),
+                hintStyle: const TextStyle(color: AppColors.hint, fontSize: 14),
+                errorStyle: const TextStyle(color: AppColors.warning, fontSize: 12),
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 16,
@@ -80,12 +84,10 @@ class _AuthTextFieldState extends State<AuthTextField> {
                           _obscure
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
-                          color: AuthColors.hint,
+                          color: AppColors.hint,
                           size: 20,
                         ),
-                        onPressed: () {
-                          setState(() => _obscure = !_obscure);
-                        },
+                        onPressed: () => setState(() => _obscure = !_obscure),
                       )
                     : null,
               ),
@@ -97,31 +99,23 @@ class _AuthTextFieldState extends State<AuthTextField> {
   }
 }
 
-// Desenha somente o contorno, sem pintar o interior.
 class _GradientBorderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const strokeWidth = 1.3;
-    const radius = 30.0;
-
     final rect = Offset.zero & size;
-
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
-      ..shader = const LinearGradient(
-        colors: [AuthColors.pink, AuthColors.blue],
-      ).createShader(rect);
-
+      ..shader = AppColors.gradient.createShader(rect);
     final borderRect = Rect.fromLTWH(
       strokeWidth / 2,
       strokeWidth / 2,
       size.width - strokeWidth,
       size.height - strokeWidth,
     );
-
     canvas.drawRRect(
-      RRect.fromRectAndRadius(borderRect, const Radius.circular(radius)),
+      RRect.fromRectAndRadius(borderRect, const Radius.circular(30)),
       paint,
     );
   }

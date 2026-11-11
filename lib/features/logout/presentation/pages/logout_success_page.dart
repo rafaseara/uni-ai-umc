@@ -1,16 +1,16 @@
-import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/logout_background.dart';
-import '../widgets/logout_brand.dart';
-import '../widgets/logout_colors.dart';
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/logout/presentation/widgets/logout_brand.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_background.dart';
 
 class LogoutSuccessPage extends StatelessWidget {
   const LogoutSuccessPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return LogoutBackground(
+    return UniBackground(
       child: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
@@ -30,9 +30,9 @@ class LogoutSuccessPage extends StatelessWidget {
                       width: double.infinity,
                       padding: const EdgeInsets.all(18),
                       decoration: BoxDecoration(
-                        color: LogoutColors.card,
+                        color: AppColors.card,
                         borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: LogoutColors.border),
+                        border: Border.all(color: AppColors.cardBorder),
                       ),
                       child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +41,7 @@ class LogoutSuccessPage extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.check_rounded,
-                                color: LogoutColors.cyan,
+                                color: AppColors.blue,
                                 size: 18,
                               ),
                               SizedBox(width: 8),
@@ -49,7 +49,7 @@ class LogoutSuccessPage extends StatelessWidget {
                                 child: Text(
                                   'Você saiu da sua conta',
                                   style: TextStyle(
-                                    color: LogoutColors.white,
+                                    color: AppColors.textPrimary,
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -62,7 +62,7 @@ class LogoutSuccessPage extends StatelessWidget {
                             'Sua sessão foi encerrada nesta '
                             'dispositivo. Seus estudos continuam salvos.',
                             style: TextStyle(
-                              color: LogoutColors.muted,
+                              color: AppColors.textMuted,
                               fontSize: 11,
                               height: 1.5,
                             ),
@@ -89,7 +89,7 @@ class LogoutSuccessPage extends StatelessWidget {
                     const Text(
                       'Entre novamente para continuar aprendendo.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: LogoutColors.muted, fontSize: 10),
+                      style: TextStyle(color: AppColors.textMuted, fontSize: 10),
                     ),
                   ],
                 ),

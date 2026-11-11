@@ -1,57 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/settings/models/reminder.dart';
+import 'package:plataforma_educacional/features/settings/presentation/controllers/notification_controller.dart';
 import 'package:plataforma_educacional/features/settings/presentation/widgets/reminder_card.dart';
-import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_colors.dart';
-import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_page_layout.dart';
 import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_tile.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_controlled_list.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_empty_state.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_page_layout.dart';
 
-class NotificationsPage extends StatefulWidget {
+class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
-  @override
-  State<NotificationsPage> createState() => _NotificationsPageState();
-}
 
-class _NotificationsPageState extends State<NotificationsPage> {
-  final List<bool> _enabled = [true, true, true, true];
-
-  Widget _toggle(int index) => Switch(
-    value: _enabled[index],
-    onChanged: (value) => setState(() => _enabled[index] = value),
-    activeThumbColor: Colors.white,
-    activeTrackColor: SettingsColors.purple,
+  Widget _toggle(BuildContext context, int index) => Switch(
+    value: context.watch<NotificationController>().enabled[index],
+    onChanged: (value) => context.read<NotificationController>().setEnabled(index, value),
+    activeThumbColor: AppColors.textPrimary,
+    activeTrackColor: AppColors.purple,
   );
 
   @override
   Widget build(BuildContext context) {
-    return SettingsPageLayout(
-      showBackButton: true,
+    return UniPageLayout(
       title: 'Notificações e Lembretes',
       subtitle: 'Organize seus horários e não perca prazos',
       children: [
         const Text(
           'Próximos lembretes',
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors.textPrimary,
             fontSize: 13,
             fontWeight: FontWeight.w600,
           ),
         ),
         const SizedBox(height: 12),
-        // Lembretes fictícios só para montar o visual.
-        const ReminderCard(
-          title: 'Entregar trabalho de Engenharia',
-          time: 'Hoje · 18:00',
+        UniControlledList<Reminder>(
+          controller: context.watch<NotificationController>(),
+          emptyState: const UniEmptyState(
+            icon: Icons.notifications_off_outlined,
+            title: 'Nenhuma notificação',
+            message: 'Seus próximos lembretes aparecerão aqui.',
+          ),
+          builder: (context, reminders) => Column(
+            children: [
+              for (final reminder in reminders) ...[
+                ReminderCard(title: reminder.title, time: reminder.time),
+                const SizedBox(height: 12),
+              ],
+            ],
+          ),
         ),
-        const SizedBox(height: 12),
-        const ReminderCard(title: 'Horário de estudo', time: 'Hoje · 19:00'),
-        const SizedBox(height: 12),
-        const ReminderCard(title: 'Pausa para descanso', time: 'Hoje · 19:50'),
         const SizedBox(height: 20),
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: SettingsColors.card,
+            color: AppColors.card,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: SettingsColors.cardBorder),
+            border: Border.all(color: AppColors.cardBorder),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(14),
@@ -63,7 +68,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   child: Text(
                     'Preferências de notificação',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
@@ -72,30 +77,42 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 SettingsTile(
                   icon: Icons.school_outlined,
                   title: 'Atividades acadêmicas',
-                  onTap: () => setState(() => _enabled[0] = !_enabled[0]),
+                  onTap: () {
+                    final controller = context.read<NotificationController>();
+                    controller.setEnabled(0, !controller.enabled[0]);
+                  },
                   subtitle: 'Trabalhos e tarefas',
-                  trailing: _toggle(0),
+                  trailing: _toggle(context, 0),
                 ),
                 SettingsTile(
                   icon: Icons.event_available_outlined,
                   title: 'Prazos de entrega',
-                  onTap: () => setState(() => _enabled[1] = !_enabled[1]),
+                  onTap: () {
+                    final controller = context.read<NotificationController>();
+                    controller.setEnabled(1, !controller.enabled[1]);
+                  },
                   subtitle: 'Avisos antes do vencimento',
-                  trailing: _toggle(1),
+                  trailing: _toggle(context, 1),
                 ),
                 SettingsTile(
                   icon: Icons.schedule_outlined,
                   title: 'Horários de estudo',
-                  onTap: () => setState(() => _enabled[2] = !_enabled[2]),
+                  onTap: () {
+                    final controller = context.read<NotificationController>();
+                    controller.setEnabled(2, !controller.enabled[2]);
+                  },
                   subtitle: 'Lembretes para começar a estudar',
-                  trailing: _toggle(2),
+                  trailing: _toggle(context, 2),
                 ),
                 SettingsTile(
                   icon: Icons.coffee_outlined,
                   title: 'Pausas e descanso',
-                  onTap: () => setState(() => _enabled[3] = !_enabled[3]),
+                  onTap: () {
+                    final controller = context.read<NotificationController>();
+                    controller.setEnabled(3, !controller.enabled[3]);
+                  },
                   subtitle: 'Avisos para fazer intervalos',
-                  trailing: _toggle(3),
+                  trailing: _toggle(context, 3),
                 ),
               ],
             ),

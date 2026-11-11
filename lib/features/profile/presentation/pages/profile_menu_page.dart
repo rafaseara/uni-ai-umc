@@ -1,155 +1,98 @@
-import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:plataforma_educacional/features/profile/presentation/pages/profile_page.dart';
-import 'package:plataforma_educacional/features/profile/presentation/widgets/profile_background.dart';
-import 'package:plataforma_educacional/features/profile/presentation/widgets/profile_colors.dart';
+import 'package:provider/provider.dart';
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
+import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:plataforma_educacional/features/profile/presentation/widgets/profile_user_card.dart';
+import 'package:plataforma_educacional/shared/widgets/uni_page_layout.dart';
 
 class ProfileMenuPage extends StatelessWidget {
   const ProfileMenuPage({super.key});
 
   void _openProfile(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => const ProfilePage()));
+    AppRoutes.openModule(context, AppRoutes.profile);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ProfileBackground(
-      child: Column(
-        children: [
-          const _ProfileHeader(),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
-                  ProfileUserCard(
-                    showProfileLink: true,
-                    onTap: () => _openProfile(context),
-                  ),
-                  const SizedBox(height: 15),
-                  const Text(
-                    'MEUS ESTUDOS',
-                    style: TextStyle(color: ProfileColors.muted, fontSize: 9),
-                  ),
-                  const SizedBox(height: 3),
-                  _MenuEntry(
-                    icon: Icons.calendar_month_outlined,
-                    title: 'Calendário',
-                    onTap: () =>
-                        Navigator.pushNamed(context, AppRoutes.calendar),
-                  ),
-                  _MenuEntry(
-                    icon: Icons.access_time_outlined,
-                    title: 'Planejamento semanal',
-                    onTap: () =>
-                        Navigator.pushNamed(context, AppRoutes.planner),
-                  ),
-                  _MenuEntry(
-                    icon: Icons.school_outlined,
-                    title: 'Professores',
-                    onTap: () =>
-                        Navigator.pushNamed(context, AppRoutes.teachers),
-                  ),
-                  _MenuEntry(
-                    icon: Icons.people_outline,
-                    title: 'Grupos de estudo',
-                    onTap: () => Navigator.pushNamed(context, AppRoutes.groups),
-                  ),
-                  _MenuEntry(
-                    icon: Icons.auto_awesome_outlined,
-                    title: 'Chat IA',
-                    onTap: () => Navigator.pushNamed(context, AppRoutes.chat),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Divider(color: ProfileColors.border, height: 1),
-                  ),
-                  _MenuEntry(
-                    icon: Icons.favorite_border,
-                    title: 'Sobrecarga acadêmica',
-                    onTap: () =>
-                        Navigator.pushNamed(context, AppRoutes.workload),
-                  ),
-                  _MenuEntry(
-                    icon: Icons.notifications_none,
-                    title: 'Notificações e lembretes',
-                    onTap: () =>
-                        Navigator.pushNamed(context, AppRoutes.notifications),
-                  ),
-                  _MenuEntry(
-                    icon: Icons.settings_outlined,
-                    title: 'Configurações',
-                    onTap: () =>
-                        Navigator.pushNamed(context, AppRoutes.settings),
-                  ),
-                  const SizedBox(height: 12),
-                  _OutlineGradientButton(
-                    label: 'Sair da conta',
-                    onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      AppRoutes.logoutSuccess,
-                      (_) => false,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ProfileHeader extends StatelessWidget {
-  const _ProfileHeader();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 62,
-      child: Row(
-        children: [
-          IconButton(
-            icon: const Icon(Icons.chevron_left, color: Colors.white, size: 24),
-            onPressed: () {
-              if (Navigator.of(context).canPop()) Navigator.of(context).pop();
-            },
-          ),
-          const Expanded(
-            child: Center(
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Uni',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    TextSpan(
-                      text: 'A.I.',
-                      style: TextStyle(color: Color(0xFFAC43EB)),
-                    ),
-                  ],
-                ),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.notifications_none,
-              color: Color(0xFFC1BBCB),
-              size: 21,
-            ),
-            onPressed: () => Navigator.pushNamed(context, '/notificacoes'),
-          ),
-        ],
-      ),
+    return UniPageLayout(
+      title: '',
+      subtitle: '',
+      showTitle: false,
+      children: [
+        const SizedBox(height: 10),
+        ProfileUserCard(
+          showProfileLink: true,
+          onTap: () => _openProfile(context),
+        ),
+        const SizedBox(height: 15),
+        const Text(
+          'MEUS ESTUDOS',
+          style: TextStyle(color: AppColors.textMuted, fontSize: 9),
+        ),
+        const SizedBox(height: 3),
+        _MenuEntry(
+          icon: Icons.calendar_month_outlined,
+          title: 'Calendário',
+          onTap: () =>
+              AppRoutes.openModule(context, AppRoutes.calendar),
+        ),
+        _MenuEntry(
+          icon: Icons.access_time_outlined,
+          title: 'Planejamento semanal',
+          onTap: () =>
+              AppRoutes.openModule(context, AppRoutes.planner),
+        ),
+        _MenuEntry(
+          icon: Icons.school_outlined,
+          title: 'Professores',
+          onTap: () =>
+              AppRoutes.openModule(context, AppRoutes.teachers),
+        ),
+        _MenuEntry(
+          icon: Icons.people_outline,
+          title: 'Grupos de estudo',
+          onTap: () => AppRoutes.openModule(context, AppRoutes.groups),
+        ),
+        _MenuEntry(
+          icon: Icons.auto_awesome_outlined,
+          title: 'Chat IA',
+          onTap: () => AppRoutes.openModule(context, AppRoutes.chat),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Divider(color: AppColors.cardBorder, height: 1),
+        ),
+        _MenuEntry(
+          icon: Icons.favorite_border,
+          title: 'Sobrecarga acadêmica',
+          onTap: () =>
+              AppRoutes.openModule(context, AppRoutes.workload),
+        ),
+        _MenuEntry(
+          icon: Icons.notifications_none,
+          title: 'Notificações e lembretes',
+          onTap: () =>
+              AppRoutes.openModule(context, AppRoutes.notifications),
+        ),
+        _MenuEntry(
+          icon: Icons.settings_outlined,
+          title: 'Configurações',
+          onTap: () =>
+              AppRoutes.openModule(context, AppRoutes.settings),
+        ),
+        const SizedBox(height: 12),
+        _OutlineGradientButton(
+          label: 'Sair da conta',
+          onPressed: () {
+            context.read<AuthController>().signOut();
+            Navigator.pushNamedAndRemoveUntil(
+              context, AppRoutes.logoutSuccess, (_) => false,
+            );
+          },
+        ),
+        const SizedBox(height: 20)
+      ],
     );
   }
 }
@@ -172,17 +115,17 @@ class _MenuEntry extends StatelessWidget {
         onTap: onTap,
         child: Row(
           children: [
-            Icon(icon, size: 19, color: ProfileColors.purple),
+            Icon(icon, size: 19, color: AppColors.purple),
             const SizedBox(width: 13),
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                style: const TextStyle(color: AppColors.textPrimary, fontSize: 12),
               ),
             ),
             const Icon(
               Icons.chevron_right,
-              color: ProfileColors.muted,
+              color: AppColors.textMuted,
               size: 18,
             ),
           ],
@@ -205,12 +148,12 @@ class _OutlineGradientButton extends StatelessWidget {
       padding: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [ProfileColors.pink, ProfileColors.cyan],
+          colors: [AppColors.pink, AppColors.blue],
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Material(
-        color: ProfileColors.background,
+        color: AppColors.background,
         borderRadius: BorderRadius.circular(9),
         child: InkWell(
           borderRadius: BorderRadius.circular(9),
@@ -219,7 +162,7 @@ class _OutlineGradientButton extends StatelessWidget {
             child: Text(
               label,
               style: const TextStyle(
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
