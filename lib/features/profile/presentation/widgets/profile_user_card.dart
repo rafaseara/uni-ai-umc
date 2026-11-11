@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/features/profile/presentation/widgets/profile_colors.dart';
 
 class ProfileUserCard extends StatelessWidget {
-  const ProfileUserCard({
-    super.key,
-    this.showProfileLink = false,
-    this.onTap,
-  });
+  const ProfileUserCard({super.key, this.showProfileLink = false, this.onTap});
 
   final bool showProfileLink;
   final VoidCallback? onTap;
@@ -36,22 +32,51 @@ class ProfileUserCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: ProfileColors.purple),
                 ),
-                child: const Text('GM', style: TextStyle(color: ProfileColors.purple, fontSize: 12)),
+                child: const Text(
+                  'E',
+                  style: TextStyle(color: ProfileColors.purple, fontSize: 12),
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Gabriel Muniz', style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600)),
+                    const Text(
+                      'Estudante',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     const SizedBox(height: 3),
-                    const Text('Estudante · UMC', style: TextStyle(color: ProfileColors.muted, fontSize: 10)),
+                    const Text(
+                      'Estudante · UMC',
+                      style: TextStyle(
+                        color: ProfileColors.muted,
+                        fontSize: 10,
+                      ),
+                    ),
                     if (showProfileLink) ...[
                       const SizedBox(height: 3),
-                      const Text('Ver meu perfil →', style: TextStyle(color: ProfileColors.cyan, fontSize: 10, fontWeight: FontWeight.w600)),
+                      const Text(
+                        'Ver meu perfil →',
+                        style: TextStyle(
+                          color: ProfileColors.cyan,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ] else ...[
                       const SizedBox(height: 3),
-                      const Text('10 Amigos', style: TextStyle(color: ProfileColors.muted, fontSize: 9)),
+                      const Text(
+                        '10 Amigos',
+                        style: TextStyle(
+                          color: ProfileColors.muted,
+                          fontSize: 9,
+                        ),
+                      ),
                     ],
                   ],
                 ),
