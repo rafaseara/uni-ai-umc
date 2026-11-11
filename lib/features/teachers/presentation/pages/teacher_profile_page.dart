@@ -1,3 +1,4 @@
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_colors.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/gradient_button.dart';
@@ -8,8 +9,8 @@ import 'package:plataforma_educacional/features/teachers/presentation/widgets/te
 class TeacherProfilePage extends StatelessWidget {
   const TeacherProfilePage({super.key});
 
-  void _onViewPlansPressed() {
-    // TODO: navegar para os planos do professor
+  void _onViewPlansPressed(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.teacherPlans);
   }
 
   @override
@@ -112,7 +113,7 @@ class TeacherProfilePage extends StatelessWidget {
           label: 'Ver planos do professor',
           width: double.infinity,
           height: 46,
-          onPressed: _onViewPlansPressed,
+          onPressed: () => _onViewPlansPressed(context),
         ),
       ],
     );

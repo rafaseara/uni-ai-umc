@@ -51,7 +51,7 @@ class TeachersPageLayout extends StatelessWidget {
                   icon: const Icon(Icons.notifications_none, size: 22),
                   color: Colors.white,
                   onPressed: () {
-                    // TODO: abrir notificações
+                    Navigator.pushNamed(context, '/notificacoes');
                   },
                 ),
               ],
