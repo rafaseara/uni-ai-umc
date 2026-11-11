@@ -4,21 +4,21 @@ import 'package:plataforma_educacional/features/settings/presentation/widgets/se
 import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_page_layout.dart';
 import 'package:plataforma_educacional/features/settings/presentation/widgets/settings_tile.dart';
 
-class NotificationsPage extends StatelessWidget {
+class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
+  @override
+  State<NotificationsPage> createState() => _NotificationsPageState();
+}
 
-  void _onToggleChanged(bool value) {
-    // TODO: salvar a preferência (na tela é só visual por enquanto)
-  }
+class _NotificationsPageState extends State<NotificationsPage> {
+  final List<bool> _enabled = [true, true, true, true];
 
-  Widget _toggle() {
-    return Switch(
-      value: true,
-      onChanged: _onToggleChanged,
-      activeThumbColor: Colors.white,
-      activeTrackColor: SettingsColors.purple,
-    );
-  }
+  Widget _toggle(int index) => Switch(
+    value: _enabled[index],
+    onChanged: (value) => setState(() => _enabled[index] = value),
+    activeThumbColor: Colors.white,
+    activeTrackColor: SettingsColors.purple,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -72,26 +72,30 @@ class NotificationsPage extends StatelessWidget {
                 SettingsTile(
                   icon: Icons.school_outlined,
                   title: 'Atividades acadêmicas',
+                  onTap: () => setState(() => _enabled[0] = !_enabled[0]),
                   subtitle: 'Trabalhos e tarefas',
-                  trailing: _toggle(),
+                  trailing: _toggle(0),
                 ),
                 SettingsTile(
                   icon: Icons.event_available_outlined,
                   title: 'Prazos de entrega',
+                  onTap: () => setState(() => _enabled[1] = !_enabled[1]),
                   subtitle: 'Avisos antes do vencimento',
-                  trailing: _toggle(),
+                  trailing: _toggle(1),
                 ),
                 SettingsTile(
                   icon: Icons.schedule_outlined,
                   title: 'Horários de estudo',
+                  onTap: () => setState(() => _enabled[2] = !_enabled[2]),
                   subtitle: 'Lembretes para começar a estudar',
-                  trailing: _toggle(),
+                  trailing: _toggle(2),
                 ),
                 SettingsTile(
                   icon: Icons.coffee_outlined,
                   title: 'Pausas e descanso',
+                  onTap: () => setState(() => _enabled[3] = !_enabled[3]),
                   subtitle: 'Avisos para fazer intervalos',
-                  trailing: _toggle(),
+                  trailing: _toggle(3),
                 ),
               ],
             ),
