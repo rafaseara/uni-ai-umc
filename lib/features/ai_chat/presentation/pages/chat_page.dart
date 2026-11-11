@@ -1,3 +1,4 @@
+import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_disclaimer.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/widgets/chat_input_bar.dart';
@@ -23,11 +24,12 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _onSendPressed() {
-    // TODO: enviar a mensagem e abrir a conversa
+    if (_messageController.text.trim().isEmpty) return;
+    Navigator.pushNamed(context, AppRoutes.chatConversation);
   }
 
   void _onSuggestionPressed() {
-    // TODO: iniciar a conversa com a sugestão escolhida
+    Navigator.pushNamed(context, AppRoutes.chatConversation);
   }
 
   @override

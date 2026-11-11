@@ -49,11 +49,7 @@ class ChatSuggestionTile extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(
-              Icons.chevron_right,
-              color: AuthColors.hint,
-              size: 20,
-            ),
+            const Icon(Icons.chevron_right, color: AuthColors.hint, size: 20),
           ],
         ),
       ),

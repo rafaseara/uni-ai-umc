@@ -25,10 +25,7 @@ class ChatUserMessage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          Text(
-            text,
-            style: const TextStyle(color: Colors.white, fontSize: 13),
-          ),
+          Text(text, style: const TextStyle(color: Colors.white, fontSize: 13)),
         ],
       ),
     );
