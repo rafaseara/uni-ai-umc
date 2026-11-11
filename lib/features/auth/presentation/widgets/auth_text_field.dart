@@ -5,7 +5,7 @@ import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_c
 class AuthTextField extends StatefulWidget {
   const AuthTextField({
     super.key,
-    required this.label,
+    this.label,
     required this.hint,
     this.controller,
     this.keyboardType,
@@ -13,7 +13,7 @@ class AuthTextField extends StatefulWidget {
     this.isPassword = false,
   });
 
-  final String label;
+  final String? label;
   final String hint;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
@@ -32,19 +32,22 @@ class _AuthTextFieldState extends State<AuthTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: Text(
-            widget.label.toUpperCase(),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 1,
+        // Só mostra o título se ele não for nulo.
+        if (widget.label != null) ...[
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Text(
+              widget.label!.toUpperCase(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1,
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 10),
+          const SizedBox(height: 10),
+        ],
 
         // Apenas a borda recebe o degradê.
         CustomPaint(
