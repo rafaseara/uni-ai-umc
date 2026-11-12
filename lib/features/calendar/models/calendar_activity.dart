@@ -25,7 +25,35 @@ class CalendarActivity implements Identified {
   final Duration duration;
   final bool reminder;
 
-  String get timeLabel => '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+  Map<String, Object?> toJson() => {
+    'id': id,
+    'title': title,
+    'description': description,
+    'date': date.toIso8601String(),
+    'hour': time.hour,
+    'minute': time.minute,
+    'priority': priority.name,
+    'durationMinutes': duration.inMinutes,
+    'reminder': reminder,
+  };
+
+  factory CalendarActivity.fromJson(Map<String, Object?> data) =>
+      CalendarActivity(
+        id: data['id'] as String,
+        title: data['title'] as String,
+        description: data['description'] as String,
+        date: DateTime.parse(data['date'] as String),
+        time: TimeOfDay(
+          hour: (data['hour'] as num).toInt(),
+          minute: (data['minute'] as num).toInt(),
+        ),
+        priority: Priority.values.byName(data['priority'] as String),
+        duration: Duration(minutes: (data['durationMinutes'] as num).toInt()),
+        reminder: data['reminder'] as bool,
+      );
+
+  String get timeLabel =>
+      '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
   String get priorityLabel => priority.label;
   String get durationLabel => switch (duration.inMinutes) {
     0 => '0 hora',
@@ -37,8 +65,13 @@ class CalendarActivity implements Identified {
   };
 
   CalendarActivity copyWith({
-    String? title, String? description, DateTime? date, TimeOfDay? time,
-    Priority? priority, Duration? duration, bool? reminder,
+    String? title,
+    String? description,
+    DateTime? date,
+    TimeOfDay? time,
+    Priority? priority,
+    Duration? duration,
+    bool? reminder,
   }) => CalendarActivity(
     id: id,
     title: title ?? this.title,

@@ -126,7 +126,10 @@ class _StepRow extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 text,
-                style: const TextStyle(color: AppColors.textPrimary, fontSize: 12),
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 12,
+                ),
               ),
             ],
           ),

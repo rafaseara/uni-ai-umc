@@ -36,19 +36,20 @@ class ChatInputBar extends StatelessWidget {
               cursorColor: AppColors.blue,
               textInputAction: TextInputAction.send,
               onSubmitted: (_) => onSend(),
-              style: const TextStyle(color: AppColors.textPrimary, fontSize: 13),
+              style: const TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 13,
+              ),
               decoration: InputDecoration(
                 hintText: hint,
-                hintStyle: const TextStyle(
-                  color: AppColors.hint,
-                  fontSize: 13,
-                ),
+                hintStyle: const TextStyle(color: AppColors.hint, fontSize: 13),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(vertical: 16),
               ),
             ),
           ),
           IconButton(
+            tooltip: 'Enviar mensagem',
             onPressed: onSend,
             icon: Icon(
               Icons.send_outlined,

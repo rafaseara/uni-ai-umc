@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:plataforma_educacional/features/ai_chat/presentation/controllers/chat_controller.dart';
 
 import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
@@ -24,14 +26,14 @@ class _ChatPageState extends State<ChatPage> {
     super.dispose();
   }
 
-  void _onSendPressed() {
-    if (_messageController.text.trim().isEmpty) return;
+  void _sendAndOpen(String question) {
+    if (question.trim().isEmpty) return;
+    context.read<ChatController>().send(question);
+    _messageController.clear();
     Navigator.pushNamed(context, AppRoutes.chatConversation);
   }
 
-  void _onSuggestionPressed() {
-    Navigator.pushNamed(context, AppRoutes.chatConversation);
-  }
+  void _onSendPressed() => _sendAndOpen(_messageController.text);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
           const SizedBox(height: 8),
           const ChatDisclaimer(
-            text: 'A IA pode errar. Confira as informações com seu professor.',
+            text: 'Assistente local sem IA generativa. Confira as informações com seu professor.',
             centered: true,
           ),
         ],
@@ -82,23 +84,23 @@ class _ChatPageState extends State<ChatPage> {
         const SizedBox(height: 24),
         ChatSuggestionTile(
           icon: Icons.menu_book_outlined,
-          title: 'Me explique um conteúdo',
-          subtitle: 'Entenda um conceito, passo a passo',
-          onTap: _onSuggestionPressed,
+          title: 'O que vence esta semana?',
+          subtitle: 'Confira suas atividades do calendário',
+          onTap: () => _sendAndOpen('O que vence esta semana?'),
         ),
         const SizedBox(height: 12),
         ChatSuggestionTile(
           icon: Icons.event_note_outlined,
           title: 'Organize meus estudos',
-          subtitle: 'Monte uma rotina com tempo para pausas',
-          onTap: _onSuggestionPressed,
+          subtitle: 'Monte um plano para hoje',
+          onTap: () => _sendAndOpen('Monte meu plano de hoje'),
         ),
         const SizedBox(height: 12),
         ChatSuggestionTile(
           icon: Icons.auto_awesome_outlined,
-          title: 'Vamos revisar uma matéria',
-          subtitle: 'Pratique e confira o que já aprendeu',
-          onTap: _onSuggestionPressed,
+          title: 'Estou sobrecarregado?',
+          subtitle: 'Avalie a quantidade de tarefas da semana',
+          onTap: () => _sendAndOpen('Estou sobrecarregado?'),
         ),
       ],
     );

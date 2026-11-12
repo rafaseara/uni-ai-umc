@@ -18,9 +18,7 @@ abstract final class AppColors {
   static const Color divider = Color(0x14FFFFFF);
   static const Color warning = Color(0xFFFFC857);
   static const Color success = Color(0xFF3DDC84);
-  static const LinearGradient gradient = LinearGradient(
-    colors: [pink, blue],
-  );
+  static const LinearGradient gradient = LinearGradient(colors: [pink, blue]);
 
   // Supporting colors used by the existing login and decorative widgets.
   static const Color logoRingMiddle = Color(0xFF64118F);

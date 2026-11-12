@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/shared/uni_validators.dart';
 
-import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_form_layout.dart';
 import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_text_field.dart';
@@ -25,8 +24,13 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
 
   void _onContinuePressed() {
     if (!_formKey.currentState!.validate()) return;
-    // Código não validado em servidor: navegação de protótipo.
-    Navigator.pushNamed(context, AppRoutes.newPassword);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Verificação de código indisponível na autenticação local.',
+        ),
+      ),
+    );
   }
 
   @override
@@ -50,7 +54,7 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
         ),
         const SizedBox(height: 12),
         const Text(
-          'Enviado para: **********@gmail.com',
+          'Recuperação de senha indisponível no modo local',
           textAlign: TextAlign.center,
           style: TextStyle(color: AppColors.blue, fontSize: 11),
         ),

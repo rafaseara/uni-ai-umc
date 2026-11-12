@@ -46,10 +46,7 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(height: 9),
               const Text(
                 'Seus estudos e materiais continuam salvos na sua conta. Você pode entrar novamente quando quiser.',
-                style: TextStyle(
-                  color: AppColors.textMuted,
-                  fontSize: 11,
-                ),
+                style: TextStyle(color: AppColors.textMuted, fontSize: 11),
               ),
               const SizedBox(height: 16),
               SizedBox(
@@ -63,9 +60,9 @@ class ProfilePage extends StatelessWidget {
                   onPressed: () {
                     context.read<AuthController>().signOut();
                     Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    AppRoutes.logoutSuccess,
-                    (_) => false,
+                      context,
+                      AppRoutes.logoutSuccess,
+                      (_) => false,
                     );
                   },
                   child: const Text(
@@ -98,7 +95,7 @@ class ProfilePage extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

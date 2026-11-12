@@ -39,10 +39,7 @@ abstract final class AppTheme {
         fontSize: 27,
         fontWeight: FontWeight.bold,
       ),
-      titleMedium: TextStyle(
-        color: AppColors.textMuted,
-        fontSize: 12,
-      ),
+      titleMedium: TextStyle(color: AppColors.textMuted, fontSize: 12),
       bodyMedium: TextStyle(color: AppColors.textPrimary),
       bodySmall: TextStyle(color: AppColors.textMuted, fontSize: 12),
     ),

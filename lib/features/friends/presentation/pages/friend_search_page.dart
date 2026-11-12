@@ -54,16 +54,10 @@ class _FriendSearchPageState extends State<FriendSearchPage> {
               context.read<FriendController>().search(value);
             },
             cursorColor: AppColors.blue,
-            style: const TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: 13,
-            ),
+            style: const TextStyle(color: AppColors.textPrimary, fontSize: 13),
             decoration: const InputDecoration(
               hintText: 'Digite o nome do seu amigo',
-              hintStyle: TextStyle(
-                color: AppColors.textMuted,
-                fontSize: 12,
-              ),
+              hintStyle: TextStyle(color: AppColors.textMuted, fontSize: 12),
               prefixIcon: Icon(
                 Icons.search_rounded,
                 color: AppColors.textPrimary,
@@ -78,29 +72,39 @@ class _FriendSearchPageState extends State<FriendSearchPage> {
           ),
         ),
         const SizedBox(height: 16),
-        Builder(builder: (context) {
-          final controller = context.watch<FriendController>();
-          if (controller.searchStatus == LoadStatus.initial ||
-              controller.searchStatus == LoadStatus.loading) {
-            return const UniLoading();
-          }
-          if (controller.searchStatus == LoadStatus.error) {
-            return UniErrorState(onRetry: () => controller.search(_searchController.text));
-          }
-          final filtered = controller.searchResults;
-          if (filtered.isEmpty) {
-            return const UniEmptyState(
-              icon: Icons.search_off,
-              title: 'Nenhum amigo encontrado',
-              message: 'Tente outro nome na busca.',
+        Builder(
+          builder: (context) {
+            final controller = context.watch<FriendController>();
+            if (controller.searchStatus == LoadStatus.initial ||
+                controller.searchStatus == LoadStatus.loading) {
+              return const UniLoading();
+            }
+            if (controller.searchStatus == LoadStatus.error) {
+              return UniErrorState(
+                onRetry: () => controller.search(_searchController.text),
+              );
+            }
+            final filtered = controller.searchResults;
+            if (filtered.isEmpty) {
+              return const UniEmptyState(
+                icon: Icons.search_off,
+                title: 'Nenhum amigo encontrado',
+                message: 'Tente outro nome na busca.',
+              );
+            }
+            return Column(
+              children: [
+                for (final student in filtered)
+                  FriendCard(
+                    initials: student.initials,
+                    name: student.name,
+                    course: student.course,
+                    friendsCount: student.friendsCount,
+                  ),
+              ],
             );
-          }
-          return Column(children: [
-            for (final student in filtered)
-              FriendCard(initials: student.initials, name: student.name,
-                course: student.course, friendsCount: student.friendsCount),
-          ]);
-        }),
+          },
+        ),
       ],
     );
   }

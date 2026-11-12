@@ -25,7 +25,10 @@ class UniControlledList<T extends Identified> extends StatelessWidget {
       case LoadStatus.loading:
         return const UniLoading();
       case LoadStatus.error:
-        return UniErrorState(onRetry: controller.load);
+        return UniErrorState(
+          message: controller.error == null ? null : 'Não foi possível carregar os dados. Verifique sua conexão ou tente novamente.',
+          onRetry: controller.load,
+        );
       case LoadStatus.ready:
         final items = controller.items;
         return items.isEmpty ? emptyState : builder(context, items);

@@ -37,7 +37,14 @@ class _StudyGroupsPageState extends State<StudyGroupsPage> {
 
     if (!mounted || newGroup == null) return;
 
-    await context.read<GroupController>().add(newGroup);
+    final controller = context.read<GroupController>();
+    await controller.add(newGroup);
+    if (!mounted) return;
+    if (controller.actionError != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Não foi possível criar o grupo.')),
+      );
+    }
   }
 
   void _openGroup(StudyGroup group) {
@@ -65,10 +72,7 @@ class _StudyGroupsPageState extends State<StudyGroupsPage> {
               color: AppColors.textMuted,
               fontSize: 12,
             ),
-            prefixIcon: const Icon(
-              Icons.search,
-              color: AppColors.textMuted,
-            ),
+            prefixIcon: const Icon(Icons.search, color: AppColors.textMuted),
             filled: true,
             fillColor: AppColors.card,
             border: OutlineInputBorder(
@@ -98,9 +102,9 @@ class _StudyGroupsPageState extends State<StudyGroupsPage> {
           ),
           builder: (context, groups) {
             final query = _search.trim().toLowerCase();
-            final filtered = groups.where(
-              (group) => group.name.toLowerCase().contains(query),
-            ).toList();
+            final filtered = groups
+                .where((group) => group.name.toLowerCase().contains(query))
+                .toList();
             if (filtered.isEmpty) {
               return const UniEmptyState(
                 icon: Icons.search_off_outlined,
@@ -113,7 +117,10 @@ class _StudyGroupsPageState extends State<StudyGroupsPage> {
               children: [
                 Text(
                   '${filtered.length} grupos',
-                  style: const TextStyle(color: AppColors.textMuted, fontSize: 11),
+                  style: const TextStyle(
+                    color: AppColors.textMuted,
+                    fontSize: 11,
+                  ),
                 ),
                 const SizedBox(height: 14),
                 for (final group in filtered)
@@ -126,93 +133,103 @@ class _StudyGroupsPageState extends State<StudyGroupsPage> {
           },
         ),
         const SizedBox(height: 8),
-        GroupButton(text: '+ Novo Grupo', onPressed: _createGroup)
+        GroupButton(text: '+ Novo Grupo', onPressed: _createGroup),
       ],
     );
   }
 
   Widget _groupCard(StudyGroup group) {
-    return InkWell(
-      onTap: () => _openGroup(group),
-      borderRadius: BorderRadius.circular(12),
-      child: UniCard(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    group.name,
-                    style: const TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+    return Semantics(
+      button: true,
+      label: 'Abrir grupo: ${group.name}',
+      child: InkWell(
+        onTap: () => _openGroup(group),
+        borderRadius: BorderRadius.circular(12),
+        child: UniCard(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      group.name,
+                      style: const TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                const Icon(Icons.chevron_right, color: AppColors.textMuted),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Text(
-              group.description,
-              style: const TextStyle(color: AppColors.textMuted, fontSize: 11),
-            ),
-            const SizedBox(height: 15),
-            const Divider(color: AppColors.cardBorder),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(
-                  Icons.description_outlined,
-                  color: AppColors.purple,
-                  size: 17,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    group.materials.isEmpty
-                        ? 'Sem materiais'
-                        : group.materials.first,
-                    style: const TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 11,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 11),
-            Row(
-              children: [
-                const Icon(
-                  Icons.calendar_today_outlined,
-                  color: AppColors.blue,
-                  size: 16,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    group.nextActivity,
-                    style: const TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 11,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Padding(
-              padding: const EdgeInsets.only(left: 24),
-              child: Text(
-                group.activityDate,
-                style: const TextStyle(color: AppColors.textMuted, fontSize: 10),
+                  const Icon(Icons.chevron_right, color: AppColors.textMuted),
+                ],
               ),
-            ),
-          ],
+              const SizedBox(height: 5),
+              Text(
+                group.description,
+                style: const TextStyle(
+                  color: AppColors.textMuted,
+                  fontSize: 11,
+                ),
+              ),
+              const SizedBox(height: 15),
+              const Divider(color: AppColors.cardBorder),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.description_outlined,
+                    color: AppColors.purple,
+                    size: 17,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      group.materials.isEmpty
+                          ? 'Sem materiais'
+                          : group.materials.first,
+                      style: const TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 11),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_today_outlined,
+                    color: AppColors.blue,
+                    size: 16,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      group.nextActivity,
+                      style: const TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: Text(
+                  group.activityDate,
+                  style: const TextStyle(
+                    color: AppColors.textMuted,
+                    fontSize: 10,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -34,20 +34,17 @@ class ProfileMenuPage extends StatelessWidget {
         _MenuEntry(
           icon: Icons.calendar_month_outlined,
           title: 'Calendário',
-          onTap: () =>
-              AppRoutes.openModule(context, AppRoutes.calendar),
+          onTap: () => AppRoutes.openModule(context, AppRoutes.calendar),
         ),
         _MenuEntry(
           icon: Icons.access_time_outlined,
           title: 'Planejamento semanal',
-          onTap: () =>
-              AppRoutes.openModule(context, AppRoutes.planner),
+          onTap: () => AppRoutes.openModule(context, AppRoutes.planner),
         ),
         _MenuEntry(
           icon: Icons.school_outlined,
           title: 'Professores',
-          onTap: () =>
-              AppRoutes.openModule(context, AppRoutes.teachers),
+          onTap: () => AppRoutes.openModule(context, AppRoutes.teachers),
         ),
         _MenuEntry(
           icon: Icons.people_outline,
@@ -66,32 +63,32 @@ class ProfileMenuPage extends StatelessWidget {
         _MenuEntry(
           icon: Icons.favorite_border,
           title: 'Sobrecarga acadêmica',
-          onTap: () =>
-              AppRoutes.openModule(context, AppRoutes.workload),
+          onTap: () => AppRoutes.openModule(context, AppRoutes.workload),
         ),
         _MenuEntry(
           icon: Icons.notifications_none,
           title: 'Notificações e lembretes',
-          onTap: () =>
-              AppRoutes.openModule(context, AppRoutes.notifications),
+          onTap: () => AppRoutes.openModule(context, AppRoutes.notifications),
         ),
         _MenuEntry(
           icon: Icons.settings_outlined,
           title: 'Configurações',
-          onTap: () =>
-              AppRoutes.openModule(context, AppRoutes.settings),
+          onTap: () => AppRoutes.openModule(context, AppRoutes.settings),
         ),
         const SizedBox(height: 12),
         _OutlineGradientButton(
           label: 'Sair da conta',
-          onPressed: () {
-            context.read<AuthController>().signOut();
+          onPressed: () async {
+            await context.read<AuthController>().signOut();
+            if (!context.mounted) return;
             Navigator.pushNamedAndRemoveUntil(
-              context, AppRoutes.logoutSuccess, (_) => false,
+              context,
+              AppRoutes.logoutSuccess,
+              (_) => false,
             );
           },
         ),
-        const SizedBox(height: 20)
+        const SizedBox(height: 20),
       ],
     );
   }
@@ -120,7 +117,10 @@ class _MenuEntry extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(color: AppColors.textPrimary, fontSize: 12),
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 12,
+                ),
               ),
             ),
             const Icon(

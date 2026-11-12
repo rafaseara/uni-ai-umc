@@ -25,45 +25,45 @@ class ModulesPage extends StatelessWidget {
       subtitle: 'Acesse suas ferramentas de estudo.',
       children: [
         for (final entry in entries)
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: Material(
-            color: AppColors.card,
-            borderRadius: BorderRadius.circular(12),
-            child: InkWell(
-              onTap: () => AppRoutes.openModule(context, entry.$2),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Material(
+              color: AppColors.card,
               borderRadius: BorderRadius.circular(12),
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Row(
-                  children: [
-                    Icon(entry.$3, color: AppColors.blue, size: 21),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Text(
-                        entry.$1,
-                        style: const TextStyle(
-                          color: AppColors.textPrimary,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
+              child: InkWell(
+                onTap: () => AppRoutes.openModule(context, entry.$2),
+                borderRadius: BorderRadius.circular(12),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Row(
+                    children: [
+                      Icon(entry.$3, color: AppColors.blue, size: 21),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Text(
+                          entry.$1,
+                          style: const TextStyle(
+                            color: AppColors.textPrimary,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    const Icon(
-                      Icons.chevron_right,
-                      color: AppColors.textMuted,
-                    ),
-                  ],
+                      const Icon(
+                        Icons.chevron_right,
+                        color: AppColors.textMuted,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
         const SizedBox(height: 12),
         const Text(
           'Demonstração: sem autenticação, banco de dados ou IA real.',
           style: TextStyle(color: AppColors.textMuted, fontSize: 11),
-        )
+        ),
       ],
     );
   }

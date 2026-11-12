@@ -5,6 +5,7 @@ import 'package:plataforma_educacional/core/navigation/uni_module_shell.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/pages/chat_conversation_page.dart';
 import 'package:plataforma_educacional/features/ai_chat/presentation/pages/chat_page.dart';
 import 'package:plataforma_educacional/features/auth/presentation/pages/login_page.dart';
+import 'package:plataforma_educacional/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:plataforma_educacional/features/auth/presentation/pages/new_password_page.dart';
 import 'package:plataforma_educacional/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:plataforma_educacional/features/auth/presentation/pages/verify_code_page.dart';
@@ -26,7 +27,7 @@ import 'package:plataforma_educacional/features/teachers/presentation/pages/teac
 import 'package:plataforma_educacional/features/teachers/presentation/pages/teachers_page.dart';
 import 'package:plataforma_educacional/features/workload/presentation/pages/workload_page.dart';
 
-/// Rotas centralizadas da interface. O login ainda é demonstrativo.
+/// Rotas centralizadas; as telas internas exigem sessão no app principal.
 class AppRoutes {
   AppRoutes._();
 
@@ -54,6 +55,36 @@ class AppRoutes {
   static const notifications = '/notificacoes';
   static const logoutEntry = '/saida';
   static const logoutSuccess = '/saida/concluida';
+
+  static const Set<String> publicRoutes = {
+    welcome,
+    login,
+    signUp,
+    verifyCode,
+    newPassword,
+    logoutEntry,
+    logoutSuccess,
+  };
+
+  static Route<dynamic> generateRoute(
+    RouteSettings settings,
+    AuthController auth,
+  ) {
+    final requested = settings.name ?? welcome;
+    final redirected = !auth.signedIn && !publicRoutes.contains(requested)
+        ? login
+        : auth.signedIn &&
+              (requested == welcome ||
+                  requested == login ||
+                  requested == signUp)
+        ? home
+        : requested;
+    final builder = routes[redirected] ?? routes[welcome]!;
+    return MaterialPageRoute<void>(
+      settings: RouteSettings(name: redirected, arguments: settings.arguments),
+      builder: builder,
+    );
+  }
 
   /// Ordem oficial das cinco abas; nenhuma feature mantém outra cópia.
   static const List<String> tabRoutes = [
@@ -110,11 +141,14 @@ class AppRoutes {
     verifyCode: (_) => const VerifyCodePage(),
     newPassword: (_) => const NewPasswordPage(),
     home: (_) => const UniModuleShell(currentIndex: 0, child: HomePage()),
-    modules: (_) => const UniModuleShell(currentIndex: null, child: ModulesPage()),
+    modules: (_) =>
+        const UniModuleShell(currentIndex: null, child: ModulesPage()),
     calendar: (_) =>
         const UniModuleShell(currentIndex: 3, child: CalendarPage()),
-    groups: (_) => const UniModuleShell(currentIndex: 1, child: StudyGroupsPage()),
-    friends: (_) => const UniModuleShell(currentIndex: null, child: FriendsPage()),
+    groups: (_) =>
+        const UniModuleShell(currentIndex: 1, child: StudyGroupsPage()),
+    friends: (_) =>
+        const UniModuleShell(currentIndex: null, child: FriendsPage()),
     friendSearch: (_) => const FriendSearchPage(),
     profileMenu: (_) =>
         const UniModuleShell(currentIndex: 4, child: ProfileMenuPage()),

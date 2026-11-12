@@ -64,6 +64,7 @@ class CalendarMonth extends StatelessWidget {
           Row(
             children: [
               IconButton(
+                tooltip: 'Mês anterior',
                 onPressed: () {
                   onMonthChanged(DateTime(month.year, month.month - 1));
                 },
@@ -86,6 +87,7 @@ class CalendarMonth extends StatelessWidget {
               ),
 
               IconButton(
+                tooltip: 'Próximo mês',
                 onPressed: () {
                   onMonthChanged(DateTime(month.year, month.month + 1));
                 },
@@ -180,11 +182,7 @@ class CalendarMonth extends StatelessWidget {
           // Planejamento semanal
           const Row(
             children: [
-              Icon(
-                Icons.check_circle_outline,
-                color: AppColors.blue,
-                size: 15,
-              ),
+              Icon(Icons.check_circle_outline, color: AppColors.blue, size: 15),
               SizedBox(width: 6),
               Text(
                 'Ver planejamento semanal',

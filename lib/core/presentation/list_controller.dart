@@ -4,7 +4,7 @@ import 'package:plataforma_educacional/core/models/identified.dart';
 
 enum LoadStatus { initial, loading, ready, error }
 
-/// Nenhum widget recebe um repositório; a origem dos dados fica oculta aqui.
+/// Carrega a coleção uma vez; ações não provocam spinner nem apagam dados locais.
 class ListController<T extends Identified> extends ChangeNotifier {
   ListController(this._repository);
 
@@ -12,6 +12,7 @@ class ListController<T extends Identified> extends ChangeNotifier {
   List<T> _items = <T>[];
   LoadStatus _status = LoadStatus.initial;
   Object? _error;
+  Object? _actionError;
   int _requestSerial = 0;
   bool _disposed = false;
   bool get isDisposed => _disposed;
@@ -25,7 +26,8 @@ class ListController<T extends Identified> extends ChangeNotifier {
 
   List<T> get items => List<T>.unmodifiable(_items);
   LoadStatus get status => _status;
-  Object? get error => _error;
+  Object? get error => _error; // erros apenas de load
+  Object? get actionError => _actionError; // erros de add/update/delete
 
   Future<void> load() async {
     if (_disposed) return;
@@ -36,7 +38,7 @@ class ListController<T extends Identified> extends ChangeNotifier {
     try {
       final result = await _repository.getAll();
       if (serial != _requestSerial || _disposed) return;
-      _items = List<T>.unmodifiable(result);
+      _items = List<T>.of(result);
       _status = LoadStatus.ready;
     } catch (exception) {
       if (serial != _requestSerial || _disposed) return;
@@ -46,20 +48,33 @@ class ListController<T extends Identified> extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> add(T item) => _mutate(() => _repository.add(item));
-  Future<void> update(T item) => _mutate(() => _repository.update(item));
-  Future<void> delete(String id) => _mutate(() => _repository.delete(id));
+  Future<void> add(T item) =>
+      _mutate(() => _repository.add(item), () => _items = [..._items, item]);
+  Future<void> update(T item) => _mutate(
+    () => _repository.update(item),
+    () => _items = [
+      for (final current in _items) current.id == item.id ? item : current,
+    ],
+  );
+  Future<void> delete(String id) => _mutate(
+    () => _repository.delete(id),
+    () => _items = _items.where((item) => item.id != id).toList(),
+  );
 
-  Future<void> _mutate(Future<void> Function() action) async {
+  Future<void> _mutate(
+    Future<void> Function() operation,
+    VoidCallback apply,
+  ) async {
     if (_disposed) return;
+    _actionError = null;
     try {
-      await action();
-      await load();
+      await operation();
+      if (_disposed) return;
+      apply();
     } catch (exception) {
       if (_disposed) return;
-      _error = exception;
-      _status = LoadStatus.error;
-      notifyListeners();
+      _actionError = exception;
     }
+    notifyListeners();
   }
 }

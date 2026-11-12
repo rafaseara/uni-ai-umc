@@ -13,7 +13,8 @@ import 'package:plataforma_educacional/shared/widgets/uni_empty_state.dart';
 import 'package:plataforma_educacional/shared/widgets/uni_error_state.dart';
 import 'package:plataforma_educacional/shared/widgets/uni_loading.dart';
 
-class _EmptyRepository extends InMemoryStore<CalendarActivity> implements ActivityRepository {
+class _EmptyRepository extends InMemoryStore<CalendarActivity>
+    implements ActivityRepository {
   _EmptyRepository() : super([], delay: Duration.zero);
 }
 
@@ -29,14 +30,21 @@ class _RetryRepository extends _EmptyRepository {
 
 Widget _wrapped(ActivityController controller) => ChangeNotifierProvider.value(
   value: controller,
-  child: MaterialApp(home: Scaffold(body: Builder(builder: (context) =>
-    UniControlledList<CalendarActivity>(
-      controller: context.watch<ActivityController>(),
-      emptyState: const UniEmptyState(icon: Icons.search_off,
-        title: 'Lista vazia', message: 'Sem resultados no momento.'),
-      builder: (context, activities) => Text('Total: ${activities.length}'),
+  child: MaterialApp(
+    home: Scaffold(
+      body: Builder(
+        builder: (context) => UniControlledList<CalendarActivity>(
+          controller: context.watch<ActivityController>(),
+          emptyState: const UniEmptyState(
+            icon: Icons.search_off,
+            title: 'Lista vazia',
+            message: 'Sem resultados no momento.',
+          ),
+          builder: (context, activities) => Text('Total: ${activities.length}'),
+        ),
+      ),
     ),
-  ))),
+  ),
 );
 
 void main() {
@@ -52,10 +60,19 @@ void main() {
 
   testWidgets('AuthTextField exibe erro no próprio campo', (tester) async {
     final formKey = GlobalKey<FormState>();
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: Form(
-      key: formKey,
-      child: AuthTextField(hint: 'voce@email.com', validator: UniValidators.email),
-    ))));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Form(
+            key: formKey,
+            child: AuthTextField(
+              hint: 'voce@email.com',
+              validator: UniValidators.email,
+            ),
+          ),
+        ),
+      ),
+    );
     expect(formKey.currentState!.validate(), isFalse);
     await tester.pump();
     expect(find.text('Informe seu e-mail.'), findsOneWidget);
@@ -74,20 +91,22 @@ void main() {
     expect(find.text('Total: 1'), findsOneWidget);
   });
 
-testWidgets('Lista vazia informa o motivo', (tester) async {
-  final controller = ActivityController(_EmptyRepository());
+  testWidgets('Lista vazia informa o motivo', (tester) async {
+    final controller = ActivityController(_EmptyRepository());
 
-  await tester.pumpWidget(_wrapped(controller));
+    await tester.pumpWidget(_wrapped(controller));
 
-  final pending = controller.load();
+    final pending = controller.load();
 
-  await tester.pump(const Duration(milliseconds: 1));
-  await pending;
-  await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1));
+    await pending;
+    await tester.pump();
 
-  expect(find.text('Lista vazia'), findsOneWidget);
-});
-  testWidgets('Falha mostra tentar novamente e permite recuperação', (tester) async {
+    expect(find.text('Lista vazia'), findsOneWidget);
+  });
+  testWidgets('Falha mostra tentar novamente e permite recuperação', (
+    tester,
+  ) async {
     final repo = _RetryRepository();
     final controller = ActivityController(repo);
     await tester.pumpWidget(_wrapped(controller));

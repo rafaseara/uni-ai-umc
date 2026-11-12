@@ -38,7 +38,9 @@ class _NavigationHistory extends NavigatorObserver {
 }
 
 void main() {
-  setUpAll(() async { await initializeDateFormatting('pt_BR'); });
+  setUpAll(() async {
+    await initializeDateFormatting('pt_BR');
+  });
   test('Abas são centralizadas e na ordem do menu inferior', () {
     expect(AppRoutes.tabRoutes, [
       AppRoutes.home,
@@ -52,18 +54,25 @@ void main() {
     expect(AppRoutes.isTabRoute(AppRoutes.planner), isFalse);
   });
 
-  testWidgets('Trocar de aba não acumula histórico e voltar chega à Home',
-      (tester) async {
+  testWidgets('Trocar de aba não acumula histórico e voltar chega à Home', (
+    tester,
+  ) async {
     final navigatorKey = GlobalKey<NavigatorState>();
     final history = _NavigationHistory();
-    await tester.pumpWidget(AppProviders(child: MaterialApp(
-      navigatorKey: navigatorKey,
-      initialRoute: AppRoutes.welcome,
-      routes: AppRoutes.routes,
-      navigatorObservers: [history],
-    )));
-    navigatorKey.currentState!
-        .pushNamedAndRemoveUntil(AppRoutes.home, (_) => false);
+    await tester.pumpWidget(
+      AppProviders(
+        child: MaterialApp(
+          navigatorKey: navigatorKey,
+          initialRoute: AppRoutes.welcome,
+          routes: AppRoutes.routes,
+          navigatorObservers: [history],
+        ),
+      ),
+    );
+    navigatorKey.currentState!.pushNamedAndRemoveUntil(
+      AppRoutes.home,
+      (_) => false,
+    );
     await tester.pumpAndSettle();
     expect(history.routeNames, [AppRoutes.home]);
 
@@ -91,18 +100,25 @@ void main() {
     expect(find.byType(UniBottomNav), findsOneWidget);
   });
 
-  testWidgets('Entrar em aba a partir de Módulos descarta o menu',
-      (tester) async {
+  testWidgets('Entrar em aba a partir de Módulos descarta o menu', (
+    tester,
+  ) async {
     final navigatorKey = GlobalKey<NavigatorState>();
     final history = _NavigationHistory();
-    await tester.pumpWidget(AppProviders(child: MaterialApp(
-      navigatorKey: navigatorKey,
-      initialRoute: AppRoutes.welcome,
-      routes: AppRoutes.routes,
-      navigatorObservers: [history],
-    )));
-    navigatorKey.currentState!
-        .pushNamedAndRemoveUntil(AppRoutes.home, (_) => false);
+    await tester.pumpWidget(
+      AppProviders(
+        child: MaterialApp(
+          navigatorKey: navigatorKey,
+          initialRoute: AppRoutes.welcome,
+          routes: AppRoutes.routes,
+          navigatorObservers: [history],
+        ),
+      ),
+    );
+    navigatorKey.currentState!.pushNamedAndRemoveUntil(
+      AppRoutes.home,
+      (_) => false,
+    );
     await tester.pumpAndSettle();
     navigatorKey.currentState!.pushNamed(AppRoutes.modules);
     await tester.pumpAndSettle();
@@ -118,26 +134,37 @@ void main() {
     expect(history.routeNames, [AppRoutes.home]);
   });
 
-  testWidgets('Submódulos ficam sem seleção e detalhes ficam sem barra',
-      (tester) async {
+  testWidgets('Submódulos ficam sem seleção e detalhes ficam sem barra', (
+    tester,
+  ) async {
     final navigatorKey = GlobalKey<NavigatorState>();
-    await tester.pumpWidget(AppProviders(child: MaterialApp(
-      navigatorKey: navigatorKey,
-      initialRoute: AppRoutes.welcome,
-      routes: AppRoutes.routes,
-    )));
-    navigatorKey.currentState!
-        .pushNamedAndRemoveUntil(AppRoutes.home, (_) => false);
+    await tester.pumpWidget(
+      AppProviders(
+        child: MaterialApp(
+          navigatorKey: navigatorKey,
+          initialRoute: AppRoutes.welcome,
+          routes: AppRoutes.routes,
+        ),
+      ),
+    );
+    navigatorKey.currentState!.pushNamedAndRemoveUntil(
+      AppRoutes.home,
+      (_) => false,
+    );
     await tester.pumpAndSettle();
     navigatorKey.currentState!.pushNamed(AppRoutes.planner);
     await tester.pumpAndSettle();
-    expect(tester.widget<UniBottomNav>(find.byType(UniBottomNav)).currentIndex,
-        isNull);
+    expect(
+      tester.widget<UniBottomNav>(find.byType(UniBottomNav)).currentIndex,
+      isNull,
+    );
 
     AppRoutes.goToTab(tester.element(find.byType(UniBottomNav)), 2);
     await tester.pumpAndSettle();
-    expect(tester.widget<UniBottomNav>(find.byType(UniBottomNav)).currentIndex,
-        2);
+    expect(
+      tester.widget<UniBottomNav>(find.byType(UniBottomNav)).currentIndex,
+      2,
+    );
     navigatorKey.currentState!.pushNamed(AppRoutes.chatConversation);
     await tester.pumpAndSettle();
     expect(find.byType(UniBottomNav), findsNothing);

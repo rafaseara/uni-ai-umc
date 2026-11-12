@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_text.dart';
 import 'package:plataforma_educacional/shared/widgets/uni_card.dart';
 import 'package:plataforma_educacional/shared/widgets/gradient_button.dart';
 
@@ -48,55 +49,52 @@ class TeacherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UniCard(
-      child: Row(
-        children: [
-          TeacherAvatar(initials: initials),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  subject,
-                  style: const TextStyle(
-                    color: AppColors.textMuted,
-                    fontSize: 11,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Row(
-                  children: [
-                    Icon(Icons.circle, size: 6, color: AppColors.success),
-                    SizedBox(width: 6),
-                    Text(
-                      'Aceita solicitações',
-                      style: TextStyle(
-                        color: AppColors.success,
-                        fontSize: 10,
-                      ),
+    return Semantics(
+      label: 'Professor $name, $subject',
+      child: UniCard(
+        child: Row(
+          children: [
+            TeacherAvatar(initials: initials),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      color: AppColors.textPrimary,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(height: 2),
+                  Text(subject, style: AppText.caption),
+                  const SizedBox(height: 12),
+                  const Row(
+                    children: [
+                      Icon(Icons.circle, size: 6, color: AppColors.success),
+                      SizedBox(width: 6),
+                      Text(
+                        'Aceita solicitações',
+                        style: TextStyle(
+                          color: AppColors.success,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          GradientButton(
-            label: 'Ver perfil',
-            width: 96,
-            height: 38,
-            onPressed: onViewProfile,
-          ),
-        ],
+            GradientButton(
+              label: 'Ver perfil',
+              width: 96,
+              height: 38,
+              onPressed: onViewProfile,
+            ),
+          ],
+        ),
       ),
     );
   }

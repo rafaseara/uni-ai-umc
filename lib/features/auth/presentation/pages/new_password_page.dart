@@ -29,7 +29,9 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
     // Apenas demonstração: nenhum cadastro ou senha foi salvo.
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Fluxo demonstrativo: a senha não foi salva.'),
+        content: Text(
+          'Esta tela é apenas um protótipo; a senha não foi alterada.',
+        ),
       ),
     );
     Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (_) => false);
@@ -57,7 +59,8 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
           label: 'Confirme Senha',
           hint: 'Ex: uniA.I2026',
           controller: _confirmController,
-          validator: (value) => UniValidators.confirmPassword(value, _passwordController.text),
+          validator: (value) =>
+              UniValidators.confirmPassword(value, _passwordController.text),
           isPassword: true,
           textInputAction: TextInputAction.done,
         ),

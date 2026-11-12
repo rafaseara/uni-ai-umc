@@ -42,8 +42,7 @@ class SettingsSection extends StatelessWidget {
             child: Column(
               children: [
                 for (var i = 0; i < children.length; i++) ...[
-                  if (i > 0)
-                    const Divider(height: 1, color: AppColors.divider),
+                  if (i > 0) const Divider(height: 1, color: AppColors.divider),
                   children[i],
                 ],
               ],

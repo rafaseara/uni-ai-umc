@@ -26,5 +26,4 @@ class FriendController extends ListController<FriendPreview> {
     }
     notifyListeners();
   }
-
 }

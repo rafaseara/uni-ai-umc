@@ -3,5 +3,5 @@ import 'package:plataforma_educacional/features/calendar/data/activity_repositor
 import 'package:plataforma_educacional/features/calendar/models/calendar_activity.dart';
 
 class ActivityController extends ListController<CalendarActivity> {
-  ActivityController(ActivityRepository repository) : super(repository);
+  ActivityController(ActivityRepository super.repository);
 }

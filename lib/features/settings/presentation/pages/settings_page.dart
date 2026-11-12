@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:plataforma_educacional/core/data/flaky_repository.dart';
+import 'package:plataforma_educacional/features/calendar/presentation/controllers/activity_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
@@ -46,7 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (dialogContext) => AlertDialog(
         title: const Text('Segurança e privacidade'),
         content: const Text(
-          'Esta é uma versão demonstrativa. Nenhum dado pessoal é enviado a servidores.',
+          'Dados de atividades, grupos, conta e chat ficam no próprio dispositivo. A autenticação é apenas local para demonstração, não é destinada a produção.',
         ),
         actions: [
           TextButton(
@@ -62,8 +65,9 @@ class _SettingsPageState extends State<SettingsPage> {
     Navigator.pushNamed(context, AppRoutes.newPassword);
   }
 
-  void _onLogoutPressed(BuildContext context) {
-    context.read<AuthController>().signOut();
+  Future<void> _onLogoutPressed(BuildContext context) async {
+    await context.read<AuthController>().signOut();
+    if (!context.mounted) return;
     Navigator.pushNamedAndRemoveUntil(
       context,
       AppRoutes.logoutSuccess,
@@ -98,6 +102,24 @@ class _SettingsPageState extends State<SettingsPage> {
               subtitle: 'Disponibilidade e duração das sessões',
               onTap: () => _onStudyPlanningPressed(context),
             ),
+            if (kDebugMode)
+              SettingsTile(
+                icon: Icons.bug_report_outlined,
+                title: 'Simular falha de carregamento',
+                subtitle: 'Teste do estado de erro (somente debug)',
+                trailing: ValueListenableBuilder<bool>(
+                  valueListenable: FaultSwitch.enabled,
+                  builder: (context, enabled, _) => Switch(
+                    value: enabled,
+                    onChanged: (value) {
+                      FaultSwitch.enabled.value = value;
+                      context.read<ActivityController>().load();
+                    },
+                    activeThumbColor: AppColors.textPrimary,
+                    activeTrackColor: AppColors.purple,
+                  ),
+                ),
+              ),
             SettingsTile(
               icon: Icons.dark_mode_outlined,
               title: 'Tema escuro',
@@ -137,7 +159,7 @@ class _SettingsPageState extends State<SettingsPage> {
         const SizedBox(height: 14),
         const Center(
           child: Text(
-            'UniA.I. · Versão 1.0',
+            'UniA.I. · Versão 0.1.0 (protótipo local)',
             style: TextStyle(color: AppColors.hint, fontSize: 11),
           ),
         ),

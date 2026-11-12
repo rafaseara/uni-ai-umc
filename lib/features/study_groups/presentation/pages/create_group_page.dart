@@ -50,7 +50,9 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    ...context.watch<GroupController>().suggestedMembers.map((member) {
+                    ...context.watch<GroupController>().suggestedMembers.map((
+                      member,
+                    ) {
                       final selected = _members.contains(member);
 
                       return ListTile(
@@ -135,8 +137,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                 controller: _nameController,
                 style: const TextStyle(color: AppColors.textPrimary),
                 decoration: _decoration('Digite o nome do seu grupo'),
-                validator: (value) =>
-                    value == null || value.trim().isEmpty
+                validator: (value) => value == null || value.trim().isEmpty
                     ? 'Informe o nome do grupo.'
                     : null,
               ),
@@ -149,7 +150,8 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
               TextFormField(
                 controller: _descriptionController,
                 maxLines: 3,
-                validator: (value) => UniValidators.nonEmpty(value, 'a descrição do grupo'),
+                validator: (value) =>
+                    UniValidators.nonEmpty(value, 'a descrição do grupo'),
                 style: const TextStyle(color: AppColors.textPrimary),
                 decoration: _decoration('Digite a descrição do grupo'),
               ),

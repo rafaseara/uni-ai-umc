@@ -63,12 +63,18 @@ class _AuthTextFieldState extends State<AuthTextField> {
               validator: widget.validator,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               cursorColor: AppColors.blue,
-              style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
+              style: const TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 14,
+              ),
               decoration: InputDecoration(
                 filled: false,
                 hintText: widget.hint,
                 hintStyle: const TextStyle(color: AppColors.hint, fontSize: 14),
-                errorStyle: const TextStyle(color: AppColors.warning, fontSize: 12),
+                errorStyle: const TextStyle(
+                  color: AppColors.warning,
+                  fontSize: 12,
+                ),
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,
@@ -80,6 +86,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
                 ),
                 suffixIcon: widget.isPassword
                     ? IconButton(
+                        tooltip: _obscure ? 'Mostrar senha' : 'Ocultar senha',
                         icon: Icon(
                           _obscure
                               ? Icons.visibility_off_outlined

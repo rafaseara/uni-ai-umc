@@ -18,19 +18,42 @@ class _SignUpPageState extends State<SignUpPage> {
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _birthDateController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmController = TextEditingController();
+  bool _busy = false;
+  String? _registerError;
 
   @override
   void dispose() {
     _usernameController.dispose();
     _emailController.dispose();
     _birthDateController.dispose();
+    _passwordController.dispose();
+    _confirmController.dispose();
     super.dispose();
   }
 
-  void _onContinuePressed() {
+  Future<void> _onContinuePressed() async {
+    if (_busy) return;
+    setState(() => _registerError = null);
     if (!_formKey.currentState!.validate()) return;
-    context.read<AuthController>().signIn(name: _usernameController.text);
-    Navigator.pushNamed(context, AppRoutes.verifyCode);
+    setState(() => _busy = true);
+    final controller = context.read<AuthController>();
+    final success = await controller.register(
+      _usernameController.text,
+      _emailController.text,
+      _passwordController.text,
+    );
+    if (!mounted) return;
+    setState(() {
+      _busy = false;
+      _registerError = controller.lastError;
+    });
+    if (success) {
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
+    } else {
+      _formKey.currentState?.validate();
+    }
   }
 
   @override
@@ -45,7 +68,8 @@ class _SignUpPageState extends State<SignUpPage> {
           label: 'Nome de Usuário',
           hint: '@usuario',
           controller: _usernameController,
-          validator: (value) => UniValidators.nonEmpty(value, 'seu nome de usuário'),
+          validator: (value) =>
+              UniValidators.nonEmpty(value, 'seu nome de usuário'),
           textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 28),
@@ -53,7 +77,7 @@ class _SignUpPageState extends State<SignUpPage> {
           label: 'E-mail',
           hint: 'voce@email.com',
           controller: _emailController,
-          validator: UniValidators.email,
+          validator: (value) => _registerError ?? UniValidators.email(value),
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
         ),
@@ -64,6 +88,25 @@ class _SignUpPageState extends State<SignUpPage> {
           controller: _birthDateController,
           validator: UniValidators.birthDate,
           keyboardType: TextInputType.datetime,
+          textInputAction: TextInputAction.next,
+        ),
+        const SizedBox(height: 22),
+        AuthTextField(
+          label: 'Senha',
+          hint: 'Crie uma senha',
+          controller: _passwordController,
+          validator: UniValidators.password,
+          isPassword: true,
+          textInputAction: TextInputAction.next,
+        ),
+        const SizedBox(height: 22),
+        AuthTextField(
+          label: 'Confirme sua senha',
+          hint: 'Repita a senha',
+          controller: _confirmController,
+          isPassword: true,
+          validator: (value) =>
+              UniValidators.confirmPassword(value, _passwordController.text),
           textInputAction: TextInputAction.done,
         ),
       ],

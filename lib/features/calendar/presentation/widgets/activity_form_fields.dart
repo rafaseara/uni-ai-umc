@@ -36,7 +36,10 @@ class ActivityFormFields extends StatelessWidget {
 
   Widget _label(String text) => Padding(
     padding: const EdgeInsets.only(bottom: 7),
-    child: Text(text, style: const TextStyle(color: AppColors.textMuted, fontSize: 11)),
+    child: Text(
+      text,
+      style: const TextStyle(color: AppColors.textMuted, fontSize: 11),
+    ),
   );
 
   InputDecoration _decoration(String hint) => InputDecoration(
@@ -55,7 +58,8 @@ class ActivityFormFields extends StatelessWidget {
     ),
   );
 
-  String get dateText => '${date.day.toString().padLeft(2, '0')}/'
+  String get dateText =>
+      '${date.day.toString().padLeft(2, '0')}/'
       '${date.month.toString().padLeft(2, '0')}/${date.year}';
 
   @override
@@ -67,7 +71,8 @@ class ActivityFormFields extends StatelessWidget {
         controller: titleController,
         style: const TextStyle(color: AppColors.textPrimary),
         decoration: _decoration('Digite um título para a atividade.'),
-        validator: (value) => UniValidators.nonEmpty(value, 'o título da atividade'),
+        validator: (value) =>
+            UniValidators.nonEmpty(value, 'o título da atividade'),
       ),
       const SizedBox(height: 16),
       _label('Descrição'),
@@ -79,10 +84,18 @@ class ActivityFormFields extends StatelessWidget {
       ),
       const SizedBox(height: 16),
       _label('Data da atividade'),
-      ActivitySelectionTile(text: dateText, icon: Icons.calendar_month_outlined, onTap: onPickDate),
+      ActivitySelectionTile(
+        text: dateText,
+        icon: Icons.calendar_month_outlined,
+        onTap: onPickDate,
+      ),
       const SizedBox(height: 16),
       _label('Prazo de entrega'),
-      ActivitySelectionTile(text: dateText, icon: Icons.calendar_month_outlined, onTap: onPickDate),
+      ActivitySelectionTile(
+        text: dateText,
+        icon: Icons.calendar_month_outlined,
+        onTap: onPickDate,
+      ),
       const SizedBox(height: 16),
       _label('Prioridade'),
       DropdownButtonFormField<Priority>(
@@ -90,48 +103,98 @@ class ActivityFormFields extends StatelessWidget {
         dropdownColor: AppColors.card,
         style: const TextStyle(color: AppColors.textPrimary),
         decoration: _decoration('Prioridade'),
-        items: Priority.values.map((value) =>
-          DropdownMenuItem<Priority>(value: value, child: Text(value.label))).toList(),
-        onChanged: (value) { if (value != null) onPriorityChanged(value); },
+        items: Priority.values
+            .map(
+              (value) => DropdownMenuItem<Priority>(
+                value: value,
+                child: Text(value.label),
+              ),
+            )
+            .toList(),
+        onChanged: (value) {
+          if (value != null) onPriorityChanged(value);
+        },
       ),
       const SizedBox(height: 16),
-      Row(children: [
-        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          _label('Tempo estimado'),
-          DropdownButtonFormField<Duration>(
-            initialValue: duration,
-            dropdownColor: AppColors.card,
-            style: const TextStyle(color: AppColors.textPrimary, fontSize: 12),
-            decoration: _decoration('Duração'),
-            items: const [Duration.zero, Duration(minutes: 30), Duration(hours: 1),
-              Duration(hours: 2), Duration(hours: 3)]
-              .map((value) => DropdownMenuItem<Duration>(
-                value: value,
-                child: Text(value == Duration.zero ? '0 hora'
-                  : value.inMinutes == 30 ? '30 minutos'
-                  : value.inHours == 1 ? '1 hora' : '${value.inHours} horas'),
-              )).toList(),
-            onChanged: (value) { if (value != null) onDurationChanged(value); },
+      Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _label('Tempo estimado'),
+                DropdownButtonFormField<Duration>(
+                  initialValue: duration,
+                  dropdownColor: AppColors.card,
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 12,
+                  ),
+                  decoration: _decoration('Duração'),
+                  items:
+                      const [
+                            Duration.zero,
+                            Duration(minutes: 30),
+                            Duration(hours: 1),
+                            Duration(hours: 2),
+                            Duration(hours: 3),
+                          ]
+                          .map(
+                            (value) => DropdownMenuItem<Duration>(
+                              value: value,
+                              child: Text(
+                                value == Duration.zero
+                                    ? '0 hora'
+                                    : value.inMinutes == 30
+                                    ? '30 minutos'
+                                    : value.inHours == 1
+                                    ? '1 hora'
+                                    : '${value.inHours} horas',
+                              ),
+                            ),
+                          )
+                          .toList(),
+                  onChanged: (value) {
+                    if (value != null) onDurationChanged(value);
+                  },
+                ),
+              ],
+            ),
           ),
-        ])),
-        const SizedBox(width: 10),
-        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          _label('Horário'),
-          ActivitySelectionTile(text: time.format(context), icon: Icons.access_time, onTap: onPickTime),
-        ])),
-      ]),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _label('Horário'),
+                ActivitySelectionTile(
+                  text: time.format(context),
+                  icon: Icons.access_time,
+                  onTap: onPickTime,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
       const SizedBox(height: 16),
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-        decoration: BoxDecoration(color: AppColors.card,
+        decoration: BoxDecoration(
+          color: AppColors.card,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.cardBorder)),
+          border: Border.all(color: AppColors.cardBorder),
+        ),
         child: SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Lembrar desta atividade', style: TextStyle(
-            color: AppColors.textPrimary, fontSize: 12)),
-          subtitle: const Text('30 minutos antes', style: TextStyle(
-            color: AppColors.textMuted, fontSize: 10)),
+          title: const Text(
+            'Lembrar desta atividade',
+            style: TextStyle(color: AppColors.textPrimary, fontSize: 12),
+          ),
+          subtitle: const Text(
+            '30 minutos antes',
+            style: TextStyle(color: AppColors.textMuted, fontSize: 10),
+          ),
           activeThumbColor: AppColors.purple,
           value: reminder,
           onChanged: onReminderChanged,
@@ -142,7 +205,12 @@ class ActivityFormFields extends StatelessWidget {
 }
 
 class ActivitySelectionTile extends StatelessWidget {
-  const ActivitySelectionTile({super.key, required this.text, required this.icon, required this.onTap});
+  const ActivitySelectionTile({
+    super.key,
+    required this.text,
+    required this.icon,
+    required this.onTap,
+  });
   final String text;
   final IconData icon;
   final VoidCallback onTap;
@@ -150,13 +218,28 @@ class ActivitySelectionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) => InkWell(
     onTap: onTap,
-    child: Container(height: 46, padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(color: AppColors.card,
-        borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.cardBorder)),
-      child: Row(children: [
-        Expanded(child: Text(text, style: const TextStyle(color: AppColors.textPrimary, fontSize: 12))),
-        Icon(icon, color: AppColors.purple, size: 17),
-      ]),
+    child: Container(
+      height: 46,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.cardBorder),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          Icon(icon, color: AppColors.purple, size: 17),
+        ],
+      ),
     ),
   );
 }

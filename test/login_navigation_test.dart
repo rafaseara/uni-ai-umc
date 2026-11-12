@@ -10,10 +10,17 @@ import 'package:plataforma_educacional/main.dart';
 import 'package:plataforma_educacional/shared/widgets/uni_bottom_nav.dart';
 
 void main() {
-  setUpAll(() async { await initializeDateFormatting('pt_BR'); });
+  setUpAll(() async {
+    await initializeDateFormatting('pt_BR');
+  });
 
-  testWidgets('Login valida campos e navega para Home sem API', (tester) async {
-    await tester.pumpWidget(const UniAiApp());
+  testWidgets('Login valida credenciais locais e navega para Home', (
+    tester,
+  ) async {
+    final auth = AuthController();
+    await auth.register('Aluno Teste', 'aluno@universidade.com', 'senha123');
+    await auth.signOut();
+    await tester.pumpWidget(UniAiApp(authController: auth));
     await tester.tap(find.text('ENTRAR'));
     await tester.pumpAndSettle();
     expect(find.byType(LoginPage), findsOneWidget);
@@ -32,14 +39,26 @@ void main() {
   });
 
   testWidgets('Abas preservam o controller ao navegar', (tester) async {
-    await tester.pumpWidget(const UniAiApp());
+    final auth = AuthController();
+    await auth.register('Aluno Teste', 'aluno@universidade.com', 'senha123');
+    await tester.pumpWidget(UniAiApp(authController: auth));
     final navigator = tester.state<NavigatorState>(find.byType(Navigator));
     navigator.pushNamedAndRemoveUntil(AppRoutes.home, (_) => false);
     await tester.pumpAndSettle();
-    await tester.tap(find.descendant(of: find.byType(UniBottomNav), matching: find.text('Grupos')));
+    await tester.tap(
+      find.descendant(
+        of: find.byType(UniBottomNav),
+        matching: find.text('Grupos'),
+      ),
+    );
     await tester.pumpAndSettle();
     expect(find.byType(UniBottomNav), findsOneWidget);
-    await tester.tap(find.descendant(of: find.byType(UniBottomNav), matching: find.text('Início')));
+    await tester.tap(
+      find.descendant(
+        of: find.byType(UniBottomNav),
+        matching: find.text('Início'),
+      ),
+    );
     await tester.pumpAndSettle();
     expect(find.byType(HomePage), findsOneWidget);
   });

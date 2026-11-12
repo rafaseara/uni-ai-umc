@@ -45,8 +45,12 @@ class _ActivityFormPageState extends State<ActivityFormPage> {
   }
 
   Future<void> _pickDate() async {
-    final result = await showDatePicker(context: context, initialDate: _date,
-      firstDate: DateTime(2020), lastDate: DateTime(2100));
+    final result = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2100),
+    );
     if (result != null && mounted) setState(() => _date = result);
   }
 
@@ -57,12 +61,20 @@ class _ActivityFormPageState extends State<ActivityFormPage> {
 
   void _save() {
     if (!_formKey.currentState!.validate()) return;
-    Navigator.of(context).pop(CalendarActivity(
-      id: widget.activity?.id ?? 'activity-${DateTime.now().microsecondsSinceEpoch}',
-      title: _title.text.trim(), description: _description.text.trim(),
-      date: _date, time: _time, priority: _priority,
-      duration: _duration, reminder: _reminder,
-    ));
+    Navigator.of(context).pop(
+      CalendarActivity(
+        id:
+            widget.activity?.id ??
+            'activity-${DateTime.now().microsecondsSinceEpoch}',
+        title: _title.text.trim(),
+        description: _description.text.trim(),
+        date: _date,
+        time: _time,
+        priority: _priority,
+        duration: _duration,
+        reminder: _reminder,
+      ),
+    );
   }
 
   @override
@@ -70,28 +82,50 @@ class _ActivityFormPageState extends State<ActivityFormPage> {
     title: widget.activity == null ? 'Nova atividade' : 'Atualizar atividade',
     subtitle: 'Reserve espaço para o que importa.',
     children: [
-      Form(key: _formKey, child: Column(children: [
-        ActivityFormFields(
-          titleController: _title, descriptionController: _description,
-          date: _date, time: _time, priority: _priority,
-          duration: _duration, reminder: _reminder,
-          onPickDate: _pickDate, onPickTime: _pickTime,
-          onPriorityChanged: (value) => setState(() => _priority = value),
-          onDurationChanged: (value) => setState(() => _duration = value),
-          onReminderChanged: (value) => setState(() => _reminder = value),
+      Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            ActivityFormFields(
+              titleController: _title,
+              descriptionController: _description,
+              date: _date,
+              time: _time,
+              priority: _priority,
+              duration: _duration,
+              reminder: _reminder,
+              onPickDate: _pickDate,
+              onPickTime: _pickTime,
+              onPriorityChanged: (value) => setState(() => _priority = value),
+              onDurationChanged: (value) => setState(() => _duration = value),
+              onReminderChanged: (value) => setState(() => _reminder = value),
+            ),
+            const SizedBox(height: 18),
+            Container(
+              width: double.infinity,
+              height: 46,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [AppColors.pink, AppColors.blue],
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: TextButton(
+                onPressed: _save,
+                child: const Text(
+                  'Salvar atividade',
+                  style: TextStyle(color: AppColors.textPrimary),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              'A atividade será exibida no seu calendário.',
+              style: TextStyle(color: AppColors.textMuted, fontSize: 10),
+            ),
+          ],
         ),
-        const SizedBox(height: 18),
-        Container(width: double.infinity, height: 46,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(colors: [AppColors.pink, AppColors.blue]),
-            borderRadius: BorderRadius.circular(12)),
-          child: TextButton(onPressed: _save,
-            child: const Text('Salvar atividade', style: TextStyle(color: AppColors.textPrimary))),
-        ),
-        const SizedBox(height: 12),
-        const Text('A atividade será exibida no seu calendário.',
-          style: TextStyle(color: AppColors.textMuted, fontSize: 10)),
-      ])),
+      ),
     ],
   );
 }

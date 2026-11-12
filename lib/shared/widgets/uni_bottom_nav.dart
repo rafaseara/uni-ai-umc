@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 class UniBottomNav extends StatelessWidget {
-  const UniBottomNav({
-    super.key,
-    this.currentIndex,
-    required this.onTap,
-  }) : assert(currentIndex == null || (currentIndex >= 0 && currentIndex < 5));
+  const UniBottomNav({super.key, this.currentIndex, required this.onTap})
+    : assert(currentIndex == null || (currentIndex >= 0 && currentIndex < 5));
 
   final int? currentIndex;
   final ValueChanged<int> onTap;
@@ -56,9 +53,7 @@ class UniBottomNav extends StatelessWidget {
           final selected = currentIndex == index;
           final isChat = index == 2;
 
-          final itemColor = selected
-              ? AppColors.blue
-              : AppColors.textMuted;
+          final itemColor = selected ? AppColors.blue : AppColors.textMuted;
 
           return Expanded(
             child: Semantics(
@@ -137,8 +132,7 @@ class _AiChatButton extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.purple
-                .withValues(alpha: selected ? 0.45 : 0.25),
+            color: AppColors.purple.withValues(alpha: selected ? 0.45 : 0.25),
             blurRadius: selected ? 12 : 7,
           ),
         ],
@@ -148,7 +142,11 @@ class _AiChatButton extends StatelessWidget {
           color: AppColors.logoRingMiddle.withValues(alpha: 0.70),
           borderRadius: BorderRadius.circular(11),
         ),
-        child: const Icon(Icons.auto_awesome, color: AppColors.textPrimary, size: 21),
+        child: const Icon(
+          Icons.auto_awesome,
+          color: AppColors.textPrimary,
+          size: 21,
+        ),
       ),
     );
   }
