@@ -18,46 +18,67 @@ class ChatInputBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final radius = BorderRadius.circular(18);
+
     return Container(
-      padding: const EdgeInsets.only(left: 18, right: 6),
+      constraints: const BoxConstraints(minHeight: 58),
       decoration: BoxDecoration(
         color: AppColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: radius,
         border: Border.all(
-          color: highlighted ? AppColors.purple : AppColors.cardBorder,
+          color: highlighted ? AppColors.pink : AppColors.cardBorder,
           width: highlighted ? 1.2 : 1,
         ),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: controller,
-              cursorColor: AppColors.blue,
-              textInputAction: TextInputAction.send,
-              onSubmitted: (_) => onSend(),
-              style: const TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 13,
+      child: ClipRRect(
+        borderRadius: radius,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 18, right: 6),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  cursorColor: AppColors.blue,
+                  textInputAction: TextInputAction.send,
+                  onSubmitted: (_) => onSend(),
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 13,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: hint,
+                    hintStyle: const TextStyle(
+                      color: AppColors.hint,
+                      fontSize: 13,
+                    ),
+                    // O campo não desenha nenhuma borda: somente o Container
+                    // externo mantém o contorno rosa do componente.
+                    filled: false,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    focusedErrorBorder: InputBorder.none,
+                    isCollapsed: true,
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                ),
               ),
-              decoration: InputDecoration(
-                hintText: hint,
-                hintStyle: const TextStyle(color: AppColors.hint, fontSize: 13),
-                border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(vertical: 16),
+              IconButton(
+                tooltip: 'Enviar mensagem',
+                onPressed: onSend,
+                icon: Icon(
+                  Icons.send_outlined,
+                  size: 20,
+                  color: highlighted ? AppColors.textPrimary : AppColors.blue,
+                ),
               ),
-            ),
+            ],
           ),
-          IconButton(
-            tooltip: 'Enviar mensagem',
-            onPressed: onSend,
-            icon: Icon(
-              Icons.send_outlined,
-              size: 20,
-              color: highlighted ? AppColors.textPrimary : AppColors.blue,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
