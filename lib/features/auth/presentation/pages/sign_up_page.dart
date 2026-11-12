@@ -72,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
               UniValidators.nonEmpty(value, 'seu nome de usuário'),
           textInputAction: TextInputAction.next,
         ),
-        const SizedBox(height: 28),
+        const SizedBox(height: 22),
         AuthTextField(
           label: 'E-mail',
           hint: 'voce@email.com',
@@ -81,7 +81,7 @@ class _SignUpPageState extends State<SignUpPage> {
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
         ),
-        const SizedBox(height: 28),
+        const SizedBox(height: 22),
         AuthTextField(
           label: 'Data de Nascimento',
           hint: 'DD/MM/AAAA',
