@@ -6,11 +6,8 @@ import 'package:plataforma_educacional/shared/widgets/uni_bottom_nav.dart';
 
 /// Uma única barra inferior para todas as páginas raiz dos módulos.
 class UniModuleShell extends StatelessWidget {
-  const UniModuleShell({
-    super.key,
-    required this.child,
-    this.currentIndex,
-  }) : assert(currentIndex == null || (currentIndex >= 0 && currentIndex < 5));
+  const UniModuleShell({super.key, required this.child, this.currentIndex})
+    : assert(currentIndex == null || (currentIndex >= 0 && currentIndex < 5));
 
   final Widget child;
 

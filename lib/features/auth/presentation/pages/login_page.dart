@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:plataforma_educacional/core/navigation/app_routes.dart';
@@ -30,20 +31,37 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _onLoginPressed() {
+  bool _busy = false;
+  String? _loginError;
+
+  Future<void> _onLoginPressed() async {
+    if (_busy) return;
+    setState(() => _loginError = null);
     if (!_formKey.currentState!.validate()) return;
-    // Navegação DEMONSTRATIVA. Ainda NÃO existe autenticação.
-    context.read<AuthController>().signIn();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Modo demonstração: login sem autenticação real.'),
-      ),
+    setState(() => _busy = true);
+    final controller = context.read<AuthController>();
+    final success = await controller.login(
+      _emailController.text,
+      _passwordController.text,
     );
-    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
+    if (!mounted) return;
+    setState(() {
+      _busy = false;
+      _loginError = controller.lastError;
+    });
+    if (success) {
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
+    } else {
+      _formKey.currentState?.validate();
+    }
   }
 
   void _onForgotPasswordPressed() {
-    Navigator.pushNamed(context, AppRoutes.verifyCode);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Recuperação de senha indisponível no modo local.'),
+      ),
+    );
   }
 
   @override
@@ -103,7 +121,9 @@ class _LoginPageState extends State<LoginPage> {
                             controller: _passwordController,
                             isPassword: true,
                             textInputAction: TextInputAction.done,
-                            validator: (value) => UniValidators.nonEmpty(value, 'sua senha'),
+                            validator: (value) =>
+                                _loginError ??
+                                UniValidators.nonEmpty(value, 'sua senha'),
                           ),
                         ],
                       ),
@@ -120,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                     Center(
                       child: GradientButton(
                         label: 'ENTRAR',
-                        onPressed: _onLoginPressed,
+                        onPressed: _busy ? null : _onLoginPressed,
                       ),
                     ),
                     const SizedBox(height: 32),

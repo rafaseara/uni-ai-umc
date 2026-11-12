@@ -36,7 +36,11 @@ class PlannerActivityTile extends StatelessWidget {
               ),
             ),
             child: done
-                ? const Icon(Icons.check, size: 14, color: AppColors.textPrimary)
+                ? const Icon(
+                    Icons.check,
+                    size: 14,
+                    color: AppColors.textPrimary,
+                  )
                 : null,
           ),
           const SizedBox(width: 12),

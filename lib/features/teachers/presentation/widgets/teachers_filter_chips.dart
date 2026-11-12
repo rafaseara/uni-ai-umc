@@ -35,7 +35,10 @@ class TeachersFilterChips extends StatelessWidget {
               ),
               child: Text(
                 labels[i],
-                style: const TextStyle(color: AppColors.textPrimary, fontSize: 12),
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 12,
+                ),
               ),
             ),
           ),

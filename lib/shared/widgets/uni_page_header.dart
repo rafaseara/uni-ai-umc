@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:plataforma_educacional/core/navigation/app_routes.dart';
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_text.dart';
 
-/// Cabeçalho único das páginas internas. Sempre preserva o centro da marca.
+/// CabeÃ§alho Ãºnico das pÃ¡ginas internas. Sempre preserva o centro da marca.
 class UniPageHeader extends StatelessWidget {
-  const UniPageHeader({super.key, this.showBack = true, this.onBack, this.onNotifications});
+  const UniPageHeader({
+    super.key,
+    this.showBack = true,
+    this.onBack,
+    this.onNotifications,
+  });
 
   final bool showBack;
   final VoidCallback? onBack;
@@ -49,25 +55,33 @@ class UniPageHeader extends StatelessWidget {
                   )
                 : null,
           ),
-          const Expanded(
+          Expanded(
             child: Center(
               child: Text.rich(
                 TextSpan(
                   children: [
-                    TextSpan(text: 'Uni', style: TextStyle(color: AppColors.textPrimary)),
-                    TextSpan(text: 'A.I.', style: TextStyle(color: AppColors.blue)),
+                    TextSpan(
+                      text: 'Uni',
+                      style: TextStyle(color: AppColors.textPrimary),
+                    ),
+                    TextSpan(
+                      text: 'A.I.',
+                      style: TextStyle(color: AppColors.blue),
+                    ),
                   ],
                 ),
                 maxLines: 1,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: AppText.title.copyWith(fontSize: 18),
               ),
             ),
           ),
           SizedBox(
             width: 56,
             child: IconButton(
-              tooltip: 'Notificações',
-              onPressed: ModalRoute.of(context)?.settings.name == AppRoutes.notifications
+              tooltip: 'NotificaÃ§Ãµes',
+              onPressed:
+                  ModalRoute.of(context)?.settings.name ==
+                      AppRoutes.notifications
                   ? null
                   : () {
                       if (onNotifications != null) {

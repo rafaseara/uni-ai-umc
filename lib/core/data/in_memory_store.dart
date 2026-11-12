@@ -3,8 +3,10 @@ import 'package:plataforma_educacional/core/models/identified.dart';
 
 /// Cada instância vive durante a execução do app (sem persistência em disco).
 class InMemoryStore<T extends Identified> implements ListRepository<T> {
-  InMemoryStore(Iterable<T> seed, {this.delay = const Duration(milliseconds: 600)})
-      : _items = List<T>.of(seed);
+  InMemoryStore(
+    Iterable<T> seed, {
+    this.delay = const Duration(milliseconds: 600),
+  }) : _items = List<T>.of(seed);
 
   final Duration delay;
   final List<T> _items;

@@ -57,11 +57,15 @@ class _TeachersPageState extends State<TeachersPage> {
           builder: (context, teachers) {
             final query = _query.trim().toLowerCase();
             final filtered = teachers.where((teacher) {
-              final matchesQuery = teacher.name.toLowerCase().contains(query) ||
+              final matchesQuery =
+                  teacher.name.toLowerCase().contains(query) ||
                   teacher.subject.toLowerCase().contains(query);
-              final matchesFilter = _selectedFilter == 0 ||
-                  (_selectedFilter == 1 && teacher.subject.toLowerCase().contains('algoritmos')) ||
-                  (_selectedFilter == 2 && teacher.subject.toLowerCase().contains('matemática'));
+              final matchesFilter =
+                  _selectedFilter == 0 ||
+                  (_selectedFilter == 1 &&
+                      teacher.subject.toLowerCase().contains('algoritmos')) ||
+                  (_selectedFilter == 2 &&
+                      teacher.subject.toLowerCase().contains('matemática'));
               return matchesQuery && matchesFilter;
             }).toList();
             if (filtered.isEmpty) {
@@ -84,9 +88,8 @@ class _TeachersPageState extends State<TeachersPage> {
                     initials: teacher.initials,
                     name: teacher.name,
                     subject: teacher.subject,
-                    onViewProfile: () => Navigator.pushNamed(
-                      context, AppRoutes.teacherProfile,
-                    ),
+                    onViewProfile: () =>
+                        Navigator.pushNamed(context, AppRoutes.teacherProfile),
                   ),
                   const SizedBox(height: 12),
                 ],

@@ -24,11 +24,7 @@ class LogoutBrand extends StatelessWidget {
               ShaderMask(
                 shaderCallback: (bounds) {
                   return const LinearGradient(
-                    colors: [
-                      AppColors.blue,
-                      AppColors.purple,
-                      AppColors.pink,
-                    ],
+                    colors: [AppColors.blue, AppColors.purple, AppColors.pink],
                   ).createShader(bounds);
                 },
                 child: const Icon(

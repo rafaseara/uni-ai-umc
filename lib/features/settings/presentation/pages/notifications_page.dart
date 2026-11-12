@@ -14,7 +14,8 @@ class NotificationsPage extends StatelessWidget {
 
   Widget _toggle(BuildContext context, int index) => Switch(
     value: context.watch<NotificationController>().enabled[index],
-    onChanged: (value) => context.read<NotificationController>().setEnabled(index, value),
+    onChanged: (value) =>
+        context.read<NotificationController>().setEnabled(index, value),
     activeThumbColor: AppColors.textPrimary,
     activeTrackColor: AppColors.purple,
   );

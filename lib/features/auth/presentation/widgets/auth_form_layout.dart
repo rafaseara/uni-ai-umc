@@ -71,10 +71,13 @@ class AuthFormLayout extends StatelessWidget {
                     if (formKey == null)
                       ...children
                     else
-                      Form(key: formKey, child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: children,
-                      )),
+                      Form(
+                        key: formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: children,
+                        ),
+                      ),
                     const Spacer(),
                     Center(
                       child: GradientButton(

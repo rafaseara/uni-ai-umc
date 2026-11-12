@@ -29,7 +29,9 @@ abstract final class UniValidators {
       return 'Informe uma data válida.';
     }
     final date = DateTime(year, month, day);
-    if (date.year != year || date.month != month || date.day != day ||
+    if (date.year != year ||
+        date.month != month ||
+        date.day != day ||
         date.isAfter(DateTime.now())) {
       return 'Informe uma data válida.';
     }

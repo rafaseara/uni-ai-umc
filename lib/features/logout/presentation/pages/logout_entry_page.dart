@@ -35,7 +35,10 @@ class LogoutEntryPage extends StatelessWidget {
                         if (onLogin != null) {
                           onLogin!();
                         } else {
-                          Navigator.pushReplacementNamed(context, AppRoutes.login);
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.login,
+                          );
                         }
                       },
                     ),
@@ -47,7 +50,10 @@ class LogoutEntryPage extends StatelessWidget {
                         if (onRegister != null) {
                           onRegister!();
                         } else {
-                          Navigator.pushReplacementNamed(context, AppRoutes.signUp);
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.signUp,
+                          );
                         }
                       },
                       child: const Text(

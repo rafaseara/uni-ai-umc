@@ -32,7 +32,7 @@ class FriendsPage extends StatelessWidget {
           emptyState: const UniEmptyState(
             icon: Icons.people_outline,
             title: 'Nenhum amigo adicionado',
-            message: 'Busque amigos para começar a se conectar.',
+            message: 'Busque amigos para comeÃ§ar a se conectar.',
           ),
           builder: (context, friends) => Column(
             children: [

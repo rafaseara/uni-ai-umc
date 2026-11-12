@@ -3,5 +3,5 @@ import 'package:plataforma_educacional/features/teachers/data/teacher_repository
 import 'package:plataforma_educacional/features/teachers/models/teacher_preview.dart';
 
 class TeacherController extends ListController<TeacherPreview> {
-  TeacherController(TeacherRepository repository) : super(repository);
+  TeacherController(TeacherRepository super.repository);
 }

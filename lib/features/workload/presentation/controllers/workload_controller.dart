@@ -3,5 +3,5 @@ import 'package:plataforma_educacional/features/workload/data/workload_repositor
 import 'package:plataforma_educacional/features/workload/models/workload_task.dart';
 
 class WorkloadController extends ListController<WorkloadTask> {
-  WorkloadController(WorkloadRepository repository) : super(repository);
+  WorkloadController(WorkloadRepository super.repository);
 }

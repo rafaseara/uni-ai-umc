@@ -15,12 +15,16 @@ void main() {
     expect(AppTheme.dark.textTheme.titleMedium?.fontSize, 12);
   });
 
-  testWidgets('Welcome uses the shared background and app theme', (tester) async {
+  testWidgets('Welcome uses the shared background and app theme', (
+    tester,
+  ) async {
     await tester.pumpWidget(const UniAiApp());
 
     expect(find.byType(WelcomePage), findsOneWidget);
     expect(find.byType(UniBackground), findsOneWidget);
-    expect(Theme.of(tester.element(find.byType(WelcomePage))).brightness,
-        Brightness.dark);
+    expect(
+      Theme.of(tester.element(find.byType(WelcomePage))).brightness,
+      Brightness.dark,
+    );
   });
 }

@@ -89,7 +89,10 @@ class LogoutSuccessPage extends StatelessWidget {
                     const Text(
                       'Entre novamente para continuar aprendendo.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: AppColors.textMuted, fontSize: 10),
+                      style: TextStyle(
+                        color: AppColors.textMuted,
+                        fontSize: 10,
+                      ),
                     ),
                   ],
                 ),

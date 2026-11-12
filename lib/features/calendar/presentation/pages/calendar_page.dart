@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/core/utils/date_format.dart';
+import 'package:plataforma_educacional/shared/widgets/gradient_button.dart';
 import 'package:plataforma_educacional/features/calendar/models/calendar_activity.dart';
 import 'package:plataforma_educacional/features/calendar/presentation/controllers/activity_controller.dart';
 import 'package:plataforma_educacional/features/calendar/presentation/pages/activity_form_page.dart';
@@ -42,7 +44,7 @@ class _CalendarPageState extends State<CalendarPage> {
       _selected = result.date;
       _month = DateTime(result.date.year, result.date.month);
     });
-    if (controller.error != null) {
+    if (controller.actionError != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Não foi possível salvar a atividade.')),
       );
@@ -72,7 +74,7 @@ class _CalendarPageState extends State<CalendarPage> {
         ),
         const SizedBox(height: 15),
         Text(
-          '${_selected.day}/${_selected.month}/${_selected.year}',
+          UniDates.full(_selected),
           style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 13,
@@ -88,10 +90,14 @@ class _CalendarPageState extends State<CalendarPage> {
             message: 'Crie uma atividade para começar sua organização.',
           ),
           builder: (context, activities) {
-            final selectedActivities = activities.where((activity) =>
-                activity.date.year == _selected.year &&
-                activity.date.month == _selected.month &&
-                activity.date.day == _selected.day).toList();
+            final selectedActivities = activities
+                .where(
+                  (activity) =>
+                      activity.date.year == _selected.year &&
+                      activity.date.month == _selected.month &&
+                      activity.date.day == _selected.day,
+                )
+                .toList();
             if (selectedActivities.isEmpty) {
               return const UniEmptyState(
                 icon: Icons.event_available_outlined,
@@ -111,38 +117,14 @@ class _CalendarPageState extends State<CalendarPage> {
           },
         ),
         const SizedBox(height: 4),
-        _GradientButton(
+        GradientButton(
+          expanded: true,
+          filled: true,
+          radius: 12,
           label: '+ Nova atividade',
           onPressed: () => _openForm(),
         ),
       ],
-    );
-  }
-}
-
-class _GradientButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onPressed;
-
-  const _GradientButton({required this.label, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 46,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [AppColors.pink, AppColors.blue],
-          ),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: TextButton(
-          onPressed: onPressed,
-          child: Text(label, style: const TextStyle(color: AppColors.textPrimary)),
-        ),
-      ),
     );
   }
 }

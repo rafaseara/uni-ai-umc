@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_text.dart';
 import 'package:plataforma_educacional/shared/widgets/uni_background.dart';
 import 'package:plataforma_educacional/shared/widgets/uni_page_header.dart';
 
@@ -24,6 +24,7 @@ class UniPageLayout extends StatelessWidget {
   final String subtitle;
   final List<Widget> children;
   final bool showBack;
+
   /// Útil nas páginas que originalmente não tinham título (busca, menu de perfil).
   final bool showTitle;
   final Widget? titleAction;
@@ -48,28 +49,13 @@ class UniPageLayout extends StatelessWidget {
                       if (showTitle) ...[
                         Row(
                           children: [
-                            Expanded(
-                              child: Text(
-                                title,
-                                style: const TextStyle(
-                                  color: AppColors.textPrimary,
-                                  fontSize: 27,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            if (titleAction != null) titleAction!,
+                            Expanded(child: Text(title, style: AppText.title)),
+                            ?titleAction,
                           ],
                         ),
                         if (subtitle.isNotEmpty) ...[
                           const SizedBox(height: 4),
-                          Text(
-                            subtitle,
-                            style: const TextStyle(
-                              color: AppColors.textMuted,
-                              fontSize: 12,
-                            ),
-                          ),
+                          Text(subtitle, style: AppText.subtitle),
                         ],
                         const SizedBox(height: 20),
                       ],

@@ -42,10 +42,7 @@ class ChatSuggestionTile extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     subtitle,
-                    style: const TextStyle(
-                      color: AppColors.hint,
-                      fontSize: 10,
-                    ),
+                    style: const TextStyle(color: AppColors.hint, fontSize: 10),
                   ),
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/core/theme/app_text.dart';
 
 /// Card visual único: uma cor, uma borda e raio de 12 para todo o app.
 /// Cor e borda opcionais atendem estados especiais, sem duplicar estrutura.
@@ -31,7 +32,7 @@ class UniCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: borderColor),
       ),
-      child: child,
+      child: DefaultTextStyle.merge(style: AppText.body, child: child),
     );
   }
 }

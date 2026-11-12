@@ -32,10 +32,7 @@ class ActivitySavedPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(color: AppColors.blue),
                 ),
-                child: const Icon(
-                  Icons.check,
-                  color: AppColors.blue,
-                ),
+                child: const Icon(Icons.check, color: AppColors.blue),
               ),
               const SizedBox(height: 16),
               const Text(
@@ -49,10 +46,7 @@ class ActivitySavedPage extends StatelessWidget {
               const SizedBox(height: 8),
               const Text(
                 'Sua atividade foi adicionada ao calendário.',
-                style: TextStyle(
-                  color: AppColors.textMuted,
-                  fontSize: 11,
-                ),
+                style: TextStyle(color: AppColors.textMuted, fontSize: 11),
               ),
               const Divider(color: AppColors.cardBorder, height: 28),
               Text(
@@ -76,19 +70,13 @@ class ActivitySavedPage extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 'Prioridade ${activity.priorityLabel.toLowerCase()}',
-                style: const TextStyle(
-                  color: AppColors.purple,
-                  fontSize: 11,
-                ),
+                style: const TextStyle(color: AppColors.purple, fontSize: 11),
               ),
               if (activity.reminder) ...[
                 const SizedBox(height: 10),
                 const Text(
                   'Lembrete configurado para 30 minutos antes',
-                  style: TextStyle(
-                    color: AppColors.blue,
-                    fontSize: 11,
-                  ),
+                  style: TextStyle(color: AppColors.blue, fontSize: 11),
                 ),
               ],
               const SizedBox(height: 18),
@@ -116,7 +104,7 @@ class ActivitySavedPage extends StatelessWidget {
         const Text(
           'Você pode editar os detalhes da atividade a qualquer momento.',
           style: TextStyle(color: AppColors.textMuted, fontSize: 11),
-        )
+        ),
       ],
     );
   }

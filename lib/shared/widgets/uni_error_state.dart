@@ -3,13 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
 
 class UniErrorState extends StatelessWidget {
-  const UniErrorState({
-    super.key,
-    this.message = 'Não foi possível carregar os dados.',
-    required this.onRetry,
-  });
+  const UniErrorState({super.key, this.message, required this.onRetry});
 
-  final String message;
+  final String? message;
   final VoidCallback onRetry;
 
   @override
@@ -23,7 +19,7 @@ class UniErrorState extends StatelessWidget {
             const Icon(Icons.error_outline, size: 40, color: AppColors.warning),
             const SizedBox(height: 12),
             Text(
-              message,
+              message ?? 'Algo deu errado. Tente novamente.',
               textAlign: TextAlign.center,
               style: const TextStyle(color: AppColors.textMuted, fontSize: 13),
             ),
