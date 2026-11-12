@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:plataforma_educacional/core/theme/app_colors.dart';
+import 'package:plataforma_educacional/features/auth/presentation/widgets/auth_logo.dart';
 
 class LogoutBrand extends StatelessWidget {
   const LogoutBrand({super.key});
@@ -10,52 +11,7 @@ class LogoutBrand extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 96,
-          height: 96,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.background.withValues(alpha: 0.55),
-            border: Border.all(color: AppColors.purple, width: 1),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ShaderMask(
-                shaderCallback: (bounds) {
-                  return const LinearGradient(
-                    colors: [AppColors.blue, AppColors.purple, AppColors.pink],
-                  ).createShader(bounds);
-                },
-                child: const Icon(
-                  Icons.school_outlined,
-                  color: AppColors.textPrimary,
-                  size: 39,
-                ),
-              ),
-              const SizedBox(height: 2),
-              const Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Uni',
-                      style: TextStyle(color: AppColors.textPrimary),
-                    ),
-                    TextSpan(
-                      text: 'A.I.',
-                      style: TextStyle(color: AppColors.purple),
-                    ),
-                  ],
-                ),
-                style: TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.5,
-                ),
-              ),
-            ],
-          ),
-        ),
+const AuthLogo(size: 96),
         const SizedBox(height: 18),
         const Text(
           'Seu universo de estudos,\nconectado.',
