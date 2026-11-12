@@ -88,7 +88,22 @@ class TeacherProfilePage extends StatelessWidget {
                 value: 'Conceitos, exercícios e dúvidas de estudo',
               ),
               const SizedBox(height: 16),
-              const _FilledGradientButton(label: 'Chat com professor'),
+              _FilledGradientButton(
+                label: 'Chat com professor',
+                onPressed: () {
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'O chat com professores está em desenvolvimento. '
+                          'Em breve você poderá conversar diretamente por aqui!',
+                        ),
+                        duration: Duration(seconds: 4),
+                      ),
+                    );
+                },
+              ),
             ],
           ),
         ),
@@ -165,28 +180,40 @@ class _InfoRow extends StatelessWidget {
 
 // Botão preenchido com degradê (só esta tela usa).
 class _FilledGradientButton extends StatelessWidget {
-  const _FilledGradientButton({required this.label});
+  const _FilledGradientButton({
+    required this.label,
+    required this.onPressed,
+  });
 
   final String label;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 46,
-      alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         gradient: const LinearGradient(
           colors: [AppColors.pink, AppColors.blue],
         ),
       ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          color: AppColors.textPrimary,
-          fontSize: 13,
-          fontWeight: FontWeight.bold,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(12),
+          child: Center(
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ),
       ),
     );
